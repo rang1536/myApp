@@ -27,23 +27,107 @@
 	.cate{font-weight:bold;font-size:16px;color:#030066;}
 </style>
 <script>
+	$(document).ready(function(){
+		var check = '${check}';
+		if(check == 'already'){
+			if(confirm('진행중인 내용이 있습니다. 해당 페이지로 이동하겠습니까?')){
+				var lastNum = '${lastQuNum}';
+				var nextNum = parseInt(lastNum)+1;
+				var nextTag = 'section'+nextNum;
+				
+				$('#intro').css('display','none');
+				$('#'+nextTag).slideDown();
+			}
+		}
+	})
+	// 설문응답 시작
 	function start(){
 		$('#intro').css('display','none');
 		$('#section1').slideDown();
 	}
 	
+	// 다음문제 넘어가기 (부분 저장 실행)
 	function nextQuestion(nowPageNum){
 		var nextNum = parseInt(nowPageNum)+1;
 		var nowTag = 'section'+nowPageNum;
 		var nextTag = 'section'+nextNum;
+		
+		var resNo = $('#resNo').val();
+		var userNo = $('#userNo').val();
+		var ansC = '';
+		var ansEtc = '';
+		var ansK = '';
+		var ansM = '';
+		if(nowPageNum < 15){
+			ansC = $('input[name="q'+nowPageNum+'c"]:checked').val();
+			if(ansC == null || ansC == ''){
+				alert("참여여부를 선택하세요!");
+				return;
+			}
+		}
+		
+		if(nowPageNum == 1 || nowPageNum == 6 || nowPageNum == 11 || nowPageNum == 14 || nowPageNum == 16 || nowPageNum == 18 || nowPageNum == 20 || nowPageNum == 21 || nowPageNum == 23 || nowPageNum == 26 || nowPageNum == 30 || nowPageNum == 31){
+			ansEtc = $('#q'+nowPageNum+'Etc').val();
+		}
+		
+		if(nowPageNum != 31){
+			ansK = $('input[name="q'+nowPageNum+'k"]:checked').val();
+			ansM = $('input[name="q'+nowPageNum+'m"]:checked').val();
+			if(ansK == null || ansK == ''){
+				alert('기대도를 선택해주세요');
+				return;
+			}
+			if(nowPageNum < 15){
+				if(ansC == 1 && ansM == null){
+					alert('만족도를 선택하세요');
+					return;
+				}
+			}else if(nowPageNum > 14){
+				if(ansM == null || ansM == ''){
+					alert('만족도를 선택하세요');
+					return;
+				}
+			}
+		}	
+		
+		$.ajax({
+			url : 'modifyRes',
+			type : 'post',
+			dataType : 'json',
+			data : {'userNo':userNo, 'resNo':resNo ,'ansC':ansC ,'ansEtc':ansEtc ,'ansK':ansK ,'ansM':ansM,'nowPageNum':nowPageNum },
+			success : function(data){
+				
+			}
+		})
+		
+		
 		$('#'+nowTag).css('display','none');
 		$('#'+nextTag).slideDown();
 	}
+	
+	// 만족도평가항목 보이기
+	function showHiddenTb(nowPageNum){
+		var nextNum = parseInt(nowPageNum)+1;
+		var nowTag = 'section'+nowPageNum;
+		var nextTag = 'section'+nextNum;
+		$('#'+nowTag).find('#hiddenTb').slideDown();
+	}
+	
+	//만족도평가항목 감추기
+	function hideHiddenTb(nowPageNum){
+		var nextNum = parseInt(nowPageNum)+1;
+		var nowTag = 'section'+nowPageNum;
+		var nextTag = 'section'+nextNum;
+		$('#'+nowTag).find('#hiddenTb').slideUp();
+	}
+	
 </script>
 </head>
 <body>
 <div class="container">
 	<h2 style="text-align:center;background-color:#F2CB61;;">학술정보 Glocal Master 양성 사업 만족도 및 수요조사</h2>
+	<input type="hidden" id="resNo" value="${res.resNo }"/>
+	<input type="hidden" id="userNo" value="${user.userNo }"/>
 	
 	<table style="padding:4px;border:1px solid #000000;" id="intro">
 		<tr>
@@ -69,7 +153,9 @@
 		</tr>
 	</table>
 	
+		
 	<div style="width:100%;display:none;" id="section1">
+		
 		<h4 class="cate">■ 교육프로그램 영역</h4>
 		<table style="padding:2px;border:1px solid #000000;width:100%;">
 			<tr>
@@ -79,19 +165,19 @@
 			<tr>
 				<td rowspan="4" style="text-align:center;border-right:1px solid #ddd;font-weight:bold;">글로벌<br/>역량<br/>영역</td>
 				<td colspan="2">
-					<font style="font-weight:bold;">기초역량 강화를 위한 비학점 교육프로그램</font><br/>(자체학습모임과 연계)
+					<font style="font-weight:bold;">기초역량 강화를 위한 비학점 교육프로그램</font><br/>
 				</td>
 			</tr>
 			<tr>
-				<td>1) 영어회화</td>
-				<td>2) 영문법 및 독해</td>
+				<td>1) 토익</td>
+				<td>2) 영어회화</td>
 			</tr>
 			<tr>
-				<td>3) 기초전공한자</td>
-				<td>4) 데이터베이스</td>
+				<td>3) 한국사 중급</td>
+				<td>4) 사무자동화산업기사</td>
 			</tr>
 			<tr>
-				<td>5) 정보처리기사</td>
+				<td colspan="2">5) 컴퓨터활용능력 2급</td>
 			</tr>
 		</table>
 		
@@ -101,8 +187,8 @@
 				<th>불참여</th>
 			</tr>
 			<tr>
-				<td class="radioTd"><input type="radio" name="q1c" value="y"/></td>
-				<td class="radioTd"><input type="radio" name="q1c" value="n"/></td>
+				<td class="radioTd"><input type="radio" name="q1c" value="1" onclick="showHiddenTb('1');"/></td>
+				<td class="radioTd"><input type="radio" name="q1c" value="2" onclick="hideHiddenTb('1')"/></td>
 			</tr>
 		</table>
 		
@@ -124,6 +210,8 @@
 				<td class="radioTd"><input type="radio" name="q1k" value="4"/></td>
 				<td class="radioTd"><input type="radio" name="q1k" value="5"/></td>
 			</tr>
+		</table>
+		<table id="hiddenTb" style="padding:2px;border:1px solid #000000;width:100%;display:none;">
 			<tr>
 				<th colspan="5">만족도</th>
 			</tr>
@@ -145,7 +233,7 @@
 		<table style="padding:2px;border:1px solid #000000;width:100%;">
 			<tr>
 				<td>
-					<textarea name="q1Etc" rows="5" style="width:99%;font-size:14px;" placeholder="교육프로그램에 불만족했다면 그 이유와 개선방안을 기술해 주세요!"></textarea>
+					<textarea id="q1Etc" rows="5" style="width:99%;font-size:14px;" placeholder="비학점 교육프로그램 분야에 불만족했다면 그 이유와 생각하는 개선방안을 기술해 주세요."></textarea>
 				</td>
 			</tr>			
 		</table>
@@ -164,7 +252,7 @@
 			<tr>
 				<td rowspan="4" style="text-align:center;border-right:1px solid #ddd;font-weight:bold;">진로/취업<br/>탐색영역</td>
 				<td>
-					<font style="font-weight:bold;">진로 적성검사 프로그램 실시 및 CA상담 진행</font><br/>(1,2학년 대상 실시)
+					<font style="font-weight:bold;">진로 적성검사 프로그램 실시 및 CA상담 진행</font><br/>(1학년 대상 실시)
 				</td>
 			</tr>
 		</table>
@@ -175,8 +263,8 @@
 				<th>불참여</th>
 			</tr>
 			<tr>
-				<td class="radioTd"><input type="radio" name="q2c" value="y"/></td>
-				<td class="radioTd"><input type="radio" name="q2c" value="n"/></td>
+				<td class="radioTd"><input type="radio" name="q2c" value="1" onclick="showHiddenTb('2');"/></td>
+				<td class="radioTd"><input type="radio" name="q2c" value="2" onclick="hideHiddenTb('2');"/></td>
 			</tr>
 		</table>
 		
@@ -198,6 +286,8 @@
 				<td class="radioTd"><input type="radio" name="q2k" value="4"/></td>
 				<td class="radioTd"><input type="radio" name="q2k" value="5"/></td>
 			</tr>
+		</table>
+		<table id="hiddenTb" style="padding:2px;border:1px solid #000000;width:100%;display:none;">
 			<tr>
 				<th colspan="5">만족도</th>
 			</tr>
@@ -230,7 +320,7 @@
 			<tr>
 				<td rowspan="4" style="text-align:center;border-right:1px solid #ddd;font-weight:bold;">진로/취업<br/>탐색영역</td>
 				<td>
-					<font style="font-weight:bold;">진로탐색을 위한 외부전문가 초청특강</font><br/>(진로탐색 시간을 활용, 총 5회 실시)
+					<font style="font-weight:bold;">진로탐색을 위한 외부전문가 초청특강</font><br/>(진로탐색 시간을 활용, 총 7회 실시)
 				</td>
 			</tr>
 		</table>
@@ -241,8 +331,8 @@
 				<th>불참여</th>
 			</tr>
 			<tr>
-				<td class="radioTd"><input type="radio" name="q3c" value="y"/></td>
-				<td class="radioTd"><input type="radio" name="q3c" value="n"/></td>
+				<td class="radioTd"><input type="radio" name="q3c" value="1" onclick="showHiddenTb('3');"/></td>
+				<td class="radioTd"><input type="radio" name="q3c" value="2" onclick="hideHiddenTb('3');"/></td>
 			</tr>
 		</table>
 		
@@ -264,6 +354,8 @@
 				<td class="radioTd"><input type="radio" name="q3k" value="4"/></td>
 				<td class="radioTd"><input type="radio" name="q3k" value="5"/></td>
 			</tr>
+		</table>
+		<table id="hiddenTb" style="padding:2px;border:1px solid #000000;width:100%;display:none;">
 			<tr>
 				<th colspan="5">만족도</th>
 			</tr>
@@ -296,7 +388,7 @@
 			<tr>
 				<td rowspan="4" style="text-align:center;border-right:1px solid #ddd;font-weight:bold;">진로/취업<br/>탐색영역</td>
 				<td>
-					<font style="font-weight:bold;">진로 및 취업정보 공유캠프(2차년도 신설)</font><br/>(11개 기관 전문가들을 통한 진로, 취업정보 공유)
+					<font style="font-weight:bold;">진로 및 취업정보 공유캠프</font><br/>(14개 기관 전문가들을 통한 진로, 취업정보 공유)
 				</td>
 			</tr>
 		</table>
@@ -307,8 +399,8 @@
 				<th>불참여</th>
 			</tr>
 			<tr>
-				<td class="radioTd"><input type="radio" name="q4c" value="y"/></td>
-				<td class="radioTd"><input type="radio" name="q4c" value="n"/></td>
+				<td class="radioTd"><input type="radio" name="q4c" value="1" onclick="showHiddenTb('4');"/></td>
+				<td class="radioTd"><input type="radio" name="q4c" value="2" onclick="hideHiddenTb('4');"/></td>
 			</tr>
 		</table>
 		
@@ -330,6 +422,8 @@
 				<td class="radioTd"><input type="radio" name="q4k" value="4"/></td>
 				<td class="radioTd"><input type="radio" name="q4k" value="5"/></td>
 			</tr>
+		</table>
+		<table id="hiddenTb" style="padding:2px;border:1px solid #000000;width:100%;display:none;">
 			<tr>
 				<th colspan="5">만족도</th>
 			</tr>
@@ -373,8 +467,8 @@
 				<th>불참여</th>
 			</tr>
 			<tr>
-				<td class="radioTd"><input type="radio" name="q5c" value="y"/></td>
-				<td class="radioTd"><input type="radio" name="q5c" value="n"/></td>
+				<td class="radioTd"><input type="radio" name="q5c" value="1" onclick="showHiddenTb('5');"/></td>
+				<td class="radioTd"><input type="radio" name="q5c" value="2" onclick="hideHiddenTb('5');"/></td>
 			</tr>
 		</table>
 		
@@ -396,6 +490,8 @@
 				<td class="radioTd"><input type="radio" name="q5k" value="4"/></td>
 				<td class="radioTd"><input type="radio" name="q5k" value="5"/></td>
 			</tr>
+		</table>
+		<table id="hiddenTb" style="padding:2px;border:1px solid #000000;width:100%;display:none;">
 			<tr>
 				<th colspan="5">만족도</th>
 			</tr>
@@ -428,7 +524,7 @@
 			<tr>
 				<td rowspan="4" style="text-align:center;border-right:1px solid #ddd;font-weight:bold;">진로/취업<br/>탐색영역</td>
 				<td colspan="2">
-					<font style="font-weight:bold;">산업체 인턴십 확대를 위한 산학연 협력 협약 체결</font><br/>(3개 기관 MOU 체결완료 - 한국정보화진흥원, 지방행정연수원 도서관, (주)올포유)
+					<font style="font-weight:bold;">산업체 인턴십 확대를 위한 산학연 협력 협약 체결</font><br/>: 2017년도 2개 기관 MOU 체결 완료<br/>- (주)그린이펙트솔루션<br/>- (주)원트리즈뮤직
 				</td>
 			</tr>
 		</table>
@@ -439,8 +535,8 @@
 				<th>불참여</th>
 			</tr>
 			<tr>
-				<td class="radioTd"><input type="radio" name="q6c" value="y"/></td>
-				<td class="radioTd"><input type="radio" name="q6c" value="n"/></td>
+				<td class="radioTd"><input type="radio" name="q6c" value="1" onclick="showHiddenTb('6');"/></td>
+				<td class="radioTd"><input type="radio" name="q6c" value="2" onclick="hideHiddenTb('6');"/></td>
 			</tr>
 		</table>
 		
@@ -462,6 +558,8 @@
 				<td class="radioTd"><input type="radio" name="q6k" value="4"/></td>
 				<td class="radioTd"><input type="radio" name="q6k" value="5"/></td>
 			</tr>
+		</table>
+		<table id="hiddenTb" style="padding:2px;border:1px solid #000000;width:100%;display:none;">
 			<tr>
 				<th colspan="5">만족도</th>
 			</tr>
@@ -483,7 +581,7 @@
 		<table style="padding:2px;border:1px solid #000000;width:100%;">
 			<tr>
 				<td>
-					<textarea name="q2Etc" rows="5" style="width:99%;font-size:14px;" placeholder="진로/취업 분야에 불만족했다면 그 이유와 개선방안을 기술해 주세요!"></textarea>
+					<textarea id="q6Etc" rows="5" style="width:99%;font-size:14px;" placeholder="진로/취업 분야에 불만족했다면 그 이유와 개선방안을 기술해 주세요."></textarea>
 				</td>
 			</tr>			
 		</table>
@@ -501,7 +599,7 @@
 			<tr>
 				<td rowspan="4" style="text-align:center;border-right:1px solid #ddd;font-weight:bold;">전공특성화<br/>영역</td>
 				<td>
-					<font style="font-weight:bold;">특성화 교과목 신설 및 운영</font><br/>(2차년도 1,2학기 진행)<br/>- 1학년 : 정보공유의 이해<br/>- 2학년 : 학술정보와 오픈액세스, 정보공유와M<br/>- 3학년 : MARC와 RDA, 정보공유와 LOC, LOD 구축실습<br/>- 4학년 : LOD 정보서비스, 캡스톤 디자인
+					<font style="font-weight:bold;">특성화 관련 팀 프로젝트 과제 수행</font><br/>(1,2학기에 8개 팀 프로젝트 운영)
 				</td>
 			</tr>
 		</table>
@@ -512,8 +610,8 @@
 				<th>불참여</th>
 			</tr>
 			<tr>
-				<td class="radioTd"><input type="radio" name="q7c" value="y"/></td>
-				<td class="radioTd"><input type="radio" name="q7c" value="n"/></td>
+				<td class="radioTd"><input type="radio" name="q7c" value="1" onclick="showHiddenTb('7');"/></td>
+				<td class="radioTd"><input type="radio" name="q7c" value="2" onclick="hideHiddenTb('7');"/></td>
 			</tr>
 		</table>
 		
@@ -535,6 +633,8 @@
 				<td class="radioTd"><input type="radio" name="q7k" value="4"/></td>
 				<td class="radioTd"><input type="radio" name="q7k" value="5"/></td>
 			</tr>
+		</table>
+		<table id="hiddenTb" style="padding:2px;border:1px solid #000000;width:100%;display:none;">
 			<tr>
 				<th colspan="5">만족도</th>
 			</tr>
@@ -567,7 +667,7 @@
 			<tr>
 				<td rowspan="4" style="text-align:center;border-right:1px solid #ddd;font-weight:bold;">전공특성화<br/>영역</td>
 				<td>
-					<font style="font-weight:bold;">특성화 관련 팀 프로젝트 과제 수행</font><br/>(2학기에 5개 팀 프로젝트 운영)
+					<font style="font-weight:bold;">정보공유 및 LOD캠프 개최 – 4학년 대상</font><br/>(도서관 빅데이터 기반의 의사결정 과학화와 자동화)
 				</td>
 			</tr>
 		</table>
@@ -578,8 +678,8 @@
 				<th>불참여</th>
 			</tr>
 			<tr>
-				<td class="radioTd"><input type="radio" name="q8c" value="y"/></td>
-				<td class="radioTd"><input type="radio" name="q8c" value="n"/></td>
+				<td class="radioTd"><input type="radio" name="q8c" value="1" onclick="showHiddenTb('8');"/></td>
+				<td class="radioTd"><input type="radio" name="q8c" value="2" onclick="hideHiddenTb('8');"/></td>
 			</tr>
 		</table>
 		
@@ -601,6 +701,8 @@
 				<td class="radioTd"><input type="radio" name="q8k" value="4"/></td>
 				<td class="radioTd"><input type="radio" name="q8k" value="5"/></td>
 			</tr>
+		</table>
+		<table id="hiddenTb" style="padding:2px;border:1px solid #000000;width:100%;display:none;">
 			<tr>
 				<th colspan="5">만족도</th>
 			</tr>
@@ -633,7 +735,7 @@
 			<tr>
 				<td rowspan="4" style="text-align:center;border-right:1px solid #ddd;font-weight:bold;">전공특성화<br/>영역</td>
 				<td>
-					<font style="font-weight:bold;">정보공유 및 LOD캠프 개최  - 1학년 대상</font><br/>(공유저작물 활용, 나눔, 서비스)
+					<font style="font-weight:bold;">국내 기관 견학 프로그램 운영</font><br/>(세종국립도서관, 대통령기록관, 국립중앙도서관, 제천기적의도서관, 국립한글박물관, 합천해인사)
 				</td>
 			</tr>
 		</table>
@@ -644,8 +746,8 @@
 				<th>불참여</th>
 			</tr>
 			<tr>
-				<td class="radioTd"><input type="radio" name="q9c" value="y"/></td>
-				<td class="radioTd"><input type="radio" name="q9c" value="n"/></td>
+				<td class="radioTd"><input type="radio" name="q9c" value="1" onclick="showHiddenTb('9');"/></td>
+				<td class="radioTd"><input type="radio" name="q9c" value="2" onclick="hideHiddenTb('9');"/></td>
 			</tr>
 		</table>
 		
@@ -667,6 +769,8 @@
 				<td class="radioTd"><input type="radio" name="q9k" value="4"/></td>
 				<td class="radioTd"><input type="radio" name="q9k" value="5"/></td>
 			</tr>
+		</table>
+		<table id="hiddenTb" style="padding:2px;border:1px solid #000000;width:100%;display:none;">
 			<tr>
 				<th colspan="5">만족도</th>
 			</tr>
@@ -699,7 +803,7 @@
 			<tr>
 				<td rowspan="4" style="text-align:center;border-right:1px solid #ddd;font-weight:bold;">전공특성화<br/>영역</td>
 				<td>
-					<font style="font-weight:bold;">국내 기관 견학 프로그램 운영</font><br/>(세종국립도서관, 정부세종청사, 국립중앙도서관, 정독도서관, 네이버도서관, 느티나무도서관, 파주 출판단지)
+					<font style="font-weight:bold;">국외 기관 견학 프로그램</font><br/>(대만 기관 연수 체험)
 				</td>
 			</tr>
 		</table>
@@ -710,8 +814,8 @@
 				<th>불참여</th>
 			</tr>
 			<tr>
-				<td class="radioTd"><input type="radio" name="q10c" value="y"/></td>
-				<td class="radioTd"><input type="radio" name="q10c" value="n"/></td>
+				<td class="radioTd"><input type="radio" name="q10c" value="1" onclick="showHiddenTb('10');"/></td>
+				<td class="radioTd"><input type="radio" name="q10c" value="2" onclick="hideHiddenTb('10');"/></td>
 			</tr>
 		</table>
 		
@@ -733,6 +837,8 @@
 				<td class="radioTd"><input type="radio" name="q10k" value="4"/></td>
 				<td class="radioTd"><input type="radio" name="q10k" value="5"/></td>
 			</tr>
+		</table>
+		<table id="hiddenTb" style="padding:2px;border:1px solid #000000;width:100%;display:none;">
 			<tr>
 				<th colspan="5">만족도</th>
 			</tr>
@@ -760,12 +866,12 @@
 		<table style="padding:2px;border:1px solid #000000;width:100%;">
 			<tr>
 				<th>영역</th>
-				<th>내용</th>
+				<th colspan="2">내용</th>
 			</tr>
 			<tr>
 				<td rowspan="4" style="text-align:center;border-right:1px solid #ddd;font-weight:bold;">전공특성화<br/>영역</td>
-				<td>
-					<font style="font-weight:bold;">국외 기관 견학 프로그램</font><br/>(싱가포르 기관 연수 체험)
+				<td colspan="2">
+					<font style="font-weight:bold;">특성화 역량 개발을 위한 특성화동아리 운영</font><br/>(마따호세프, 도약)
 				</td>
 			</tr>
 		</table>
@@ -776,8 +882,8 @@
 				<th>불참여</th>
 			</tr>
 			<tr>
-				<td class="radioTd"><input type="radio" name="q11c" value="y"/></td>
-				<td class="radioTd"><input type="radio" name="q11c" value="n"/></td>
+				<td class="radioTd"><input type="radio" name="q11c" value="1" onclick="showHiddenTb('11');"/></td>
+				<td class="radioTd"><input type="radio" name="q11c" value="2" onclick="hideHiddenTb('11');"/></td>
 			</tr>
 		</table>
 		
@@ -799,6 +905,8 @@
 				<td class="radioTd"><input type="radio" name="q11k" value="4"/></td>
 				<td class="radioTd"><input type="radio" name="q11k" value="5"/></td>
 			</tr>
+		</table>
+		<table id="hiddenTb" style="padding:2px;border:1px solid #000000;width:100%;display:none;">
 			<tr>
 				<th colspan="5">만족도</th>
 			</tr>
@@ -817,8 +925,15 @@
 				<td class="radioTd"><input type="radio" name="q11m" value="5"/></td>
 			</tr>
 		</table>
+		<table style="padding:2px;border:1px solid #000000;width:100%;">
+			<tr>
+				<td>
+					<textarea id="q11Etc" rows="5" style="width:99%;font-size:14px;" placeholder="전공특성화 분야에 불만족했다면 그 이유와 개선방안을 기술해 주세요."></textarea>
+				</td>
+			</tr>			
+		</table>
 		<br/>
-		<button type="button" onclick="nextQuestion('11');" style="border-radius:4px;width:100%;background-color:#F2CB61;height:30px;font-weight:bold;font-size:16px;">다음</button>
+		<button type="button" onclick="nextQuestion('11');" style="border-radius:4px;width:100%;background-color:#F2CB61;height:30px;font-weight:bold;font-size:16px;">다음</button>				
 	</div>
 	
 	<div style="width:100%;display:none;" id="section12">
@@ -826,12 +941,12 @@
 		<table style="padding:2px;border:1px solid #000000;width:100%;">
 			<tr>
 				<th>영역</th>
-				<th colspan="2">내용</th>
+				<th>내용</th>
 			</tr>
 			<tr>
-				<td rowspan="4" style="text-align:center;border-right:1px solid #ddd;font-weight:bold;">전공특성화<br/>영역</td>
-				<td colspan="2">
-					<font style="font-weight:bold;">특성화 역량 개발을 위한 특성화동아리 운영</font><br/>(마따호세프, 도약)
+				<td rowspan="4" style="text-align:center;border-right:1px solid #ddd;font-weight:bold;">학생활동<br/>영역</td>
+				<td>
+					<font style="font-weight:bold;">선후배간의 소통 및 전공학습 멘토링</font><br/>(멘토1인, 멘티6인으로 구성, 멘토 장학금 지급)<br/>(1학기에 4팀, 2학기 4팀 총 8팀 운영)
 				</td>
 			</tr>
 		</table>
@@ -842,8 +957,8 @@
 				<th>불참여</th>
 			</tr>
 			<tr>
-				<td class="radioTd"><input type="radio" name="q12c" value="y"/></td>
-				<td class="radioTd"><input type="radio" name="q12c" value="n"/></td>
+				<td class="radioTd"><input type="radio" name="q12c" value="1" onclick="showHiddenTb('12');"/></td>
+				<td class="radioTd"><input type="radio" name="q12c" value="2" onclick="hideHiddenTb('12');"/></td>
 			</tr>
 		</table>
 		
@@ -865,6 +980,8 @@
 				<td class="radioTd"><input type="radio" name="q12k" value="4"/></td>
 				<td class="radioTd"><input type="radio" name="q12k" value="5"/></td>
 			</tr>
+		</table>
+		<table id="hiddenTb" style="padding:2px;border:1px solid #000000;width:100%;display:none;">
 			<tr>
 				<th colspan="5">만족도</th>
 			</tr>
@@ -883,15 +1000,8 @@
 				<td class="radioTd"><input type="radio" name="q12m" value="5"/></td>
 			</tr>
 		</table>
-		<table style="padding:2px;border:1px solid #000000;width:100%;">
-			<tr>
-				<td>
-					<textarea name="q3Etc" rows="5" style="width:99%;font-size:14px;" placeholder="전공특성화 분야에 불만족했다면 그 이유와 개선방안을 기술해 주세요!"></textarea>
-				</td>
-			</tr>			
-		</table>
 		<br/>
-		<button type="button" onclick="nextQuestion('12');" style="border-radius:4px;width:100%;background-color:#F2CB61;height:30px;font-weight:bold;font-size:16px;">다음</button>				
+		<button type="button" onclick="nextQuestion('12');" style="border-radius:4px;width:100%;background-color:#F2CB61;height:30px;font-weight:bold;font-size:16px;">다음</button>
 	</div>
 	
 	<div style="width:100%;display:none;" id="section13">
@@ -904,7 +1014,7 @@
 			<tr>
 				<td rowspan="4" style="text-align:center;border-right:1px solid #ddd;font-weight:bold;">학생활동<br/>영역</td>
 				<td>
-					<font style="font-weight:bold;">선후배간의 소통 및 전공학습 멘토링</font><br/>(전공학습 개념 추가)<br/>(멘토1인, 멘티6인으로 구성, 멘토 장학금 지급)
+					<font style="font-weight:bold;">자체학습모임 활동</font><br/>(4개의 팀으로 자발적인 학습모임 진행)<br/>(E-PLUS, LOC, LST, 한국사스터디)
 				</td>
 			</tr>
 		</table>
@@ -915,8 +1025,8 @@
 				<th>불참여</th>
 			</tr>
 			<tr>
-				<td class="radioTd"><input type="radio" name="q13c" value="y"/></td>
-				<td class="radioTd"><input type="radio" name="q13c" value="n"/></td>
+				<td class="radioTd"><input type="radio" name="q13c" value="1" onclick="showHiddenTb('13');"/></td>
+				<td class="radioTd"><input type="radio" name="q13c" value="2" onclick="hideHiddenTb('13');"/></td>
 			</tr>
 		</table>
 		
@@ -938,6 +1048,8 @@
 				<td class="radioTd"><input type="radio" name="q13k" value="4"/></td>
 				<td class="radioTd"><input type="radio" name="q13k" value="5"/></td>
 			</tr>
+		</table>
+		<table id="hiddenTb" style="padding:2px;border:1px solid #000000;width:100%;display:none;">
 			<tr>
 				<th colspan="5">만족도</th>
 			</tr>
@@ -965,12 +1077,12 @@
 		<table style="padding:2px;border:1px solid #000000;width:100%;">
 			<tr>
 				<th>영역</th>
-				<th>내용</th>
+				<th colspan="2">내용</th>
 			</tr>
 			<tr>
 				<td rowspan="4" style="text-align:center;border-right:1px solid #ddd;font-weight:bold;">학생활동<br/>영역</td>
-				<td>
-					<font style="font-weight:bold;">자체학습모임 활동</font><br/>(4개의 팀으로 자발적인 학습모임 진행)<br/>(LST, LOC, 교학상장, 영어스터디)
+				<td colspan="2">
+					<font style="font-weight:bold;">사회실천 봉사활동</font><br/>(책마루 도서관, 지방자치인재개발원 도서관, 개골개골 도서관, 독서문화한마당)
 				</td>
 			</tr>
 		</table>
@@ -981,8 +1093,8 @@
 				<th>불참여</th>
 			</tr>
 			<tr>
-				<td class="radioTd"><input type="radio" name="q14c" value="y"/></td>
-				<td class="radioTd"><input type="radio" name="q14c" value="n"/></td>
+				<td class="radioTd"><input type="radio" name="q14c" value="1" onclick="showHiddenTb('14');"/></td>
+				<td class="radioTd"><input type="radio" name="q14c" value="2" onclick="hideHiddenTb('14');"/></td>
 			</tr>
 		</table>
 		
@@ -1004,6 +1116,8 @@
 				<td class="radioTd"><input type="radio" name="q14k" value="4"/></td>
 				<td class="radioTd"><input type="radio" name="q14k" value="5"/></td>
 			</tr>
+		</table>
+		<table id="hiddenTb" style="padding:2px;border:1px solid #000000;width:100%;display:none;">
 			<tr>
 				<th colspan="5">만족도</th>
 			</tr>
@@ -1022,36 +1136,31 @@
 				<td class="radioTd"><input type="radio" name="q14m" value="5"/></td>
 			</tr>
 		</table>
+		<table style="padding:2px;border:1px solid #000000;width:100%;">
+			<tr>
+				<td>
+					<textarea id="q14Etc" rows="5" style="width:99%;font-size:14px;" placeholder="학생활동 분야에 불만족했다면 그 이유와 개선방안을 기술해 주세요."></textarea>
+				</td>
+			</tr>			
+		</table>
 		<br/>
-		<button type="button" onclick="nextQuestion('14');" style="border-radius:4px;width:100%;background-color:#F2CB61;height:30px;font-weight:bold;font-size:16px;">다음</button>
+		<button type="button" onclick="nextQuestion('14');" style="border-radius:4px;width:100%;background-color:#F2CB61;height:30px;font-weight:bold;font-size:16px;">다음</button>				
 	</div>
 	
 	<div style="width:100%;display:none;" id="section15">
-		<h4 class="cate">■ 교육프로그램 영역</h4>
+		<h4 class="cate">■ 교육환경 개선 영역</h4>
 		<table style="padding:2px;border:1px solid #000000;width:100%;">
 			<tr>
 				<th>영역</th>
-				<th colspan="2">내용</th>
+				<th>내용</th>
 			</tr>
 			<tr>
-				<td rowspan="4" style="text-align:center;border-right:1px solid #ddd;font-weight:bold;">학생활동<br/>영역</td>
-				<td colspan="2">
-					<font style="font-weight:bold;">사회실천 봉사활동</font><br/>(국립장애인도서관, 온빛중학교 도서관, 개골개골 어린이도서관, 지방행정연수원 도서관)
+				<td rowspan="4" style="text-align:center;border-right:1px solid #ddd;font-weight:bold;">전공실습<br/>환경개선</td>
+				<td>
+					<font style="font-weight:bold;">-학과 전용 전공실습실(407호)구축 및 체계적 운영<br/>-실습실 TV모니터 2대 확충, 프린터기 1대 등(2017년도 신설)</font>
 				</td>
 			</tr>
 		</table>
-		
-		<table style="padding:2px;border:1px solid #000000;width:100%;">
-			<tr>
-				<th>참여</th>
-				<th>불참여</th>
-			</tr>
-			<tr>
-				<td class="radioTd"><input type="radio" name="q15c" value="y"/></td>
-				<td class="radioTd"><input type="radio" name="q15c" value="n"/></td>
-			</tr>
-		</table>
-		
 		<table style="padding:2px;border:1px solid #000000;width:100%;">
 			<tr>
 				<th colspan="5">기대도</th>
@@ -1070,6 +1179,7 @@
 				<td class="radioTd"><input type="radio" name="q15k" value="4"/></td>
 				<td class="radioTd"><input type="radio" name="q15k" value="5"/></td>
 			</tr>
+
 			<tr>
 				<th colspan="5">만족도</th>
 			</tr>
@@ -1088,28 +1198,21 @@
 				<td class="radioTd"><input type="radio" name="q15m" value="5"/></td>
 			</tr>
 		</table>
-		<table style="padding:2px;border:1px solid #000000;width:100%;">
-			<tr>
-				<td>
-					<textarea name="q4Etc" rows="5" style="width:99%;font-size:14px;" placeholder="학생활동 분야에 불만족했다면 그 이유와 개선방안을 기술해 주세요!"></textarea>
-				</td>
-			</tr>			
-		</table>
 		<br/>
-		<button type="button" onclick="nextQuestion('15');" style="border-radius:4px;width:100%;background-color:#F2CB61;height:30px;font-weight:bold;font-size:16px;">다음</button>				
+		<button type="button" onclick="nextQuestion('15');" style="border-radius:4px;width:100%;background-color:#F2CB61;height:30px;font-weight:bold;font-size:16px;">다음</button>
 	</div>
 	
 	<div style="width:100%;display:none;" id="section16">
-		<h4 class="cate">■ 교육환경 개선 영역</h4>
+		<h4 class="cate">■ 교육 환경 개선 영역</h4>
 		<table style="padding:2px;border:1px solid #000000;width:100%;">
 			<tr>
 				<th>영역</th>
-				<th>내용</th>
+				<th colspan="2">내용</th>
 			</tr>
 			<tr>
 				<td rowspan="4" style="text-align:center;border-right:1px solid #ddd;font-weight:bold;">전공실습<br/>환경개선</td>
-				<td>
-					<font style="font-weight:bold;">-학과 전용 전공실습실(407호)구축 및 체계적 운영<br/>-실습실 TV모니터 2대 확충, 프린터기 1대 등(3차년도 신설)</font>
+				<td colspan="2">
+					<font style="font-weight:bold;">-도서관자동화프로그램을 활용한 실습환경 마련 및 운영<br/>※ LAS는 도서관자동화시스템으로 사서들이 도서관 업무를 할 때 사용하는 소프트웨어임. 2017년도에 도입함으로써 전공교과과정 중 도서관업무관련 실습환경을 강화함</font>
 				</td>
 			</tr>
 		</table>
@@ -1149,21 +1252,28 @@
 				<td class="radioTd"><input type="radio" name="q16m" value="5"/></td>
 			</tr>
 		</table>
+		<table style="padding:2px;border:1px solid #000000;width:100%;">
+			<tr>
+				<td>
+					<textarea id="q16Etc" rows="5" style="width:99%;font-size:14px;" placeholder="전공실습환경 분야에 불만족했다면 그 이유와 개선방안을 기술해 주세요."></textarea>
+				</td>
+			</tr>			
+		</table>
 		<br/>
-		<button type="button" onclick="nextQuestion('16');" style="border-radius:4px;width:100%;background-color:#F2CB61;height:30px;font-weight:bold;font-size:16px;">다음</button>
+		<button type="button" onclick="nextQuestion('16');" style="border-radius:4px;width:100%;background-color:#F2CB61;height:30px;font-weight:bold;font-size:16px;">다음</button>				
 	</div>
 	
 	<div style="width:100%;display:none;" id="section17">
-		<h4 class="cate">■ 교육 환경 개선 영역</h4>
+		<h4 class="cate">■ 교육환경 개선 영역</h4>
 		<table style="padding:2px;border:1px solid #000000;width:100%;">
 			<tr>
 				<th>영역</th>
-				<th colspan="2">내용</th>
+				<th>내용</th>
 			</tr>
 			<tr>
-				<td rowspan="4" style="text-align:center;border-right:1px solid #ddd;font-weight:bold;">전공특성화<br/>영역</td>
-				<td colspan="2">
-					<font style="font-weight:bold;">LAS 실습환경 구축(3차년도 신설)</font>
+				<td rowspan="4" style="text-align:center;border-right:1px solid #ddd;font-weight:bold;">행정지원</td>
+				<td>
+					<font style="font-weight:bold;">특성화 사업 행정지원 전담인력 운영</font><br/>(전담직원 1명, 전담조교 1명)
 				</td>
 			</tr>
 		</table>
@@ -1203,28 +1313,21 @@
 				<td class="radioTd"><input type="radio" name="q17m" value="5"/></td>
 			</tr>
 		</table>
-		<table style="padding:2px;border:1px solid #000000;width:100%;">
-			<tr>
-				<td>
-					<textarea name="q5Etc" rows="5" style="width:99%;font-size:14px;" placeholder="전공실습환경 분야에 불만족했다면 그 이유와 개선방안을 기술해 주세요!"></textarea>
-				</td>
-			</tr>			
-		</table>
 		<br/>
-		<button type="button" onclick="nextQuestion('17');" style="border-radius:4px;width:100%;background-color:#F2CB61;height:30px;font-weight:bold;font-size:16px;">다음</button>				
+		<button type="button" onclick="nextQuestion('17');" style="border-radius:4px;width:100%;background-color:#F2CB61;height:30px;font-weight:bold;font-size:16px;">다음</button>
 	</div>
 	
 	<div style="width:100%;display:none;" id="section18">
-		<h4 class="cate">■ 교육환경 개선 영역</h4>
+		<h4 class="cate">■ 교육 환경 개선 영역</h4>
 		<table style="padding:2px;border:1px solid #000000;width:100%;">
 			<tr>
 				<th>영역</th>
-				<th>내용</th>
+				<th colspan="2">내용</th>
 			</tr>
 			<tr>
 				<td rowspan="4" style="text-align:center;border-right:1px solid #ddd;font-weight:bold;">행정지원</td>
-				<td>
-					<font style="font-weight:bold;">특성화 사업 행정지원 전담인력 운영</font><br/>(전담직원 1명, 전담조교 1명)
+				<td colspan="2">
+					<font style="font-weight:bold;">근로 장학생 운영을 통한 행정지원 및 실습(2명)</font>
 				</td>
 			</tr>
 		</table>
@@ -1264,21 +1367,28 @@
 				<td class="radioTd"><input type="radio" name="q18m" value="5"/></td>
 			</tr>
 		</table>
+		<table style="padding:2px;border:1px solid #000000;width:100%;">
+			<tr>
+				<td>
+					<textarea id="q18Etc" rows="5" style="width:99%;font-size:14px;" placeholder="행정지원 분야에 불만족했다면 그 이유와 개선방안을 기술해 주세요."></textarea>
+				</td>
+			</tr>			
+		</table>
 		<br/>
-		<button type="button" onclick="nextQuestion('18');" style="border-radius:4px;width:100%;background-color:#F2CB61;height:30px;font-weight:bold;font-size:16px;">다음</button>
+		<button type="button" onclick="nextQuestion('18');" style="border-radius:4px;width:100%;background-color:#F2CB61;height:30px;font-weight:bold;font-size:16px;">다음</button>				
 	</div>
 	
 	<div style="width:100%;display:none;" id="section19">
-		<h4 class="cate">■ 교육 환경 개선 영역</h4>
+		<h4 class="cate">■ 교육환경 개선 영역</h4>
 		<table style="padding:2px;border:1px solid #000000;width:100%;">
 			<tr>
 				<th>영역</th>
-				<th colspan="2">내용</th>
+				<th>내용</th>
 			</tr>
 			<tr>
-				<td rowspan="4" style="text-align:center;border-right:1px solid #ddd;font-weight:bold;">행정지원</td>
-				<td colspan="2">
-					<font style="font-weight:bold;">근로 장학생 운영을 통한 행정지원 및 실습(1명)</font>
+				<td rowspan="4" style="text-align:center;border-right:1px solid #ddd;font-weight:bold;">재정지원</td>
+				<td>
+					<font style="font-weight:bold;">특성화동아리/자체학습동아리/전공학습멘토링/팀프로젝트/사회봉사실천활동 등에 대한 운영비 지원</font>
 				</td>
 			</tr>
 		</table>
@@ -1318,28 +1428,21 @@
 				<td class="radioTd"><input type="radio" name="q19m" value="5"/></td>
 			</tr>
 		</table>
-		<table style="padding:2px;border:1px solid #000000;width:100%;">
-			<tr>
-				<td>
-					<textarea name="q6Etc" rows="5" style="width:99%;font-size:14px;" placeholder="행정지원 분야에 불만족했다면 그 이유와 개선방안을 기술해 주세요!"></textarea>
-				</td>
-			</tr>			
-		</table>
 		<br/>
-		<button type="button" onclick="nextQuestion('19');" style="border-radius:4px;width:100%;background-color:#F2CB61;height:30px;font-weight:bold;font-size:16px;">다음</button>				
+		<button type="button" onclick="nextQuestion('19');" style="border-radius:4px;width:100%;background-color:#F2CB61;height:30px;font-weight:bold;font-size:16px;">다음</button>
 	</div>
 	
 	<div style="width:100%;display:none;" id="section20">
-		<h4 class="cate">■ 교육환경 개선 영역</h4>
+		<h4 class="cate">■ 교육 환경 개선 영역</h4>
 		<table style="padding:2px;border:1px solid #000000;width:100%;">
 			<tr>
 				<th>영역</th>
-				<th>내용</th>
+				<th colspan="2">내용</th>
 			</tr>
 			<tr>
 				<td rowspan="4" style="text-align:center;border-right:1px solid #ddd;font-weight:bold;">재정지원</td>
-				<td>
-					<font style="font-weight:bold;">특성화동아리/자체학습동아리/전공학습멘토링/팀프로젝트/사회실천봉사활동 등에 대한 운영비 지원</font>
+				<td colspan="2">
+					<font style="font-weight:bold;">국내외 견학 및 체험프로그램 운영비 지원</font><br/>(국외의 경우 대만 1인당 152만원)
 				</td>
 			</tr>
 		</table>
@@ -1379,21 +1482,28 @@
 				<td class="radioTd"><input type="radio" name="q20m" value="5"/></td>
 			</tr>
 		</table>
+		<table style="padding:2px;border:1px solid #000000;width:100%;">
+			<tr>
+				<td>
+					<textarea id="q20Etc" rows="5" style="width:99%;font-size:14px;" placeholder="재정지원 분야에 불만족했다면 그 이유와 개선방안을 기술해 주세요."></textarea>
+				</td>
+			</tr>			
+		</table>
 		<br/>
-		<button type="button" onclick="nextQuestion('20');" style="border-radius:4px;width:100%;background-color:#F2CB61;height:30px;font-weight:bold;font-size:16px;">다음</button>
+		<button type="button" onclick="nextQuestion('20');" style="border-radius:4px;width:100%;background-color:#F2CB61;height:30px;font-weight:bold;font-size:16px;">다음</button>				
 	</div>
 	
 	<div style="width:100%;display:none;" id="section21">
-		<h4 class="cate">■ 교육 환경 개선 영역</h4>
+		<h4 class="cate">■ 홍보 및 만족도 영역</h4>
 		<table style="padding:2px;border:1px solid #000000;width:100%;">
 			<tr>
 				<th>영역</th>
-				<th colspan="2">내용</th>
+				<th>내용</th>
 			</tr>
 			<tr>
-				<td rowspan="4" style="text-align:center;border-right:1px solid #ddd;font-weight:bold;">재정지원</td>
-				<td colspan="2">
-					<font style="font-weight:bold;">국내외 견학 및 체험프로그램 운영비 지원</font><br/>(국외의 경우 싱가포르 연수 1인당 159만원 지원)
+				<td rowspan="4" style="text-align:center;border-right:1px solid #ddd;font-weight:bold;">홍보영역</td>
+				<td>
+					<font style="font-weight:bold;">특성화 교육프로그램 및 교육활동에 대한 학생 대상 공지 및 안내</font><br/>(게시판, 카카오톡, 홍보 리플릿 배포 등)
 				</td>
 			</tr>
 		</table>
@@ -1415,6 +1525,7 @@
 				<td class="radioTd"><input type="radio" name="q21k" value="4"/></td>
 				<td class="radioTd"><input type="radio" name="q21k" value="5"/></td>
 			</tr>
+		
 			<tr>
 				<th colspan="5">만족도</th>
 			</tr>
@@ -1436,12 +1547,12 @@
 		<table style="padding:2px;border:1px solid #000000;width:100%;">
 			<tr>
 				<td>
-					<textarea name="q7Etc" rows="5" style="width:99%;font-size:14px;" placeholder="재정지원 분야에 불만족했다면 그 이유와 개선방안을 기술해 주세요!"></textarea>
+					<textarea id="q21Etc" rows="5" style="width:99%;font-size:14px;" placeholder="홍보 분야에 불만족했다면 그 이유와 생각하는 개선방안을 기술해 주세요."></textarea>
 				</td>
 			</tr>			
 		</table>
 		<br/>
-		<button type="button" onclick="nextQuestion('21');" style="border-radius:4px;width:100%;background-color:#F2CB61;height:30px;font-weight:bold;font-size:16px;">다음</button>				
+		<button type="button" onclick="nextQuestion('21');" style="border-radius:4px;width:100%;background-color:#F2CB61;height:30px;font-weight:bold;font-size:16px;">다음</button>
 	</div>
 	
 	<div style="width:100%;display:none;" id="section22">
@@ -1452,9 +1563,9 @@
 				<th>내용</th>
 			</tr>
 			<tr>
-				<td rowspan="4" style="text-align:center;border-right:1px solid #ddd;font-weight:bold;">홍보영역</td>
+				<td rowspan="4" style="text-align:center;border-right:1px solid #ddd;font-weight:bold;">만족도영역</td>
 				<td>
-					<font style="font-weight:bold;">특성화 사업에 대한 사업설명회</font><br/>(2학기 : 1학년 학부모 초청 사업설명회)
+					<font style="font-weight:bold;">세부 프로그램 종료할 때 마다 참여 학생의 만족도조사 실시</font><br/>(예 : 전문가초청특강 종료 후 학생 만족도 조사)
 				</td>
 			</tr>
 		</table>
@@ -1506,9 +1617,9 @@
 				<th colspan="2">내용</th>
 			</tr>
 			<tr>
-				<td rowspan="4" style="text-align:center;border-right:1px solid #ddd;font-weight:bold;">홍보영역</td>
+				<td rowspan="4" style="text-align:center;border-right:1px solid #ddd;font-weight:bold;">만족도영역</td>
 				<td colspan="2">
-					<font style="font-weight:bold;">특성화 교육프로그램 및 교육활동에 대한 학생 대상 공지 및 안내</font><br/>(게시판, 카카오톡, 홍보 리플릿 배포 등)
+					<font style="font-weight:bold;">특성화 종료 시 학과 전체 학생의 만족도 조사 실시</font>
 				</td>
 			</tr>
 		</table>
@@ -1551,7 +1662,7 @@
 		<table style="padding:2px;border:1px solid #000000;width:100%;">
 			<tr>
 				<td>
-					<textarea name="q8Etc" rows="5" style="width:99%;font-size:14px;" placeholder="홍보 분야에 불만족했다면 그 이유와 개선방안을 기술해 주세요!"></textarea>
+					<textarea id="q23Etc" rows="5" style="width:99%;font-size:14px;" placeholder="만족도 분야에 불만족했다면 그 이유와 개선방안을 기술해 주세요."></textarea>
 				</td>
 			</tr>			
 		</table>
@@ -1560,16 +1671,16 @@
 	</div>
 	
 	<div style="width:100%;display:none;" id="section24">
-		<h4 class="cate">■ 홍보 및 만족도 영역</h4>
+		<h4 class="cate">■ 평가 및 장학금 영역</h4>
 		<table style="padding:2px;border:1px solid #000000;width:100%;">
 			<tr>
 				<th>영역</th>
 				<th>내용</th>
 			</tr>
 			<tr>
-				<td rowspan="4" style="text-align:center;border-right:1px solid #ddd;font-weight:bold;">만족도영역</td>
+				<td rowspan="4" style="text-align:center;border-right:1px solid #ddd;font-weight:bold;">평가영역</td>
 				<td>
-					<font style="font-weight:bold;">세부 프로그램 종료할 때 마다 참여 학생의 만족도조사 실시</font><br/>(예 : 전문가초청특강 종료 후 학생 만족도 조사)
+					<font style="font-weight:bold;">참여 프로그램 종료 시 결과보고서 작성 및 제출</font>
 				</td>
 			</tr>
 		</table>
@@ -1614,16 +1725,16 @@
 	</div>
 	
 	<div style="width:100%;display:none;" id="section25">
-		<h4 class="cate">■ 홍보 및 만족도 영역</h4>
+		<h4 class="cate">■ 평가 및 장학금 영역</h4>
 		<table style="padding:2px;border:1px solid #000000;width:100%;">
 			<tr>
 				<th>영역</th>
-				<th colspan="2">내용</th>
+				<th>내용</th>
 			</tr>
 			<tr>
-				<td rowspan="4" style="text-align:center;border-right:1px solid #ddd;font-weight:bold;">만족도영역</td>
-				<td colspan="2">
-					<font style="font-weight:bold;">특성화 프로그램 종료 시 학과 전체 학생의 만족도 조사 실시</font>
+				<td rowspan="4" style="text-align:center;border-right:1px solid #ddd;font-weight:bold;">평가영역</td>
+				<td>
+					<font style="font-weight:bold;">학기말에 프로그램별 지도교수가 진행하는 자체평가회 진행</font>
 				</td>
 			</tr>
 		</table>
@@ -1663,15 +1774,8 @@
 				<td class="radioTd"><input type="radio" name="q25m" value="5"/></td>
 			</tr>
 		</table>
-		<table style="padding:2px;border:1px solid #000000;width:100%;">
-			<tr>
-				<td>
-					<textarea name="q9Etc" rows="5" style="width:99%;font-size:14px;" placeholder="만족도 분야에 불만족했다면 그 이유와 개선방안을 기술해 주세요!"></textarea>
-				</td>
-			</tr>			
-		</table>
 		<br/>
-		<button type="button" onclick="nextQuestion('25');" style="border-radius:4px;width:100%;background-color:#F2CB61;height:30px;font-weight:bold;font-size:16px;">다음</button>				
+		<button type="button" onclick="nextQuestion('25');" style="border-radius:4px;width:100%;background-color:#F2CB61;height:30px;font-weight:bold;font-size:16px;">다음</button>
 	</div>
 	
 	<div style="width:100%;display:none;" id="section26">
@@ -1679,12 +1783,12 @@
 		<table style="padding:2px;border:1px solid #000000;width:100%;">
 			<tr>
 				<th>영역</th>
-				<th>내용</th>
+				<th colspan="2">내용</th>
 			</tr>
 			<tr>
 				<td rowspan="4" style="text-align:center;border-right:1px solid #ddd;font-weight:bold;">평가영역</td>
-				<td>
-					<font style="font-weight:bold;">참여 프로그램 종료 시 결과보고서 작성 및 제출</font>
+				<td colspan="2">
+					<font style="font-weight:bold;">매년 말에 4가지 핵심역량 평가를 통한 LIStar 포인트 부여 : 글로벌 역량, 산업실무역량, 전공역량, 융합소통역량</font>
 				</td>
 			</tr>
 		</table>
@@ -1724,8 +1828,15 @@
 				<td class="radioTd"><input type="radio" name="q26m" value="5"/></td>
 			</tr>
 		</table>
+		<table style="padding:2px;border:1px solid #000000;width:100%;">
+			<tr>
+				<td>
+					<textarea id="q26Etc" rows="5" style="width:99%;font-size:14px;" placeholder="평가 분야에 불만족했다면 그 이유와 개선방안을 기술해 주세요."></textarea>
+				</td>
+			</tr>			
+		</table>
 		<br/>
-		<button type="button" onclick="nextQuestion('26');" style="border-radius:4px;width:100%;background-color:#F2CB61;height:30px;font-weight:bold;font-size:16px;">다음</button>
+		<button type="button" onclick="nextQuestion('26');" style="border-radius:4px;width:100%;background-color:#F2CB61;height:30px;font-weight:bold;font-size:16px;">다음</button>				
 	</div>
 	
 	<div style="width:100%;display:none;" id="section27">
@@ -1736,9 +1847,9 @@
 				<th>내용</th>
 			</tr>
 			<tr>
-				<td rowspan="4" style="text-align:center;border-right:1px solid #ddd;font-weight:bold;">평가영역</td>
+				<td rowspan="4" style="text-align:center;border-right:1px solid #ddd;font-weight:bold;">장학영역</td>
 				<td>
-					<font style="font-weight:bold;">학기말에 프로그램별 지도교수가 진행하는 자체평가회 진행</font>
+					<font style="font-weight:bold;">LIStar 포인트 합산하여 우수 장학금 지급</font><br/>(LIStar 포인트 상위 22명에게 지급)
 				</td>
 			</tr>
 		</table>
@@ -1787,12 +1898,12 @@
 		<table style="padding:2px;border:1px solid #000000;width:100%;">
 			<tr>
 				<th>영역</th>
-				<th colspan="2">내용</th>
+				<th>내용</th>
 			</tr>
 			<tr>
-				<td rowspan="4" style="text-align:center;border-right:1px solid #ddd;font-weight:bold;">평가영역</td>
-				<td colspan="2">
-					<font style="font-weight:bold;">매년 말에 4가지 핵심역량 평가를 통한 LIStar 포인트 부여 : 글로벌 역량, 산업실무역량, 전공역량, 융합소통역량</font>
+				<td rowspan="4" style="text-align:center;border-right:1px solid #ddd;font-weight:bold;">장학영역</td>
+				<td>
+					<font style="font-weight:bold;">팀 프로젝트 성과달성 장학금 지급</font><br/>(매 학기 팀 프로젝트 참여 학생에 한하여, 수행결과를 평가하여 우수 장학금 지급)
 				</td>
 			</tr>
 		</table>
@@ -1832,15 +1943,8 @@
 				<td class="radioTd"><input type="radio" name="q28m" value="5"/></td>
 			</tr>
 		</table>
-		<table style="padding:2px;border:1px solid #000000;width:100%;">
-			<tr>
-				<td>
-					<textarea name="q10Etc" rows="5" style="width:99%;font-size:14px;" placeholder="평가 분야에 불만족했다면 그 이유와 개선방안을 기술해 주세요!"></textarea>
-				</td>
-			</tr>			
-		</table>
 		<br/>
-		<button type="button" onclick="nextQuestion('28');" style="border-radius:4px;width:100%;background-color:#F2CB61;height:30px;font-weight:bold;font-size:16px;">다음</button>				
+		<button type="button" onclick="nextQuestion('28');" style="border-radius:4px;width:100%;background-color:#F2CB61;height:30px;font-weight:bold;font-size:16px;">다음</button>
 	</div>
 	
 	<div style="width:100%;display:none;" id="section29">
@@ -1848,12 +1952,12 @@
 		<table style="padding:2px;border:1px solid #000000;width:100%;">
 			<tr>
 				<th>영역</th>
-				<th>내용</th>
+				<th colspan="2">내용</th>
 			</tr>
 			<tr>
-				<td rowspan="4" style="text-align:center;border-right:1px solid #ddd;font-weight:bold;">평가영역</td>
-				<td>
-					<font style="font-weight:bold;">LIStar 포인트 합산하여 우수 장학금 지급</font><br/>(LIStar 포인트 상위 22명에게 지급)
+				<td rowspan="4" style="text-align:center;border-right:1px solid #ddd;font-weight:bold;">장학영역</td>
+				<td colspan="2">
+					<font style="font-weight:bold;">전공학습 멘토링 장학금 지급</font><br/>(매 학기 멘토링 운영 멘토 4명에 대하여 격려 장학금 지급)
 				</td>
 			</tr>
 		</table>
@@ -1894,7 +1998,7 @@
 			</tr>
 		</table>
 		<br/>
-		<button type="button" onclick="nextQuestion('29');" style="border-radius:4px;width:100%;background-color:#F2CB61;height:30px;font-weight:bold;font-size:16px;">다음</button>
+		<button type="button" onclick="nextQuestion('29');" style="border-radius:4px;width:100%;background-color:#F2CB61;height:30px;font-weight:bold;font-size:16px;">다음</button>				
 	</div>
 	
 	<div style="width:100%;display:none;" id="section30">
@@ -1902,12 +2006,12 @@
 		<table style="padding:2px;border:1px solid #000000;width:100%;">
 			<tr>
 				<th>영역</th>
-				<th>내용</th>
+				<th colspan="2">내용</th>
 			</tr>
 			<tr>
-				<td rowspan="4" style="text-align:center;border-right:1px solid #ddd;font-weight:bold;">평가영역</td>
-				<td>
-					<font style="font-weight:bold;">전공학습 멘토링 장학금 지급</font><br/>(매 학기 멘토링 운영 멘토4명에 대하여 격려 장학금 지급)
+				<td rowspan="4" style="text-align:center;border-right:1px solid #ddd;font-weight:bold;">장학영역</td>
+				<td colspan="2">
+					<font style="font-weight:bold;">근로 장학생 장학금 지급</font><br/>(매 학기 사무실 및 실습실 관리, 행정보조 업무 1명)
 				</td>
 			</tr>
 		</table>
@@ -1947,121 +2051,36 @@
 				<td class="radioTd"><input type="radio" name="q30m" value="5"/></td>
 			</tr>
 		</table>
+		<table style="padding:2px;border:1px solid #000000;width:100%;">
+			<tr>
+				<td>
+					<textarea id="q30Etc" rows="5" style="width:99%;font-size:14px;" placeholder="장학 분야에 불만족했다면 그 이유와 개선방안을 기술해 주세요."></textarea>
+				</td>
+			</tr>			
+		</table>
 		<br/>
-		<button type="button" onclick="nextQuestion('30');" style="border-radius:4px;width:100%;background-color:#F2CB61;height:30px;font-weight:bold;font-size:16px;">다음</button>
+		<button type="button" onclick="nextQuestion('30');" style="border-radius:4px;width:100%;background-color:#F2CB61;height:30px;font-weight:bold;font-size:16px;">다음</button>				
 	</div>
 	
 	<div style="width:100%;display:none;" id="section31">
-		<h4 class="cate">■ 평가 및 장학금 영역</h4>
-		<table style="padding:2px;border:1px solid #000000;width:100%;">
-			<tr>
-				<th>영역</th>
-				<th colspan="2">내용</th>
-			</tr>
-			<tr>
-				<td rowspan="4" style="text-align:center;border-right:1px solid #ddd;font-weight:bold;">장학영역</td>
-				<td colspan="2">
-					<font style="font-weight:bold;">근로 장학생 장학금 지급</font><br/>(매 학기 사무실 및 실습실 관리, 행정보조 업무 1명)
-				</td>
-			</tr>
-		</table>
-		<table style="padding:2px;border:1px solid #000000;width:100%;">
-			<tr>
-				<th colspan="5">기대도</th>
-			</tr>
-			<tr>
-				<th>1점</th>
-				<th>2점</th>
-				<th>3점</th>
-				<th>4점</th>
-				<th>5점</th>
-			</tr>
-			<tr>
-				<td class="radioTd"><input type="radio" name="q31k" value="1"/></td>
-				<td class="radioTd"><input type="radio" name="q31k" value="2"/></td>
-				<td class="radioTd"><input type="radio" name="q31k" value="3"/></td>
-				<td class="radioTd"><input type="radio" name="q31k" value="4"/></td>
-				<td class="radioTd"><input type="radio" name="q31k" value="5"/></td>
-			</tr>
-			<tr>
-				<th colspan="5">만족도</th>
-			</tr>
-			<tr>
-				<th>1점</th>
-				<th>2점</th>
-				<th>3점</th>
-				<th>4점</th>
-				<th>5점</th>
-			</tr>
-			<tr>
-				<td class="radioTd"><input type="radio" name="q31m" value="1"/></td>
-				<td class="radioTd"><input type="radio" name="q31m" value="2"/></td>
-				<td class="radioTd"><input type="radio" name="q31m" value="3"/></td>
-				<td class="radioTd"><input type="radio" name="q31m" value="4"/></td>
-				<td class="radioTd"><input type="radio" name="q31m" value="5"/></td>
-			</tr>
-		</table>
+		<h4 class="cate">■ 2018년도 학과 특성화 프로그램으로 진행하면 좋겠다는 아이디어가 있으면 자유롭게 기술해 주십시오.</h4>
 		<table style="padding:2px;border:1px solid #000000;width:100%;">
 			<tr>
 				<td>
-					<textarea name="q11Etc" rows="5" style="width:99%;font-size:14px;" placeholder="장학 분야에 불만족했다면 그 이유와 개선방안을 기술해 주세요!"></textarea>
+					<textarea id="q31Etc" rows="5" style="width:99%;font-size:14px;"></textarea>
 				</td>
 			</tr>			
 		</table>
 		<br/>
-		<button type="button" onclick="nextQuestion('31');" style="border-radius:4px;width:100%;background-color:#F2CB61;height:30px;font-weight:bold;font-size:16px;">다음</button>				
+		<button type="button" onclick="nextQuestion('31');" style="border-radius:4px;width:100%;background-color:#F2CB61;height:30px;font-weight:bold;font-size:16px;">다음</button>	
 	</div>
-	
+
 	<div style="width:100%;display:none;" id="section32">
-		<h4 class="cate">■ 향후 2017년도에 운영할 학과 특성화 사업에 대해 개선사항, 요구사항이 있으시면 자유롭게 서술해 주십시오.</h4>
-		<table style="padding:2px;border:1px solid #000000;width:100%;">
-			<tr>
-				<td>
-					<textarea name="q12Etc" rows="5" style="width:99%;font-size:14px;"></textarea>
-				</td>
-			</tr>			
-		</table>
-		<br/>
-		<button type="button" onclick="nextQuestion('32');" style="border-radius:4px;width:100%;background-color:#F2CB61;height:30px;font-weight:bold;font-size:16px;">다음</button>	
+		<h4 style="text-align:center;background-color:#F2CB61;;">■ 설문에 응해주셔서 감사합니다.</h4>
+		<br/><br/><br/>
+		
+		<!-- <button type="button" onclick="javascript:window.open('','_self').close();">창닫기</button> -->
 	</div>
-	
-	<div style="width:100%;display:none;" id="section33">
-		<h4 class="cate">■ 통계분석을 위한 인적 사항</h4>
-		<table style="padding:2px;border:1px solid #000000;width:100%;">
-			<tr>
-				<th colspan="2">성별</th>
-			</tr>
-			<tr>
-				<th>남성</th>
-				<th>여성</th>
-			</tr>
-			<tr>
-				<td class="radioTd"><input type="radio" name="q33k" value="1"/></td>
-				<td class="radioTd"><input type="radio" name="q33k" value="2"/></td>
-			</tr>
-		<table style="padding:2px;border:1px solid #000000;width:100%;">
-			<tr>
-				<th colspan="4">학년</th>
-			</tr>
-			<tr>
-				<th>1학년</th>
-				<th>2학년</th>
-				<th>3학년</th>
-				<th>4학년</th>
-			</tr>
-			<tr>
-				<td class="radioTd"><input type="radio" name="q33m" value="1"/></td>
-				<td class="radioTd"><input type="radio" name="q33m" value="2"/></td>
-				<td class="radioTd"><input type="radio" name="q33m" value="3"/></td>
-				<td class="radioTd"><input type="radio" name="q33m" value="4"/></td>
-			</tr>
-		</table>
-		<br/>
-		<h2 style="text-align:center;;">-설문에 응해 주셔서 대단히 감사드립니다.-</h2>
-	</div>
-	
-	
-	
 </div>
 </body>
 </html>

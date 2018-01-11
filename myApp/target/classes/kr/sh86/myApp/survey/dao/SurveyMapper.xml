@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SurveyDao">
+
+<!-- 입력 -->
+<insert id="insertRes" parameterType="kr.sh86.myApp.survey.domain.Response">
+	<selectKey keyProperty="resNo" resultType="int" order="BEFORE">
+		select glocal_res_seq.nextval FROM DUAL
+	</selectKey>
+	INSERT INTO GLOCAL.RESPONSE(
+		RES_NO,
+		REGDATE,
+		USER_NO,
+		SEX,
+		GRADE)
+	VALUES(
+		#{resNo},
+		to_char(sysdate,'yyyy-mm-dd'),
+		#{userNo},
+		#{sex},
+		#{grade})
+</insert>
+
+<!-- 응답자 조회 -->
+<select id="selectUser" parameterType="int" resultType="kr.sh86.myApp.survey.domain.Users">
+	SELECT
+		*
+	FROM
+		GLOCAL.USERS
+	WHERE
+		USER_NO = #{userNo}
+</select>
+
+<!-- 응답여부 확인 -->
+<select id="selectCountRes" parameterType="int" resultType="int">
+	SELECT
+		COUNT(*)
+	FROM
+		GLOCAL.RESPONSE
+	WHERE
+		USER_NO = #{userNo}
+</select>
+
+<!-- 응답내용 조회 -->
+<select id="selectResNo" parameterType="int" resultType="int">
+	SELECT
+		RES_NO
+	FROM
+		GLOCAL.RESPONSE
+	WHERE
+		USER_NO = #{userNo}
+</select>
+
+<!-- 응답내용 수정 -->
+<update id="updateRes" parameterType="kr.sh86.myApp.survey.domain.Response">
+	UPDATE GLOCAL.RESPONSE
+	SET
+		UPDATE_DATE = to_char(sysdate,'yyyy-mm-dd')
+		<if test="q1c != null and q1c !=''">,Q1C=#{q1c}</if>
+		<if test="q1k != null and q1k !=''">,Q1K=#{q1k}</if>
+		<if test="q1m != null and q1m !=''">,Q1M=#{q1m}</if>
+		<if test="q1Etc != null and q1Etc !=''">,Q1ETC=#{q1Etc}</if>
+		<if test="q2c != null and q2c !=''">,Q2C=#{q2c}</if>
+		<if test="q2k != null and q2k !=''">,Q2K=#{q2k}</if>
+		<if test="q2m != null and q2m !=''">,Q2M=#{q2m}</if>
+		<if test="q3c != null and q3c !=''">,Q3C=#{q3c}</if>
+		<if test="q3k != null and q3k !=''">,Q3K=#{q3k}</if>
+		<if test="q3m != null and q3m !=''">,Q3M=#{q3m}</if>
+		<if test="q4c != null and q4c !=''">,Q4C=#{q4c}</if>
+		<if test="q4k != null and q4k !=''">,Q4K=#{q4k}</if>
+		<if test="q4m != null and q4m !=''">,Q4M=#{q4m}</if>
+		<if test="q5c != null and q5c !=''">,Q5C=#{q5c}</if>
+		<if test="q5k != null and q5k !=''">,Q5K=#{q5k}</if>
+		<if test="q5m != null and q5m !=''">,Q5M=#{q5m}</if>
+		<if test="q6c != null and q6c !=''">,Q6C=#{q6c}</if>
+		<if test="q6k != null and q6k !=''">,Q6K=#{q6k}</if>
+		<if test="q6m != null and q6m !=''">,Q6M=#{q6m}</if>
+		<if test="q6Etc != null and q6Etc !=''">,Q6ETC=#{q6Etc}</if>
+		<if test="q7c != null and q7c !=''">,Q7C=#{q7c}</if>
+		<if test="q7k != null and q7k !=''">,Q7K=#{q7k}</if>
+		<if test="q7m != null and q7m !=''">,Q7M=#{q7m}</if>
+		<if test="q8c != null and q8c !=''">,Q8C=#{q8c}</if>
+		<if test="q8k != null and q8k !=''">,Q8K=#{q8k}</if>
+		<if test="q8m != null and q8m !=''">,Q8M=#{q8m}</if>
+		<if test="q9c != null and q9c !=''">,Q9C=#{q9c}</if>
+		<if test="q9k != null and q9k !=''">,Q9K=#{q9k}</if>
+		<if test="q9m != null and q9m !=''">,Q9M=#{q9m}</if>
+		<if test="q10c != null and q10c !=''">,Q10C=#{q10c}</if>
+		<if test="q10k != null and q10k !=''">,Q10K=#{q10k}</if>
+		<if test="q10m != null and q10m !=''">,Q10M=#{q10m}</if>
+		<if test="q11c != null and q11c !=''">,Q11C=#{q11c}</if>
+		<if test="q11k != null and q11k !=''">,Q11K=#{q11k}</if>
+		<if test="q11m != null and q11m !=''">,Q11M=#{q11m}</if>
+		<if test="q11Etc != null and q11Etc !=''">,Q11ETC=#{q11Etc}</if>
+		<if test="q12c != null and q12c !=''">,Q12C=#{q12c}</if>
+		<if test="q12k != null and q12k !=''">,Q12K=#{q12k}</if>
+		<if test="q12m != null and q12m !=''">,Q12M=#{q12m}</if>
+		<if test="q13c != null and q13c !=''">,Q13C=#{q13c}</if>
+		<if test="q13k != null and q13k !=''">,Q13K=#{q13k}</if>
+		<if test="q13m != null and q13m !=''">,Q13M=#{q13m}</if>
+		<if test="q14c != null and q14c !=''">,Q14C=#{q14c}</if>
+		<if test="q14k != null and q14k !=''">,Q14K=#{q14k}</if>
+		<if test="q14m != null and q14m !=''">,Q14M=#{q14m}</if>
+		<if test="q14Etc != null and q14Etc !=''">,Q14ETC=#{q14Etc}</if>
+		<if test="q15k != null and q15k !=''">,Q15K=#{q15k}</if>
+		<if test="q15m != null and q15m !=''">,Q15M=#{q15m}</if>
+		<if test="q16k != null and q16k !=''">,Q16K=#{q16k}</if>
+		<if test="q16m != null and q16m !=''">,Q16M=#{q16m}</if>
+		<if test="q16Etc != null and q16Etc !=''">,Q16ETC=#{q16Etc}</if>
+		<if test="q17k != null and q17k !=''">,Q17K=#{q17k}</if>
+		<if test="q17m != null and q17m !=''">,Q17M=#{q17m}</if>
+		<if test="q18k != null and q18k !=''">,Q18K=#{q18k}</if>
+		<if test="q18m != null and q18m !=''">,Q18M=#{q18m}</if>
+		<if test="q18Etc != null and q18Etc !=''">,Q18ETC=#{q18Etc}</if>
+		<if test="q19k != null and q19k !=''">,Q19K=#{q19k}</if>
+		<if test="q19m != null and q19m !=''">,Q19M=#{q19m}</if>
+		<if test="q20k != null and q20k !=''">,Q20K=#{q20k}</if>
+		<if test="q20m != null and q20m !=''">,Q20M=#{q20m}</if>
+		<if test="q20Etc != null and q20Etc !=''">,Q20ETC=#{q20Etc}</if>
+		<if test="q21k != null and q21k !=''">,Q21K=#{q21k}</if>
+		<if test="q21m != null and q21m !=''">,Q21M=#{q21m}</if>
+		<if test="q21Etc != null and q21Etc !=''">,Q21ETC=#{q21Etc}</if>
+		<if test="q22k != null and q22k !=''">,Q22K=#{q22k}</if>
+		<if test="q22m != null and q22m !=''">,Q22M=#{q22m}</if>
+		<if test="q23k != null and q23k !=''">,Q23K=#{q23k}</if>
+		<if test="q23m != null and q23m !=''">,Q23M=#{q23m}</if>
+		<if test="q23Etc != null and q23Etc !=''">,Q23ETC=#{q23Etc}</if>
+		<if test="q24k != null and q24k !=''">,Q24K=#{q24k}</if>
+		<if test="q24m != null and q24m !=''">,Q24M=#{q24m}</if>
+		<if test="q25k != null and q25k !=''">,Q25K=#{q25k}</if>
+		<if test="q25m != null and q25m !=''">,Q25M=#{q25m}</if>
+		<if test="q26k != null and q26k !=''">,Q26K=#{q26k}</if>
+		<if test="q26m != null and q26m !=''">,Q26M=#{q26m}</if>
+		<if test="q26Etc != null and q26Etc !=''">,Q26ETC=#{q26Etc}</if>
+		<if test="q27k != null and q27k !=''">,Q27K=#{q27k}</if>
+		<if test="q27m != null and q27m !=''">,Q27M=#{q27m}</if>
+		<if test="q28k != null and q28k !=''">,Q28K=#{q28k}</if>
+		<if test="q28m != null and q28m !=''">,Q28M=#{q28m}</if>
+		<if test="q29k != null and q29k !=''">,Q29K=#{q29k}</if>
+		<if test="q29m != null and q29m !=''">,Q29M=#{q29m}</if>
+		<if test="q30k != null and q30k !=''">,Q30K=#{q30k}</if>
+		<if test="q30m != null and q30m !=''">,Q30M=#{q30m}</if>
+		<if test="q30Etc != null and q30Etc !=''">,Q30ETC=#{q30Etc}</if>
+		<if test="q31Etc != null and q31Etc !=''">,Q31ETC=#{q31Etc}</if>
+	WHERE
+		RES_NO = #{resNo}
+</update>
+
+<!--응답자 마지막 응답번호 수정  -->
+<update id="updateUserLastComplete" parameterType="kr.sh86.myApp.survey.domain.Users">
+	UPDATE GLOCAL.USERS
+	SET
+		RES_COMPLETE = #{resComplete}
+	WHERE
+		USER_NO= #{userNo}
+</update>
+
+<!-- 문자> 전체 응답자 조회 -->
+<select id="selectUserAll" resultType="kr.sh86.myApp.survey.domain.Users">
+	SELECT
+		*
+	FROM
+		GLOCAL.USERS
+</select>
+
+<!-- 문자발송 -->
+<insert id="sendMmsToSelected" parameterType="kr.sh86.myApp.survey.domain.Mms">
+	INSERT INTO XROSHOT.SDK_MMS_SEND(
+		msg_id, 
+		user_id, 
+		schedule_type, 
+		subject, 
+		now_date, 
+		send_date, 
+		callback, 
+		dest_count, 
+		dest_info, 
+		mms_msg)
+	VALUES(
+		XROSHOT.SDK_MMS_SEQ.NEXTVAL,
+		'mystat03',
+		#{scheduleType},
+		#{subject},
+		TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS'),
+		TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS'),
+		#{callback},
+		#{destCount},
+		#{destInfo},
+		#{mmsMsg})
+</insert>
+
+<!--총카운트 -->
+<select id="selectUserCount" resultType="int">
+	SELECT COUNT(*)
+	FROM GLOCAL.USERS
+</select>
+
+<!-- 응답자 총 카운트 -->
+<select id="selectResCount" resultType="int">
+	SELECT COUNT(*)
+	FROM GLOCAL.RESPONSE	
+</select>
+
+<!-- 모든답변응답자  -->
+<select id="selectResAllCount" resultType="int">
+	SELECT COUNT(*)
+	FROM GLOCAL.USERS
+	WHERE RES_COMPLETE = 31
+</select>
+
+<!-- 문자전송실패자 -->
+<select id="selectMmsFailCount" resultType="int">
+	SELECT COUNT(*) 
+	FROM glocal.users 
+	WHERE USER_NAME IN (SELECT dest_name 
+						FROM xroshot.sdk_mms_report_detail 
+						WHERE send_date like '20180108%' 
+						AND result != 2)
+</select>
+
+<!-- 미응답자 조회 -->
+<select id="selectNoResList" resultType="kr.sh86.myApp.survey.domain.Users">
+	SELECT *
+	FROM GLOCAL.USERS
+	WHERE USER_NO NOT IN (SELECT USER_NO
+						  FROM GLOCAL.RESPONSE)
+</select>
+
+<!--문자전송 실패자 조회 -->
+<select id="selectMmsFailList" resultType="kr.sh86.myApp.survey.domain.Users">
+	SELECT * 
+	FROM glocal.users 
+	WHERE USER_NAME IN (SELECT dest_name 
+						FROM xroshot.sdk_mms_report_detail 
+						WHERE send_date like '20180108%' 
+						AND result != 2)
+</select>
+
+<!--문자발송 내역 인서트  -->
+<insert id="insertMmsReport">
+	INSERT INTO GLOCAL.MMSREPORT(NO, SENDDATE)
+	VALUES(glocal_mms_seq.nextval, to_char(sysdate, 'yyyy-mm-dd hh:mm'))
+	
+</insert>
+
+<!-- 발송내역 조회 -->
+<select id="selectSendReport" resultType="String">
+	SELECT SENDDATE
+	FROM GLOCAL.MMSREPORT
+	ORDER BY NO 
+</select>
+
+<!-- 문자재발송자 조회 -->
+<select id="selectReSendList" resultType="kr.sh86.myApp.survey.domain.Users">
+	SELECT *
+	FROM glocal.users 
+	WHERE res_complete &lt; 31 
+	OR res_complete IS NULL
+</select>
+
+
+</mapper>
