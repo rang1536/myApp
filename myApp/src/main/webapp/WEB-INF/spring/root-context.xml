@@ -24,6 +24,7 @@
 		<property name="mapperLocations">
 			<list>
 				<value>classpath:kr//sh86/myApp/survey/dao/SurveyMapper.xml</value>
+				<value>classpath:kr//sh86/myApp/bc/dao/BcMapper.xml</value>
 			</list>
 		</property>
 	</bean>

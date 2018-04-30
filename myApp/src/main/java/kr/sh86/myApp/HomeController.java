@@ -1,5 +1,6 @@
 package kr.sh86.myApp;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -14,8 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import kr.sh86.myApp.bc.service.BcService;
+import kr.sh86.myApp.survey.domain.BioResponse;
+import kr.sh86.myApp.survey.domain.BioUser;
 import kr.sh86.myApp.survey.domain.Users;
 import kr.sh86.myApp.survey.service.SurveyService;
+import kr.sh86.myApp.util.RombInteg;
 
 @Controller
 public class HomeController {
@@ -23,21 +28,46 @@ public class HomeController {
 	@Autowired
 	private SurveyService surveyService;
 	
+	@Autowired
+	private BcService bcService;
+	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model,
 			@RequestParam(value="userNo", defaultValue="0")int userNo) {
 		if(userNo == 0) {
+			/*surveyService.removeBestpollServ();*/ 
+			/*surveyService.setTargerArs3();*/ 
+			/*surveyService.reCheck();*/
+			/*surveyService.lastInsert();*/
+			/*surveyService.checkSexAgeServ();*/
+			/*surveyService.lastResult2Serv();*/
+			/*surveyService.lastResult2Serv();*/
+			/*surveyService.removeRepeatServ();*/
+			/*surveyService.removeOverlap();*/
+			/*surveyService.addHome35();*/
+			/*surveyService.addHome35FromJbuniv();*/
+			/*surveyService.lastResult2Serv();*/
+			/*surveyService.changLotationTwoToOne2();*/
+			/*surveyService.setSampleRddServ();*/
+			/*surveyService.changLotationTwoToOne();*/
+			bcService.induCodeAddServ();
 			return "redirect:list";
+		}else if(userNo == 100) {
+			int count = surveyService.readBioResCount();
+			model.addAttribute("count", count);
+			return "bio/state";
 		}
-		Users user = surveyService.readUserServ(userNo);
-		Map<String, Object> map= surveyService.createResServ(user);
+		
+		/*Users user = surveyService.readUserServ(userNo);
+		Map<String, Object> map= surveyService.createResServ(user);*/
 		
 		/*surveyService.sendMmsServ();*/
-		model.addAttribute("user", user);
+		/*model.addAttribute("user", user);
 		model.addAttribute("res", map.get("response"));
 		model.addAttribute("check", map.get("check"));
-		model.addAttribute("lastQuNum", user.getResComplete());
-		return "/glocal/a";
+		model.addAttribute("lastQuNum", user.getResComplete());*/
+		/*return "/glocal/a";*/
+		return "/bio/a";
 	}
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
@@ -53,4 +83,13 @@ public class HomeController {
 		return "/glocal/list";
 	}
 	
+	@RequestMapping(value = "/insertBioRes", method = RequestMethod.POST)
+	public String insertBioResCtrl(BioUser bioUser, BioResponse bioResponse) {
+		System.out.println("기업정보 : "+bioUser);
+		System.out.println("응답정보 : "+bioResponse);
+		
+		int result = surveyService.addBioResServ(bioUser, bioResponse);
+		
+		return "bio/b";
+	}
 }

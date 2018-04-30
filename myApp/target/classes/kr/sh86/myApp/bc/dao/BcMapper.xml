@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="BcDao">
+
+<!-- 산업코드 분류 시작 -->
+
+<!-- 산업코드 세세분류 조회 -->
+<select id="selectInduCodeAll" resultType="kr.sh86.myApp.bc.domain.InduCode">
+	SELECT *
+	FROM BC.TB_INDUCODE
+</select>
+
+<!-- 타겟에서 일치하는 행 조회 -->
+<select id="selectInduCodeAtInduCode" parameterType="String" resultType="kr.sh86.myApp.bc.domain.Target">
+	SELECT *
+	FROM BC.TB_TARGET
+	WHERE column9 like #{indBBSmallGroup}||'%'
+</select>
+
+<!-- 타겟에 산업코드 대분류부터 입력 -->
+<update id="updateTargetInduCode" parameterType="kr.sh86.myApp.bc.domain.Target">
+	UPDATE BC.TB_TARGET
+	SET COLUMN5 = #{column5},
+		COLUMN6 = #{column6},
+		COLUMN7 = #{column7},
+		COLUMN8 = #{column8},
+		COLUMN11 = #{column11},
+		COLUMN12 = #{column12}
+	WHERE COLUMN1 = #{column1}
+</update>
+
+
+<!-- 산업코드 분류 끝 -->
+
+
+<!-- 전체 명함 조회 -->
+<select id="selectBcAll" resultType="kr.sh86.myApp.bc.domain.BcUser">
+	SELECT *
+	FROM BC.BC_USERS
+	ORDER BY PO_NAME
+</select>
+
+<!-- 즐겨찾기 추가 -->
+<update id="updateBcFavorByPoNum" parameterType="kr.sh86.myApp.bc.domain.BcUser">
+	UPDATE BC.BC_USERS
+	SET PO_FAVOR = #{poFavor}
+	WHERE PO_NUM = #{poNum}
+</update>
+
+<!-- 상세보기 -->
+<select id="selectUserByPoNum" parameterType="int" resultType="kr.sh86.myApp.bc.domain.BcUser">
+	SELECT *
+	FROM BC.BC_USERS
+	WHERE PO_NUM = #{poNum}
+</select>
+
+<!-- 명함검색 -->
+<select id="selectUserByPoName" parameterType="Map" resultType="kr.sh86.myApp.bc.domain.BcUser">
+	SELECT *
+	FROM BC.BC_USERS
+	<trim prefix="WHERE" prefixOverrides="AND">
+		<if test="searchValue != 'none'">AND PO_NAME LIKE '%'||#{searchValue}||'%'</if>
+		<if test="local != 'none'">AND PO_SIDO LIKE '%'||#{local}||'%'</if>
+		<if test="jobCate != '직업'">AND PO_JOBCATE LIKE '%'||#{jobCate}||'%'</if>
+		<if test="relationShip != '관계'">AND PO_RELATIONSHIP LIKE '%'||#{relationShip}||'%'</if>
+		<if test="searchType == 'favor'">AND PO_FAVOR = 2</if>
+	</trim>
+	ORDER BY PO_NAME
+</select>
+
+<!-- 명함삭제 -->
+<delete id="deleteUserByPoNum" parameterType="int">
+	DELETE 
+	FROM BC.BC_USERS
+	WHERE PO_NUM = #{poNum}
+</delete>
+
+<!-- 즐겨찾기 카테고리 조회 -->
+<select id="selectFavorCateAll" resultType="kr.sh86.myApp.bc.domain.FavorCate">
+	SELECT *
+	FROM BC.FAVOR_CATE
+</select>
+
+<!-- 명함정보에 즐겨찾기 카테고리 등록 -->
+<update id="updateUserFavorCate" parameterType="kr.sh86.myApp.bc.domain.BcUser">
+	UPDATE BC.BC_USERS
+	SET PO_FAVOR_CATE = #{poFavorCate}
+	WHERE PO_NUM = #{poNum}
+</update>
+
+<!-- 검색옵션 조회 - 직업카테고리 -->
+<select id="selectJobCode" resultType="String">
+	SELECT DISTINCT PO_JOBCATE
+	FROM BC.BC_USERS
+	WHERE PO_JOBCATE IS NOT NULL
+	ORDER BY PO_JOBCATE 
+</select>
+
+<!-- 검색옵션조회 - 관계 -->
+<select id="selectRelation" resultType="String">
+	SELECT DISTINCT PO_RELATIONSHIP
+	FROM BC.BC_USERS
+	WHERE PO_RELATIONSHIP IS NOT NULL
+	ORDER BY PO_RELATIONSHIP
+</select>
+
+<!-- 즐겨찾기목록 조회 -->
+<select id="selectFavorListByCate" parameterType="Map" resultType="kr.sh86.myApp.bc.domain.BcUser">
+	SELECT *
+	FROM BC.BC_USERS
+	WHERE PO_FAVOR = 2
+	<if test="cateNum != 0">AND PO_FAVOR_CATE = #{cateNum}</if>
+	ORDER BY PO_NAME
+</select>
+
+<!-- 모바일기기 전화번호부 입력 -->
+<insert id="insertPhoneList" parameterType="kr.sh86.myApp.bc.domain.BcUser">
+	INSERT INTO BC.BC_USERS(
+		PO_NUM, 
+		PO_NAME, 
+		PO_TEL2)
+	VALUES(
+		BCUSER_SEQ.NEXTVAL, 
+		#{poName},
+		#{poTel2})
+</insert>
+</mapper>

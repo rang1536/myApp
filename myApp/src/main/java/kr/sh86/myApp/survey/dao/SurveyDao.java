@@ -6,9 +6,18 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kr.sh86.myApp.survey.domain.Ars;
+import kr.sh86.myApp.survey.domain.BioResponse;
+import kr.sh86.myApp.survey.domain.BioUser;
+import kr.sh86.myApp.survey.domain.ExceptionTel;
 import kr.sh86.myApp.survey.domain.Mms;
 import kr.sh86.myApp.survey.domain.Response;
+import kr.sh86.myApp.survey.domain.Result;
+import kr.sh86.myApp.survey.domain.Sample;
+import kr.sh86.myApp.survey.domain.Sampling;
+import kr.sh86.myApp.survey.domain.User;
 import kr.sh86.myApp.survey.domain.Users;
+import kr.sh86.myApp.survey.domain.Xroshot;
 
 @Repository
 public class SurveyDao {
@@ -71,13 +80,13 @@ public class SurveyDao {
 	}
 	
 	// 문자전송 실패자
-	public int selectMmsFailCount() {
-		return sqlSession.selectOne("SurveyDao.selectMmsFailCount");
+	public int selectMmsFailCount(String lastTime) {
+		return sqlSession.selectOne("SurveyDao.selectMmsFailCount",lastTime);
 	}
 	
 	// 문자전송 실패자
-	public List<Users> selectMmsFailList() {
-		return sqlSession.selectList("SurveyDao.selectMmsFailList");
+	public List<Users> selectMmsFailList(String lastTime) {
+		return sqlSession.selectList("SurveyDao.selectMmsFailList",lastTime);
 	}
 		
 	//미응답자 조회
@@ -98,5 +107,191 @@ public class SurveyDao {
 	//문자재발송자 조회
 	public List<Users> selectReSendList(){
 		return sqlSession.selectList("SurveyDao.selectReSendList");
+	}
+	
+	//selectLastMmsTime
+	public List<String> selectLastMmsTime(){
+		return sqlSession.selectList("SurveyDao.selectLastMmsTime");
+	}
+	
+	//selectBestpoll
+	public List<Ars> selectBestpoll(){
+		return sqlSession.selectList("SurveyDao.selectBestpoll");
+	}
+	
+	//deleteBestpoll
+	public int deleteBestpoll(Ars ars){
+		return sqlSession.delete("SurveyDao.deleteBestpoll", ars);
+	}
+	
+	//익산시 조회
+	public List<Sample> selectSample(){
+		return sqlSession.selectList("SurveyDao.selectSample");
+	}
+	
+	//샘플데이터 입력
+	public int insertSample(Sampling sampling){
+		return sqlSession.insert("SurveyDao.insertSample", sampling);
+	}
+	
+	//응답테이블입력
+	public int insertArsResultTb(Sampling sampling) {
+		return sqlSession.insert("SurveyDao.insertArsResultTb", sampling);
+	}
+	
+	//익산 나머지 대상 조회
+	public List<Sample> selectAllHome(String dong){
+		return sqlSession.selectList("SurveyDao.selectAllHome",dong);
+	}
+	
+	//성별
+	public List<Xroshot> selectManCount(){
+		return sqlSession.selectList("SurveyDao.selectManCount");
+	}
+		
+	//연령
+	public int selectAgeCount(int length){
+		return sqlSession.selectOne("SurveyDao.selectAgeCount",length);
+	}
+		
+	//selectResForAgeCheck
+	public List<String> selectResForAgeCheck(){
+		return sqlSession.selectList("SurveyDao.selectResForAgeCheck");
+	}
+	
+	//대상자추가
+	public List<String> selectTels(){
+		return sqlSession.selectList("SurveyDao.selectTels");
+	}
+	
+	//결과테이블 추가
+	public int insertArsResultTb2(Sampling sampling) {
+		return sqlSession.insert("SurveyDao.insertArsResultTb2", sampling);
+	}
+	
+	//모든응답조회
+	public List<Xroshot> selectAllResArs(){
+		return sqlSession.selectList("SurveyDao.selectAllResArs");
+	}
+	
+	public List<Integer> selectArsResultKis(String tel){
+		return sqlSession.selectList("SurveyDao.selectArsResultKis", tel);
+	}
+	
+	public int deleteRepeat(int num) {
+		return sqlSession.delete("SurveyDao.deleteRepeat", num);
+	}
+	
+	public int updateArsResult(Xroshot xroshot) {
+		return sqlSession.update("SurveyDao.updateArsResult", xroshot);
+	}
+	
+	public List<Result> selectResultTb(int arsNum){
+		return sqlSession.selectList("SurveyDao.selectResultTb", arsNum);
+	}
+	
+	//selectCntTel
+	public int selectCntTel(String tel){
+		return sqlSession.selectOne("SurveyDao.selectCntTel", tel);
+	}
+	
+	//selectLast
+	public List<Xroshot> selectLast(){
+		return sqlSession.selectList("SurveyDao.selectLast");
+	}
+	
+	//updateLast
+	public int updateLast(int num) {
+		return sqlSession.update("SurveyDao.updateLast", num);
+	}
+	
+	//selectResStat
+	public List<Xroshot> selectResStat(){
+		return sqlSession.selectList("SurveyDao.selectResStat");
+	}
+	
+	//selectResStat2
+	public List<Xroshot> selectResStat2(){
+		return sqlSession.selectList("SurveyDao.selectResStat2");
+	}
+	
+	//insertResult
+	public int insertResult(Xroshot xroshot) {
+		return sqlSession.insert("SurveyDao.insertResult", xroshot);
+	}
+	
+	//deleteOverlap
+	public int deleteOverlap() {
+		return sqlSession.insert("SurveyDao.deleteOverlap");
+	}
+	
+	// selectDataUser
+	public List<User> selectDataUser(){
+		return sqlSession.selectList("SurveyDao.selectDataUser");
+	}
+	
+	// insertHome35
+	public int insertHome35(User user) {
+		return sqlSession.insert("SurveyDao.insertHome35", user);
+	}
+	
+	// selectOverlap207
+	public int selectOverlap207(String tel) {
+		return sqlSession.selectOne("SurveyDao.selectOverlap207", tel);
+	}
+	
+	//selectOverlapHome35
+	public int selectOverlapHome35(String tel) {
+		return sqlSession.selectOne("SurveyDao.selectOverlapHome35", tel);
+	}
+	
+	//selectJbuniv
+	public List<User> selectJbuniv(String sigungu){
+		return sqlSession.selectList("SurveyDao.selectJbuniv", sigungu);
+	}
+	
+	//insertSamplingImsil
+	public int insertSamplingImsil(Sampling sampling) {
+		return sqlSession.insert("SurveyDao.insertSamplingImsil", sampling);
+	}
+	
+	//생진원 - 업체입력
+	public int insertBioUser(BioUser bioUser) {
+		return sqlSession.insert("SurveyDao.insertBioUser",bioUser);
+	}
+	
+	//생진원 - 응답입력
+	public int insertBioRes(BioResponse bioResponse) {
+		return sqlSession.insert("SurveyDao.insertBioRes",bioResponse);
+	}
+	
+	//생진청 - 응답수
+	public int selectBioResCount() {
+		return sqlSession.selectOne("SurveyDao.selectBioResCount");
+	}
+	
+	//예외번호조회
+	public List<ExceptionTel> selectExceptionNum(){
+		return sqlSession.selectList("SurveyDao.selectExceptionNum");
+	}
+	
+	//예외번호 삭제
+	public int deleteExcTel(String tel) {
+		return sqlSession.delete("SurveyDao.deleteExcTel", tel);
+	}
+	
+	//selectResJj
+	public List<Xroshot> selectResJj(){
+		return sqlSession.selectList("SurveyDao.selectResJj");
+	}
+	
+	//selectDateForCompare
+	public int selectDateForCompare(String phoneNumber) {
+		return sqlSession.selectOne("SurveyDao.selectDateForCompare", phoneNumber);
+	}
+	
+	//insertResJj
+	public int insertResJj(Xroshot xroshot) {
+		return sqlSession.insert("SurveyDao.insertResJj", xroshot);
 	}
 }

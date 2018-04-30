@@ -211,12 +211,12 @@
 </select>
 
 <!-- 문자전송실패자 -->
-<select id="selectMmsFailCount" resultType="int">
+<select id="selectMmsFailCount" parameterType="String" resultType="int">
 	SELECT COUNT(*) 
 	FROM glocal.users 
 	WHERE USER_NAME IN (SELECT dest_name 
 						FROM xroshot.sdk_mms_report_detail 
-						WHERE send_date like '20180108%' 
+						WHERE send_date like #{lastTime}||'%' 
 						AND result != 2)
 </select>
 
@@ -229,12 +229,12 @@
 </select>
 
 <!--문자전송 실패자 조회 -->
-<select id="selectMmsFailList" resultType="kr.sh86.myApp.survey.domain.Users">
+<select id="selectMmsFailList" parameterType="String" resultType="kr.sh86.myApp.survey.domain.Users">
 	SELECT * 
 	FROM glocal.users 
 	WHERE USER_NAME IN (SELECT dest_name 
 						FROM xroshot.sdk_mms_report_detail 
-						WHERE send_date like '20180108%' 
+						WHERE send_date like #{lastTime}||'%' 
 						AND result != 2)
 </select>
 
@@ -252,6 +252,13 @@
 	ORDER BY NO 
 </select>
 
+<!-- 마지막 문자발송시간 조회 -->
+<select id="selectLastMmsTime" resultType="String">
+	SELECT SENDDATE
+	FROM GLOCAL.MMSREPORT
+	ORDER BY NO DESC
+</select>
+
 <!-- 문자재발송자 조회 -->
 <select id="selectReSendList" resultType="kr.sh86.myApp.survey.domain.Users">
 	SELECT *
@@ -260,5 +267,535 @@
 	OR res_complete IS NULL
 </select>
 
+<!-- 베스트폴 ARS 대상 중복제거 -->
+<select id="selectBestpoll" resultType="kr.sh86.myApp.survey.domain.Ars">
+	SELECT num, ars_num, name, tel
+	FROM BESTPOLL_ARS.ARS_RESULT_KIS_BACK
+	WHERE ARS_NUM = 197
+</select>
+
+<delete id="deleteBestpoll" parameterType="kr.sh86.myApp.survey.domain.Ars">
+	DELETE
+	FROM BESTPOLL_ARS.ARS_RESULT_KIS
+	WHERE ARS_NUM = 198
+	AND NAME = #{name}
+	AND TEL = #{tel}
+</delete>
+
+<!-- ars 강제추출 -->
+<select id="selectSample" resultType="kr.sh86.myApp.survey.domain.Sample">
+	SELECT t_name, t_telno 
+	FROM kis_stat.home_35
+	WHERE t_sigungu='익산시' 
+	AND t_is != 1
+	AND t_dong IS NULL
+</select>
+
+<!--샘플링데이터 입력  -->
+<insert id="insertSample" parameterType="kr.sh86.myApp.survey.domain.Sampling">
+	INSERT INTO bestpoll_ars.ars_sampling_kis(
+		num, 
+		ars_num, 
+		sido, 
+		sigungu, 
+		sample, 
+		data_in_date)
+	VALUES(
+		bestpoll_ars.ars_sampling_kis_seq.nextval, 
+		#{arsNum}, 
+		#{sido}, 
+		#{sigungu}, 
+		#{sample}, 
+		to_char(sysdate,'YYYY-MM-DD'))
+</insert>
+
+<insert id="insertArsResultTb" parameterType="kr.sh86.myApp.survey.domain.Sampling">
+	INSERT INTO bestpoll_ars.ars_result_kis(
+		num, 
+		ars_num, 
+		<if test="name != null and name != ''">name,</if>
+		tel, 
+		sido, 
+		sigungu,
+		dong, 
+		data_in_date)
+	VALUES(
+		bestpoll_ars.ars_result_kis_seq.nextval, 
+		#{arsNum}, 
+		<if test="name != null and name != ''">#{name},</if>
+		#{tel}, 
+		#{sido}, 
+		#{sigungu},
+		#{dong}, 
+		to_char(sysdate,'YYYY-MM-DD'))
+</insert>
+
+<!-- 임실샘플링 입력 -->
+<insert id="insertSamplingImsil" parameterType="kr.sh86.myApp.survey.domain.Sampling">
+	INSERT INTO BESTPOLL_ARS.ARS_SAMPLING_KIS(
+		NUM, ARS_NUM, SIDO, SIGUNGU, 
+		<if test="dong != null and dong !=''">dong,</if> 
+		SAMPLE, DATA_IN_DATE)
+	VALUES(
+		BESTPOLL_ARS.ARS_SAMPLING_KIS_SEQ.NEXTVAL,
+		#{arsNum},
+		#{sido},
+		#{sigungu},
+		<if test="dong != null and dong !=''">#{dong},</if>
+		#{sample},
+		to_char(sysdate,'YYYY-MM-DD')
+		)	
+</insert>
+
+<!-- 현재 통화가지 않은 가정집 전체 조회 -->
+<select id="selectAllHome" parameterType="String" resultType="kr.sh86.myApp.survey.domain.Sample">
+	SELECT t_telno, t_name, t_sido, t_sigungu, t_dong 
+	FROM kis_stat.home_35 a
+	WHERE t_sido='전북' 
+	AND t_sigungu = '임실군' 
+	AND t_dong = #{dong} 
+	<!-- AND NOT EXISTS (select * 
+					from bestpoll_ars.ars_result_kis b
+					where ars_num &gt;= 197 
+					and ars_num &lt;=204
+					and a.t_telno = b.tel) -->
+</select>
+
+<!-- 성별확인 조회 -->
+<select id="selectManCount" resultType="kr.sh86.myApp.survey.domain.Xroshot">
+	SELECT REPLIED_FILE, MSG_ID
+	FROM XROSHOT.SDK_VMS_REPORT_DETAIL
+	WHERE LENGTH(REPLIED_FILE) &gt;= 72
+	AND SEND_DATE &gt;= '20180118120000'
+</select>
+
+<!-- 연령확인 조회 -->
+<select id="selectAgeCount" parameterType="int" resultType="int">
+	SELECT COUNT(*)
+	FROM XROSHOT.SDK_VMS_REPORT_DETAIL
+	WHERE LENGTH(REPLIED_FILE) &gt;= #{length}
+	AND SEND_DATE &gt;= '20180118120000'
+</select>
+
+<!-- 연령별 응답확인을 위한 조회 -->
+<select id="selectResForAgeCheck" resultType="String">
+	SELECT REPLIED_FILE
+	FROM XROSHOT.SDK_VMS_REPORT_DETAIL
+	WHERE LENGTH(REPLIED_FILE) &gt;= 16
+	AND SEND_DATE &gt;= '20180118120000'
+</select>
+
+<select id="selectResStat" resultType="kr.sh86.myApp.survey.domain.Xroshot">
+	SELECT 
+		msg_id,
+		replied_file,
+		job_id,
+		nvl(substr(replied_file, 10,1),'') as ans1, 
+		nvl(substr(replied_file, 16,1),'') as ans2,
+		nvl(substr(replied_file, 22,1),'') as ans3,
+		nvl(substr(replied_file, 28,1),'') as ans4,
+		nvl(substr(replied_file, 34,1),'') as ans5,
+		nvl(substr(replied_file, 40,1),'') as ans6,
+		nvl(substr(replied_file, 46,1),'') as ans7,
+		nvl(substr(replied_file, 52,1),'') as ans8,
+		nvl(substr(replied_file, 58,1),'') as ans9,
+		nvl(substr(replied_file, 65,1),'') as ans10,
+		nvl(substr(replied_file, 72,1),'') as ans11
+	FROM XROSHOT.SDK_VMS_REPORT_DETAIL
+	WHERE SEND_DATE &gt;= '20180118120000'
+	AND LENGTH(replied_file) >= 72
+</select>
+
+<select id="selectResStat2" resultType="kr.sh86.myApp.survey.domain.Xroshot">
+	SELECT 
+		msg_id,
+		replied_file,
+		job_id,
+		phone_number,
+		result, 
+		tcs_result,
+		send_date, 
+		stime, 
+		rtime, 
+		duration,
+		nvl(substr(replied_file, 10,1),'') as ans1, 
+		nvl(substr(replied_file, 16,1),'') as ans2,
+		nvl(substr(replied_file, 22,1),'') as ans3,
+		nvl(substr(replied_file, 28,1),'') as ans4,
+		nvl(substr(replied_file, 34,1),'') as ans5,
+		nvl(substr(replied_file, 40,1),'') as ans6,
+		nvl(substr(replied_file, 46,1),'') as ans7,
+		nvl(substr(replied_file, 52,1),'') as ans8,
+		nvl(substr(replied_file, 58,1),'') as ans9,
+		nvl(substr(replied_file, 65,1),'') as ans10,
+		nvl(substr(replied_file, 72,1),'') as ans11
+	FROM XROSHOT.SDK_VMS_REPORT_DETAIL
+	WHERE SEND_DATE &gt;= '20180118120000'
+	<!-- AND LENGTH(replied_file) &gt;= 72 -->
+</select>
+
+<!-- 연락처세팅 -->
+<select id="selectTels" resultType="String">
+	SELECT TEL
+	FROM GLOCAL.USERS2
+</select>
+
+<!-- 입력 -->
+<insert id="insertArsResultTb2" parameterType="kr.sh86.myApp.survey.domain.Sampling">
+	INSERT INTO bestpoll_ars.ars_result_kis(
+		num, 
+		ars_num, 
+		tel, 
+		sido, 
+		sigungu,
+		result,
+		tcs_result,
+		data_in_date)
+	VALUES(
+		bestpoll_ars.ars_result_kis_seq.nextval, 
+		#{arsNum}, 
+		#{tel}, 
+		#{sido}, 
+		#{sigungu},
+		0,
+		-2,
+		to_char(sysdate,'YYYY-MM-DD'))
+</insert>
+
+<select id="selectResultTb" parameterType="int" resultType="kr.sh86.myApp.survey.domain.Result">
+	SELECT num, tel 
+	FROM bestpoll_ars.ars_result_kis 
+	WHERE result!=2 
+	and result!=6 
+	and result!=41 
+	and ars_num=#{arsNum}
+</select>
+
+<select id="selectXroshotResult" parameterType="kr.sh86.myApp.survey.domain.Result" resultType="kr.sh86.myApp.survey.domain.Xroshot">
+	SELECT DISTINCT b.result, b.tcs_result, b.replied_file, 
+		nvl(substr(b.replied_file, 10,1),'')as ans1, 
+		nvl(substr(b.replied_file, 16,1),'')as ans2,
+		nvl(substr(b.replied_file, 22,1),'')as ans3,
+		nvl(substr(b.replied_file, 28,1),'')as ans4,
+		nvl(substr(b.replied_file, 34,1),'')as ans5,
+		nvl(substr(b.replied_file, 40,1),'')as ans6,
+		nvl(substr(b.replied_file, 46,1),'')as ans7,
+		nvl(substr(b.replied_file, 52,1),'')as ans8,
+		nvl(substr(b.replied_file, 58,1),'')as ans9,
+		nvl(substr(b.replied_file, 65,1),'')as ans10,
+		nvl(substr(b.replied_file, 72,1),'')as ans11
+	FROM xroshot.sdk_vms_report_detail b, xroshot.sdk_vms_report c 
+	WHERE c.msg_id = b.msg_id 
+	and b.phone_number = #{tel} 
+	and c.attach_file= #{attachFile}
+	and b.send_date like to_char(sysdate,'rrrr')|| '%')
+</select>
+
+<update id="updateArsResult" parameterType="kr.sh86.myApp.survey.domain.Xroshot">
+	UPDATE bestpoll_ars.ars_result_kis 
+	SET result=#{result},
+	tcs_result =#{tcsResult},
+	replied_file = #{repliedFile}
+	WHERE tel = #{phoneNumber}
+</update>
+
+<select id="selectAllResArs" resultType="kr.sh86.myApp.survey.domain.Xroshot">
+	select * 
+	from XROSHOT.SDK_VMS_REPORT_DETAIL 
+	where length(replied_file) >=72 
+	and send_date >= '20180118120000'
+</select>
+
+<select id="selectArsResultKis" parameterType="String" resultType="int">
+	SELECT num
+	FROM bestpoll_ars.ars_result_kis 
+	WHERE tel = #{tel}
+	AND ars_num = 206
+</select>
+
+<delete id="deleteRepeat" parameterType="int">
+	DELETE
+	FROM bestpoll_ars.ars_result_kis 
+	WHERE num = #{num}
+</delete>
+
+<select id="selectCntTel" parameterType="String" resultType="int">
+	SELECT count(*)
+	FROM bestpoll_ars.ars_result_kis 
+	WHERE tel = #{tel}
+	AND ars_num = 206
+</select>
+
+<!-- 4번 안받은사람, 받았다가 바로 끈은사람 조회 -->
+<select id="selectLast" resultType="kr.sh86.myApp.survey.domain.Xroshot">
+	select DISTINCT phone_number
+	from xroshot.sdk_vms_report_detail 
+	where result=4 and send_date &gt; '20180118120000'
+	OR result =2 and send_date &gt; '20180118120000' and LENGTH(replied_file) &lt;= 10	
+</select>
+
+<!-- <select id="selectLast" resultType="kr.sh86.myApp.survey.domain.Xroshot">
+	select distinct phone_number 
+	from XROSHOT.SDK_VMS_REPORT_DETAIL 
+	where send_date &gt; '20180118120000'
+	and result = 4	
+</select> -->
+
+
+<update id="updateLast" parameterType="int">
+	UPDATE bestpoll_ars.ars_result_kis
+	SET ars_num = 207
+	WHERE num = #{num}
+</update>
+
+<insert id="insertResult" parameterType="kr.sh86.myApp.survey.domain.Xroshot">
+	INSERT INTO ADMIN.ARSLOTATION(
+		NUM 
+		<if test="ans1 != null and ans1 != ''">,ANS1</if>
+		<if test="ans2 != null and ans2 != ''">,ANS2</if>
+		<if test="ans3 != null and ans3 != ''">,ANS3</if>
+		<if test="ans4 != null and ans4 != ''">,ANS4</if>
+		<if test="ans5 != null and ans5 != ''">,ANS5</if>
+		<if test="ans6 != null and ans6 != ''">,ANS6</if>
+		<if test="ans7 != null and ans7 != ''">,ANS7</if>
+		<if test="ans8 != null and ans8 != ''">,ANS8</if>
+		<if test="ans9 != null and ans9 != ''">,ANS9</if>
+		<if test="ans10 != null and ans10 != ''">,ANS10</if>
+		<if test="ans11 != null and ans11 != ''">,ANS11</if>
+		<!-- <if test="jobId != null and jobId != ''">,JOB_ID</if> -->
+		<if test="phoneNumber != null and phoneNumber != ''">,TEL</if>
+		<if test="result != null and result != ''">,RESULT</if>
+		<if test="tcsResult != null and tcsResult != ''">,TCS_RESULT</if>
+		<if test="stime != null and stime != ''">,STIME</if>
+		<if test="rtime != null and rtime != ''">,RTIME</if>
+		<if test="repliedFile != null and repliedFile != ''">,REPLIED_FILE</if>
+		<if test="duration != null and duration != ''">,DURATION</if>
+		)
+	VALUES(
+		#{no}
+		<if test="ans1 != null and ans1 != ''">,#{ans1}</if>
+		<if test="ans2 != null and ans2 != ''">,#{ans2}</if>
+		<if test="ans3 != null and ans3 != ''">,#{ans3}</if>
+		<if test="ans4 != null and ans4 != ''">,#{ans4}</if>
+		<if test="ans5 != null and ans5 != ''">, #{ans5}</if>
+		<if test="ans6 != null and ans6 != ''">,#{ans6}</if>
+		<if test="ans7 != null and ans7 != ''">,#{ans7}</if>
+		<if test="ans8 != null and ans8 != ''">,#{ans8}</if>
+		<if test="ans9 != null and ans9 != ''">,#{ans9}</if>
+		<if test="ans10 != null and ans10 != ''">,#{ans10}</if>
+		<if test="ans11 != null and ans11 != ''">,#{ans11}</if>
+		<!-- <if test="jobId != null and jobId != ''">,#{jobId}</if> -->
+		<if test="phoneNumber != null and phoneNumber != ''">,#{phoneNumber}</if>
+		<if test="result != null and result != ''">,#{result}</if>
+		<if test="tcsResult != null and tcsResult != ''">,#{tcsResult}</if>
+		<if test="stime != null and stime != ''">,#{stime}</if>
+		<if test="rtime != null and rtime != ''">,#{rtime}</if>
+		<if test="repliedFile != null and repliedFile != ''">,#{repliedFile}</if>
+		<if test="duration != null and duration != ''">,#{duration}</if>
+		)
+</insert>
+
+<!-- 결번삭제 -->
+<delete id="deleteOverlap">
+	DELETE
+	FROM KIS_STAT.HOME_35 a
+	WHERE EXISTS (SELECT * 
+				  FROM XROSHOT.SDK_VMS_REPORT_DETAIL b
+				  WHERE a.t_telno = b.phone_number
+				  AND result = 6
+				  AND send_date > '20180118120000')
+</delete>
+
+<!--데이터 업로드 -->
+<select id="selectDataUser" resultType="kr.sh86.myApp.survey.domain.User">
+	SELECT 
+		TEL, SIDO, SIGUNGU, DONG, NAME, HP
+	FROM GLOCAL.USERS2
+</select>
+
+<!-- 홈디비에 데이터 추가 -->
+<insert id="insertHome35" parameterType="kr.sh86.myApp.survey.domain.User">
+	INSERT INTO KIS_STAT.HOME_35(
+		t_is
+		<if test="tel != null and tel != ''">,t_telno</if>
+		,t_sido
+		,t_sigungu
+		<if test="dong != null and dong != ''">,t_dong</if>		
+		<if test="sangse != null and sangse != ''">,t_addr</if>	
+		<if test="name != null and name != ''">,t_name</if>
+		<if test="hp != null and hp != ''">,t_hp</if>
+		)
+	VALUES(
+		0
+		<if test="tel != null and tel != ''">,#{tel}</if>
+		,#{sido}
+		,#{sigungu}
+		<if test="dong != null and dong != ''">,#{dong}</if>		
+		<if test="sangse != null and sangse != ''">,#{sangse}</if>	
+		<if test="name != null and name != ''">,#{name}</if>
+		<if test="hp != null and hp != ''">,#{hp}</if>
+		)
+</insert>
+
+<!-- 중복 조회 -->
+<select id="selectOverlap207" parameterType="String" resultType="int">
+	SELECT COUNT(*)
+	FROM BESTPOLL_ARS.ARS_RESULT_KIS
+	WHERE TEL = #{tel}
+	AND ARS_NUM = 207
+</select>
+
+<!-- 중복 조회 -->
+<select id="selectOverlapHome35" parameterType="String" resultType="int">
+	SELECT COUNT(*)
+	FROM KIS_STAT.HOME_35
+	WHERE T_TELNO = #{tel}
+</select>
+
+<!-- 전북대 동창회 데이터 조회 -->
+<select id="selectJbuniv" parameterType="String" resultType="kr.sh86.myApp.survey.domain.User">
+	SELECT
+		NAME,
+		HOME_PHONE as tel
+	FROM JBUNIV.USERS a
+	WHERE home_address like '%'||#{sigungu}||'%' 
+	AND home_phone is not null 
+	AND home_phone like '063-___-____'
+</select>
+
+
+<!-- 생진원- 응답업체 입력 -->
+<insert id="insertBioUser" parameterType="kr.sh86.myApp.survey.domain.BioUser">
+	<selectKey keyProperty="no" resultType="int" order="BEFORE">
+		select biouser_seq.nextval FROM DUAL
+	</selectKey>
+	INSERT INTO GLOCAL.BIOUSER(
+		NO, COM_NAME, COM_IMPORT17, COM_WORKERCNT, COM_ADDRESS
+		<if test="comCeo != null and comCeo != ''">,COM_CEO</if>
+		<if test="comProduct != null and comProduct != ''">,COM_PRODUCT</if>
+		<if test="comTel != null and comTel != ''">,COM_TEL</if>
+		<if test="comHomepage != null and comHomepage != ''">,COM_HOMEPAGE</if>
+		<if test="comFax != null and comFax != ''">,COM_FAX</if>
+		<if test="comEmail != null and comEmail != ''">,COM_EMAIL</if>
+		)
+	VALUES(
+		#{no}, #{comName}, #{comImport17}, #{comWorkerCnt}, #{comAddress}
+		<if test="comCeo != null and comCeo != ''">,#{comCeo}</if>
+		<if test="comProduct != null and comProduct != ''">,#{comProduct}</if>
+		<if test="comTel != null and comTel != ''">,#{comTel}</if>
+		<if test="comHomepage != null and comHomepage != ''">,#{comHomepage}</if>
+		<if test="comFax != null and comFax != ''">,#{comFax}</if>
+		<if test="comEmail != null and comEmail != ''">,#{comEmail}</if>
+		)
+</insert>
+
+<!-- 생진원 - 업체응답내용 입력  -->
+<insert id="insertBioRes" parameterType="kr.sh86.myApp.survey.domain.BioResponse">
+	<selectKey keyProperty="no" resultType="int" order="BEFORE">
+		select biores_seq.nextval FROM DUAL
+	</selectKey>
+	INSERT INTO GLOCAL.BIORESPONSE(
+		NO, Q1, Q1C, Q2, Q2C, Q3, Q3C, Q4, Q4C, USERNO
+		<if test="q5 != null and q5 != ''">,Q5</if>
+		<if test="q5c != null and q5c != ''">,Q5C</if>
+		<if test="q1Fir != null and q1Fir != ''">,Q1FIR</if>
+		<if test="q1Sec != null and q1Sec != ''">,Q1SEC</if>
+		<if test="q1Thi != null and q1Thi != ''">,Q1THI</if>
+		<if test="q2Fir != null and q2Fir != ''">,Q2FIR</if>
+		<if test="q2Sec != null and q2Sec != ''">,Q2SEC</if>
+		<if test="q2Thi != null and q2Thi != ''">,Q2THI</if>
+		<if test="q2Etc != null and q2Etc != ''">,Q2ETC</if>
+		<if test="q3Fir != null and q3Fir != ''">,Q3FIR</if>
+		<if test="q3Sec != null and q3Sec != ''">,Q3SEC</if>
+		<if test="q3Thi != null and q3Thi != ''">,Q3THI</if>
+		<if test="q3Etc != null and q3Etc != ''">,Q3ETC</if>
+		<if test="q4Fir != null and q4Fir != ''">,Q4FIR</if>
+		<if test="q4Sec != null and q4Sec != ''">,Q4SEC</if>
+		<if test="q4Thi != null and q4Thi != ''">,Q4THI</if>
+		<if test="q4Etc != null and q4Etc != ''">,Q4ETC</if>
+		<if test="q5Etc != null and q5Etc != ''">,Q5ETC</if>
+		<if test="q6Etc != null and q6Etc != ''">,Q6ETC</if>
+		)
+	VALUES(
+		#{no}, #{q1}, #{q1c}, #{q2}, #{q2c}, #{q3}, #{q3c}, #{q4}, #{q4c}, #{userNo}
+		<if test="q5 != null and q5 != ''">,#{q5}</if>
+		<if test="q5c != null and q5c != ''">,#{q5c}</if>
+		<if test="q1Fir != null and q1Fir != ''">,#{q1Fir}</if>
+		<if test="q1Sec != null and q1Sec != ''">,#{q1Sec}</if>
+		<if test="q1Thi != null and q1Thi != ''">,#{q1Thi}</if>
+		<if test="q2Fir != null and q2Fir != ''">,#{q2Fir}</if>
+		<if test="q2Sec != null and q2Sec != ''">,#{q2Sec}</if>
+		<if test="q2Thi != null and q2Thi != ''">,#{q2Thi}</if>
+		<if test="q2Etc != null and q2Etc != ''">,#{q2Etc}</if>
+		<if test="q3Fir != null and q3Fir != ''">,#{q3Fir}</if>
+		<if test="q3Sec != null and q3Sec != ''">,#{q3Sec}</if>
+		<if test="q3Thi != null and q3Thi != ''">,#{q3Thi}</if>
+		<if test="q3Etc != null and q3Etc != ''">,#{q3Etc}</if>
+		<if test="q4Fir != null and q4Fir != ''">,#{q4Fir}</if>
+		<if test="q4Sec != null and q4Sec != ''">,#{q4Sec}</if>
+		<if test="q4Thi != null and q4Thi != ''">,#{q4Thi}</if>
+		<if test="q4Etc != null and q4Etc != ''">,#{q4Etc}</if>
+		<if test="q5Etc != null and q5Etc != ''">,#{q5Etc}</if>
+		<if test="q6Etc != null and q6Etc != ''">,#{q6Etc}</if>
+		)
+</insert>
+
+<!-- 생진청 응답수 -->
+<select id="selectBioResCount" resultType="int">
+	SELECT COUNT(*) 
+	FROM GLOCAL.BIORESPONSE
+</select>
+
+<!-- 예외번호 조회 -->
+<select id="selectExceptionNum" resultType="kr.sh86.myApp.survey.domain.ExceptionTel">
+	SELECT *
+	FROM BESTPOLL_ARS.ARS_EXCEPTION_TEL
+</select>
+
+<delete id="deleteExcTel" parameterType="String">
+	DELETE
+	FROM BESTPOLL_ARS.ARS_RESULT_KIS
+	WHERE TEL = #{tel}
+</delete>
+
+<select id="selectResJj" resultType="kr.sh86.myApp.survey.domain.Xroshot">
+	SELECT result, tcs_result, send_date, stime, rtime, duration, phone_number, msg_id, 
+				  nvl(substr(replied_file, 9,1),'') as ans1, 
+				  nvl(substr(replied_file, 15,1),'') as ans2,
+				  nvl(substr(replied_file, 21,1),'') as ans3,
+				  nvl(substr(replied_file, 27,1),'') as ans4
+	FROM xroshot.sdk_vms_report_detail 
+	WHERE send_date > '20180429090000' 
+	AND length(replied_file) >= 27
+	AND substr(replied_file, 21, 1) != 3
+	ORDER BY SEND_DATE DESC
+</select>
+
+<!-- <select id="selectResJj" resultType="kr.sh86.myApp.survey.domain.Xroshot">
+	SELECT result, tcs_result, send_date, stime, rtime, duration, phone_number, msg_id, 
+				  nvl(substr(replied_file, 9,1),'') as ans1, 
+				  nvl(substr(replied_file, 15,1),'') as ans2,
+				  nvl(substr(replied_file, 21,1),'') as ans3,
+				  nvl(substr(replied_file, 27,1),'') as ans4,
+				  nvl(substr(replied_file, 33,1),'') as ans5
+	FROM xroshot.sdk_vms_report_detail 
+	WHERE send_date > '20180408155500' 
+	AND length(replied_file) >= 33
+	AND substr(replied_file, 21, 1) != 3
+	ORDER BY SEND_DATE DESC
+</select> -->
+<select id="selectDateForCompare" parameterType="String" resultType="int">
+	SELECT COUNT(*)
+	FROM KIS_STAT.COM35
+	WHERE TELL = #{phoneNumber}
+	AND sigungu like '전주시%'
+</select>
+
+<insert id="insertResJj" parameterType="kr.sh86.myApp.survey.domain.Xroshot">
+	INSERT INTO BESTPOLL_ARS.TB_RESULT(
+		no, result, result2, senddate, stime, rtime, duration, a1, a2, a3, a4, iscompany)
+	VALUES(
+		#{no}, #{result}, #{tcsResult}, #{sendDate}, #{stime}, #{rtime}, #{duration}, #{ans1}, #{ans2}, #{ans3}, #{ans4}, #{isCompany})
+</insert>
 
 </mapper>

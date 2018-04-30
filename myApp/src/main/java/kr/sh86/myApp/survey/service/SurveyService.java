@@ -9,9 +9,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.sh86.myApp.survey.dao.SurveyDao;
+import kr.sh86.myApp.survey.domain.Ars;
+import kr.sh86.myApp.survey.domain.BioResponse;
+import kr.sh86.myApp.survey.domain.BioUser;
+import kr.sh86.myApp.survey.domain.ExceptionTel;
 import kr.sh86.myApp.survey.domain.Mms;
 import kr.sh86.myApp.survey.domain.Response;
+import kr.sh86.myApp.survey.domain.Result;
+import kr.sh86.myApp.survey.domain.Sample;
+import kr.sh86.myApp.survey.domain.Sampling;
+import kr.sh86.myApp.survey.domain.User;
 import kr.sh86.myApp.survey.domain.Users;
+import kr.sh86.myApp.survey.domain.Xroshot;
 
 @Service
 public class SurveyService {
@@ -278,11 +287,18 @@ public class SurveyService {
 		
 	//현황표
 	public Map<String, Object> readResStatusServ(){
+		//마지막 문자보낸 시간 조회
+		List<String> lastTimeList = surveyDao.selectLastMmsTime();
+		String lastTime = lastTimeList.get(0).replaceAll("-", "");
+		lastTime = lastTime.trim().replaceAll(" ","").substring(0, 10);
+		System.out.println("마지막 문자 시간 : "+lastTime);
+		
 		Map<String, Object> map = new HashMap<String, Object>(); 
 		int total = surveyDao.selectUserCount(); //총카운트
 		int resTotal = surveyDao.selectResCount(); //응답자
 		int resAll = surveyDao.selectResAllCount(); //모든답변응답자
-		int mmsFail = surveyDao.selectMmsFailCount(); //문자전송 실패자
+		int mmsFail = surveyDao.selectMmsFailCount(lastTime); //문자전송 실패자
+		System.out.println("문자전송 실패자 : "+mmsFail);
 		List<String> sendList = surveyDao.selectSendReport();
 				
 		map.put("total", total);
@@ -292,5 +308,1406 @@ public class SurveyService {
 		map.put("sendList", sendList);
 		System.out.println(map);
 		return map;
+	}
+	
+	// 베스트풀 중복제거
+	public void removeBestpollServ() {
+		List<Ars> list = surveyDao.selectBestpoll();
+		
+		int delCnt = 0;
+		for(int i=0; i<list.size(); i++) {
+			int result = surveyDao.deleteBestpoll(list.get(i));
+			if(result > 0) delCnt++; 
+			System.out.println(i+ " 번째 진행중!!");
+		}
+		
+		System.out.println("총 삭제건수 : "+ delCnt);
+	}
+	
+	// 임실군 설문샘플링 세팅
+	public int setSamplingImsil(String dong, int sample) {
+		int arsNum = 0; // 설문등록 후 바꿔줘야함.
+		Sampling sampling = new Sampling();
+		sampling.setArsNum(arsNum);
+		sampling.setSido("전북");
+		sampling.setSigungu("임실군");
+		sampling.setDong(dong);
+		sampling.setSample(sample);
+		
+		return surveyDao.insertSamplingImsil(sampling);
+	}
+	
+	// 임실군 설문대상 세팅
+	public void setTargerArsImsil() {
+		/*List<Sample> list = surveyDao.selectSample();*/ //익산시 인거 조회
+		int sampleCnt = 0;
+		int count = 0;
+		int arsNum = 0;
+		/* 익산
+		 * String[] dongList = {"오산면","모현동","송학동","중앙동","평화동","인화동","마동","남중동","신동","함열읍","황등면","함라면","웅포면","성당면","용안면","용동면","낭산면","망성면","여산면","금마면","왕궁면","춘포면","삼기면","영등2동","삼성동","동산동","영동1동","어양동","팔봉동"};
+		*/
+		String[] dongList = {"임실읍","성수면","운암면","신평면","신덕면","관촌면","청웅면","오수면","삼계면","강진면","덕치면","지사면"};
+		int[] sampleList = {119, 32, 31, 29, 24, 63, 26, 71, 29, 30, 22, 24}; //비례할당 표본수
+		for(int i=0; i<dongList.length; i++) {
+			// 임실군 설문샘플링 세팅
+			int result = setSamplingImsil(dongList[i], sampleList[i]);
+			if(result == 1) sampleCnt++;
+			
+			List<Sample> list = surveyDao.selectAllHome(dongList[i]); //전화 안건 목록 동별로 조회
+			for(int j=0; j<list.size(); j++) {
+				Sampling sampling = new Sampling();
+				sampling.setArsNum(arsNum);
+				sampling.setSido(list.get(j).gettSido());
+				sampling.setSigungu(list.get(j).gettSigungu());
+				sampling.setDong(list.get(j).gettDong());
+				if(list.get(j).gettName() != null && list.get(j).gettName() != "")sampling.setName(list.get(j).gettName());
+				sampling.setTel(list.get(j).gettTelNo());
+				
+				int result2 = surveyDao.insertArsResultTb(sampling);
+				if(result2 > 0) System.out.println(j +" 번째 결과테이블 입력성공");
+				else if(result2 == 0) System.out.println(j +" 번째 결과테이블 입력실패");
+				count++;
+			}			
+		}
+		System.out.println("샘플링 등록 성공건수 : "+sampleCnt);
+		System.out.println("총 카운트 : "+count);
+		
+		/*Sampling sampling = new Sampling();
+		sampling.setArsNum(204);
+		sampling.setSample(1000);
+		sampling.setSido("전북");
+		sampling.setSigungu("익산시");
+		
+		int result = surveyDao.insertSample(sampling); //샘플링데이터 입력
+		
+		for(int i=0; i<list.size(); i++) {
+			sampling = new Sampling();
+			sampling.setArsNum(204);
+			sampling.setSido("전북");
+			sampling.setSigungu("익산시");
+			if(list.get(i).gettName() != null && list.get(i).gettName() != "")sampling.setName(list.get(i).gettName());
+			sampling.setTel(list.get(i).gettTelNo());
+			
+			int result2 = surveyDao.insertArsResultTb(sampling);
+			if(result2 > 0) System.out.println(i +" 번째 결과테이블 입력성공");
+			else if(result2 == 0) System.out.println(i +" 번째 결과테이블 입력실패");
+		}*/
+	}
+	/*List<String> aList = surveyDao.selectAgeCount();
+	
+	int age1=0; //10
+	int age2=0; //20
+	int age3=0; //30
+	int age4=0; //40
+	int age5=0; //50
+	int age6=0; //60
+	
+	for(int i=0; i<aList.size(); i++) {
+		
+	}*/
+	
+	/*public void lastResultServ() {
+		List<Xroshot> sList = surveyDao.selectResStat();
+		
+		int checkCount = 0;
+		for(int i=0; i<sList.size();i++) {
+			//1형, 7형, 8형
+			int id = sList.get(i).getMsgId();
+			if(id >= 20498 && id <=20565 || id >= 21267 && id <=21327 || id >= 21475 && id <=21785 || id >= 22212 && id <=22443 ||id >= 22589 && id <=22838 ||id >= 22903 && id <=23150) {
+				if(sList.get(i).getRepliedFile().substring(21, 22).equals("1")) {
+					System.out.println("가선거구");
+					sList.get(i).setAns3(1);
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("2")) {
+					System.out.println("나선거구");
+					sList.get(i).setAns3(2);
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("3")) {
+					System.out.println("다선거구");
+					sList.get(i).setAns3(3);
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("4")) {
+					System.out.println("라선거구");
+					sList.get(i).setAns3(4);
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("5")) {
+					System.out.println("마선거구");
+					sList.get(i).setAns3(5);
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("6")) {
+					System.out.println("바선거구");
+					sList.get(i).setAns3(6);
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("7")) {
+					System.out.println("사선거구");
+					sList.get(i).setAns3(7);
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("8")) {
+					System.out.println("아선거구");
+					sList.get(i).setAns3(8);
+				}
+				
+				//로테이션
+				if(id <=22838) {
+					
+				}else if(id >= 22903) {
+					if(sList.get(i).getRepliedFile().substring(33, 34).equals("1")) {
+						sList.get(i).setAns5(3);
+					}else if(sList.get(i).getRepliedFile().substring(33, 34).equals("2")) {
+						sList.get(i).setAns5(4);
+					}else if(sList.get(i).getRepliedFile().substring(33, 34).equals("3")) {
+						sList.get(i).setAns5(5);
+					}else if(sList.get(i).getRepliedFile().substring(33, 34).equals("4")) {
+						sList.get(i).setAns5(6);
+					}else if(sList.get(i).getRepliedFile().substring(33, 34).equals("5")) {
+						sList.get(i).setAns5(1);
+					}else if(sList.get(i).getRepliedFile().substring(33, 34).equals("6")) {
+						sList.get(i).setAns5(2);
+					}
+				}
+				
+			//2형
+			}else if(id >= 20566 && id <=20802 || id >= 21328 && id <=21474 || id >= 22444 && id <=22588 ||id >= 22839 && id <=22902) {
+				if(sList.get(i).getRepliedFile().substring(21, 22).equals("1")) {
+					sList.get(i).setAns3(3);
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("2")) {
+					sList.get(i).setAns3(4);
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("3")) {
+					sList.get(i).setAns3(5);
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("4")) {
+					sList.get(i).setAns3(6);
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("5")) {
+					sList.get(i).setAns3(7);
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("6")) {
+					sList.get(i).setAns3(8);
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("7")) {
+					sList.get(i).setAns3(1);
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("8")) {
+					sList.get(i).setAns3(2);
+				}
+				
+				if(sList.get(i).getRepliedFile().substring(33, 34).equals("1")) {
+					sList.get(i).setAns5(3);
+				}else if(sList.get(i).getRepliedFile().substring(33, 34).equals("2")) {
+					sList.get(i).setAns5(4);
+				}else if(sList.get(i).getRepliedFile().substring(33, 34).equals("3")) {
+					sList.get(i).setAns5(5);
+				}else if(sList.get(i).getRepliedFile().substring(33, 34).equals("4")) {
+					sList.get(i).setAns5(6);
+				}else if(sList.get(i).getRepliedFile().substring(33, 34).equals("5")) {
+					sList.get(i).setAns5(1);
+				}else if(sList.get(i).getRepliedFile().substring(33, 34).equals("6")) {
+					sList.get(i).setAns5(2);
+				}
+				
+			//3형
+			}else if(id >= 20803 && id <=21034 || id >= 21786 && id <=22073) {
+				if(sList.get(i).getRepliedFile().substring(21, 22).equals("1")) {
+					sList.get(i).setAns3(5);
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("2")) {
+					sList.get(i).setAns3(6);
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("3")) {
+					sList.get(i).setAns3(7);
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("4")) {
+					sList.get(i).setAns3(8);
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("5")) {
+					sList.get(i).setAns3(1);
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("6")) {
+					sList.get(i).setAns3(2);
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("7")) {
+					sList.get(i).setAns3(3);
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("8")) {
+					sList.get(i).setAns3(4);
+				}
+				
+				if(sList.get(i).getRepliedFile().substring(33, 34).equals("1")) {
+					sList.get(i).setAns5(5);
+				}else if(sList.get(i).getRepliedFile().substring(33, 34).equals("2")) {
+					sList.get(i).setAns5(6);
+				}else if(sList.get(i).getRepliedFile().substring(33, 34).equals("3")) {
+					sList.get(i).setAns5(1);
+				}else if(sList.get(i).getRepliedFile().substring(33, 34).equals("4")) {
+					sList.get(i).setAns5(2);
+				}else if(sList.get(i).getRepliedFile().substring(33, 34).equals("5")) {
+					sList.get(i).setAns5(3);
+				}else if(sList.get(i).getRepliedFile().substring(33, 34).equals("6")) {
+					sList.get(i).setAns5(4);
+				}
+			//4형
+			}else if(id >= 21035 && id <=21266 || id >= 22074 && id <=22211) {
+				if(sList.get(i).getRepliedFile().substring(21, 22).equals("1")) {
+					sList.get(i).setAns3(7);
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("2")) {
+					sList.get(i).setAns3(8);
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("3")) {
+					sList.get(i).setAns3(1);
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("4")) {
+					sList.get(i).setAns3(2);
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("5")) {
+					sList.get(i).setAns3(3);
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("6")) {
+					sList.get(i).setAns3(4);
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("7")) {
+					sList.get(i).setAns3(5);
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("8")) {
+					sList.get(i).setAns3(6);
+				}
+				
+				if(sList.get(i).getRepliedFile().substring(33, 34).equals("1")) {
+					sList.get(i).setAns5(1);
+				}else if(sList.get(i).getRepliedFile().substring(33, 34).equals("2")) {
+					sList.get(i).setAns5(2);
+				}else if(sList.get(i).getRepliedFile().substring(33, 34).equals("3")) {
+					sList.get(i).setAns5(5);
+				}else if(sList.get(i).getRepliedFile().substring(33, 34).equals("4")) {
+					sList.get(i).setAns5(6);
+				}else if(sList.get(i).getRepliedFile().substring(33, 34).equals("5")) {
+					sList.get(i).setAns5(3);
+				}else if(sList.get(i).getRepliedFile().substring(33, 34).equals("6")) {
+					sList.get(i).setAns5(4);
+				}
+			}
+			// 입력
+			sList.get(i).setNo(i+1);
+			int insRes = surveyDao.insertResult(sList.get(i));
+			if(insRes == 1) {
+				System.out.println(i+"번째 입력성공!!");
+				checkCount++;
+			}			
+		}
+		System.out.println("총 입력성공 카운트 : "+checkCount);
+	}*/
+	
+	/*public void lastResult2Serv() {
+		List<Xroshot> sList = surveyDao.selectResStat2();
+		
+		int checkCount = 0;
+		for(int i=0; i<sList.size();i++) {
+			//1형, 7형, 8형
+			int id = sList.get(i).getMsgId();
+			if(sList.get(i).getRepliedFile().length() >= 23) {
+				if(id >= 20498 && id <=20565 || id >= 21267 && id <=21327 || id >= 21475 && id <=21785 || id >= 22212 && id <=22443 ||id >= 22589 && id <=22838 ||id >= 22903 && id <=23150) {
+					
+					if(sList.get(i).getRepliedFile().length() == 23) {
+						if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("1")) {
+							System.out.println("가선거구");
+							sList.get(i).setAns3(1);
+						}else if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("2")) {
+							System.out.println("나선거구");
+							sList.get(i).setAns3(2);
+						}else if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("3")) {
+							System.out.println("다선거구");
+							sList.get(i).setAns3(3);
+						}else if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("4")) {
+							System.out.println("라선거구");
+							sList.get(i).setAns3(4);
+						}else if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("5")) {
+							System.out.println("마선거구");
+							sList.get(i).setAns3(5);
+						}else if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("6")) {
+							System.out.println("바선거구");
+							sList.get(i).setAns3(6);
+						}else if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("7")) {
+							System.out.println("사선거구");
+							sList.get(i).setAns3(7);
+						}else if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("8")) {
+							System.out.println("아선거구");
+							sList.get(i).setAns3(8);
+						}
+					}else if(sList.get(i).getRepliedFile().length() > 23) {
+						if(sList.get(i).getRepliedFile().substring(21, 22).equals("1")) {
+							System.out.println("가선거구");
+							sList.get(i).setAns3(1);
+						}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("2")) {
+							System.out.println("나선거구");
+							sList.get(i).setAns3(2);
+						}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("3")) {
+							System.out.println("다선거구");
+							sList.get(i).setAns3(3);
+						}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("4")) {
+							System.out.println("라선거구");
+							sList.get(i).setAns3(4);
+						}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("5")) {
+							System.out.println("마선거구");
+							sList.get(i).setAns3(5);
+						}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("6")) {
+							System.out.println("바선거구");
+							sList.get(i).setAns3(6);
+						}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("7")) {
+							System.out.println("사선거구");
+							sList.get(i).setAns3(7);
+						}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("8")) {
+							System.out.println("아선거구");
+							sList.get(i).setAns3(8);
+						}
+					}
+					
+					
+					//로테이션
+					if(id <=22838) {
+						
+					}else if(id >= 22903) {
+						if(sList.get(i).getRepliedFile().length() == 35) {
+							if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("1")) {
+								sList.get(i).setAns5(3);
+							}else if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("2")) {
+								sList.get(i).setAns5(4);
+							}else if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("3")) {
+								sList.get(i).setAns5(5);
+							}else if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("4")) {
+								sList.get(i).setAns5(6);
+							}else if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("5")) {
+								sList.get(i).setAns5(1);
+							}else if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("6")) {
+								sList.get(i).setAns5(2);
+							}
+						}else if(sList.get(i).getRepliedFile().length() > 35){
+							if(sList.get(i).getRepliedFile().substring(33, 34).equals("1")) {
+								sList.get(i).setAns5(3);
+							}else if(sList.get(i).getRepliedFile().substring(33, 34).equals("2")) {
+								sList.get(i).setAns5(4);
+							}else if(sList.get(i).getRepliedFile().substring(33, 34).equals("3")) {
+								sList.get(i).setAns5(5);
+							}else if(sList.get(i).getRepliedFile().substring(33, 34).equals("4")) {
+								sList.get(i).setAns5(6);
+							}else if(sList.get(i).getRepliedFile().substring(33, 34).equals("5")) {
+								sList.get(i).setAns5(1);
+							}else if(sList.get(i).getRepliedFile().substring(33, 34).equals("6")) {
+								sList.get(i).setAns5(2);
+							}
+						}
+						
+					}
+					
+				//2형
+				}else if(id >= 20566 && id <=20802 || id >= 21328 && id <=21474 || id >= 22444 && id <=22588 ||id >= 22839 && id <=22902) {
+					if(sList.get(i).getRepliedFile().length() == 23) {
+						if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("1")) {
+							sList.get(i).setAns3(3);
+						}else if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("2")) {
+							sList.get(i).setAns3(4);
+						}else if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("3")) {
+							sList.get(i).setAns3(5);
+						}else if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("4")) {
+							sList.get(i).setAns3(6);
+						}else if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("5")) {
+							sList.get(i).setAns3(7);
+						}else if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("6")) {
+							sList.get(i).setAns3(8);
+						}else if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("7")) {
+							sList.get(i).setAns3(1);
+						}else if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("8")) {
+							sList.get(i).setAns3(2);
+						}
+					}else if(sList.get(i).getRepliedFile().length() > 23){
+						if(sList.get(i).getRepliedFile().substring(21, 22).equals("1")) {
+							sList.get(i).setAns3(3);
+						}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("2")) {
+							sList.get(i).setAns3(4);
+						}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("3")) {
+							sList.get(i).setAns3(5);
+						}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("4")) {
+							sList.get(i).setAns3(6);
+						}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("5")) {
+							sList.get(i).setAns3(7);
+						}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("6")) {
+							sList.get(i).setAns3(8);
+						}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("7")) {
+							sList.get(i).setAns3(1);
+						}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("8")) {
+							sList.get(i).setAns3(2);
+						}
+					}
+					
+					
+					if(sList.get(i).getRepliedFile().length() == 35) {
+						if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("1")) {
+							sList.get(i).setAns5(3);
+						}else if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("2")) {
+							sList.get(i).setAns5(4);
+						}else if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("3")) {
+							sList.get(i).setAns5(5);
+						}else if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("4")) {
+							sList.get(i).setAns5(6);
+						}else if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("5")) {
+							sList.get(i).setAns5(1);
+						}else if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("6")) {
+							sList.get(i).setAns5(2);
+						}
+					}else if(sList.get(i).getRepliedFile().length() > 35){
+						if(sList.get(i).getRepliedFile().substring(33, 34).equals("1")) {
+							sList.get(i).setAns5(3);
+						}else if(sList.get(i).getRepliedFile().substring(33, 34).equals("2")) {
+							sList.get(i).setAns5(4);
+						}else if(sList.get(i).getRepliedFile().substring(33, 34).equals("3")) {
+							sList.get(i).setAns5(5);
+						}else if(sList.get(i).getRepliedFile().substring(33, 34).equals("4")) {
+							sList.get(i).setAns5(6);
+						}else if(sList.get(i).getRepliedFile().substring(33, 34).equals("5")) {
+							sList.get(i).setAns5(1);
+						}else if(sList.get(i).getRepliedFile().substring(33, 34).equals("6")) {
+							sList.get(i).setAns5(2);
+						}
+					}
+					
+					
+				//3형
+				}else if(id >= 20803 && id <=21034 || id >= 21786 && id <=22073) {
+					if(sList.get(i).getRepliedFile().length() == 23) {
+						if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("1")) {
+							sList.get(i).setAns3(5);
+						}else if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("2")) {
+							sList.get(i).setAns3(6);
+						}else if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("3")) {
+							sList.get(i).setAns3(7);
+						}else if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("4")) {
+							sList.get(i).setAns3(8);
+						}else if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("5")) {
+							sList.get(i).setAns3(1);
+						}else if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("6")) {
+							sList.get(i).setAns3(2);
+						}else if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("7")) {
+							sList.get(i).setAns3(3);
+						}else if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("8")) {
+							sList.get(i).setAns3(4);
+						}
+					}else if(sList.get(i).getRepliedFile().length() > 23) {
+						if(sList.get(i).getRepliedFile().substring(21, 22).equals("1")) {
+							sList.get(i).setAns3(5);
+						}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("2")) {
+							sList.get(i).setAns3(6);
+						}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("3")) {
+							sList.get(i).setAns3(7);
+						}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("4")) {
+							sList.get(i).setAns3(8);
+						}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("5")) {
+							sList.get(i).setAns3(1);
+						}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("6")) {
+							sList.get(i).setAns3(2);
+						}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("7")) {
+							sList.get(i).setAns3(3);
+						}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("8")) {
+							sList.get(i).setAns3(4);
+						}
+					}
+					
+					
+					if(sList.get(i).getRepliedFile().length() == 35) {
+						if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("1")) {
+							sList.get(i).setAns5(5);
+						}else if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("2")) {
+							sList.get(i).setAns5(6);
+						}else if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("3")) {
+							sList.get(i).setAns5(1);
+						}else if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("4")) {
+							sList.get(i).setAns5(2);
+						}else if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("5")) {
+							sList.get(i).setAns5(3);
+						}else if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("6")) {
+							sList.get(i).setAns5(4);
+						}
+					}else if(sList.get(i).getRepliedFile().length() > 35){
+						if(sList.get(i).getRepliedFile().substring(33, 34).equals("1")) {
+							sList.get(i).setAns5(5);
+						}else if(sList.get(i).getRepliedFile().substring(33, 34).equals("2")) {
+							sList.get(i).setAns5(6);
+						}else if(sList.get(i).getRepliedFile().substring(33, 34).equals("3")) {
+							sList.get(i).setAns5(1);
+						}else if(sList.get(i).getRepliedFile().substring(33, 34).equals("4")) {
+							sList.get(i).setAns5(2);
+						}else if(sList.get(i).getRepliedFile().substring(33, 34).equals("5")) {
+							sList.get(i).setAns5(3);
+						}else if(sList.get(i).getRepliedFile().substring(33, 34).equals("6")) {
+							sList.get(i).setAns5(4);
+						}
+					}
+					
+				//4형
+				}else if(id >= 21035 && id <=21266 || id >= 22074 && id <=22211) {
+					if(sList.get(i).getRepliedFile().length() == 23) {
+						if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("1")) {
+							sList.get(i).setAns3(7);
+						}else if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("2")) {
+							sList.get(i).setAns3(8);
+						}else if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("3")) {
+							sList.get(i).setAns3(1);
+						}else if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("4")) {
+							sList.get(i).setAns3(2);
+						}else if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("5")) {
+							sList.get(i).setAns3(3);
+						}else if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("6")) {
+							sList.get(i).setAns3(4);
+						}else if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("7")) {
+							sList.get(i).setAns3(5);
+						}else if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("8")) {
+							sList.get(i).setAns3(6);
+						}
+					}else if(sList.get(i).getRepliedFile().length() > 23) {
+						if(sList.get(i).getRepliedFile().substring(21, 22).equals("1")) {
+							sList.get(i).setAns3(7);
+						}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("2")) {
+							sList.get(i).setAns3(8);
+						}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("3")) {
+							sList.get(i).setAns3(1);
+						}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("4")) {
+							sList.get(i).setAns3(2);
+						}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("5")) {
+							sList.get(i).setAns3(3);
+						}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("6")) {
+							sList.get(i).setAns3(4);
+						}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("7")) {
+							sList.get(i).setAns3(5);
+						}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("8")) {
+							sList.get(i).setAns3(6);
+						}
+					}
+					
+					
+					if(sList.get(i).getRepliedFile().length() == 35) {
+						if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("1")) {
+							sList.get(i).setAns5(1);
+						}else if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("2")) {
+							sList.get(i).setAns5(2);
+						}else if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("3")) {
+							sList.get(i).setAns5(5);
+						}else if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("4")) {
+							sList.get(i).setAns5(6);
+						}else if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("5")) {
+							sList.get(i).setAns5(3);
+						}else if(sList.get(i).getRepliedFile().substring(sList.get(i).getRepliedFile().length()-2, sList.get(i).getRepliedFile().length()-1).equals("6")) {
+							sList.get(i).setAns5(4);
+						}
+					}else if(sList.get(i).getRepliedFile().length() > 35){
+						if(sList.get(i).getRepliedFile().substring(33, 34).equals("1")) {
+							sList.get(i).setAns5(1);
+						}else if(sList.get(i).getRepliedFile().substring(33, 34).equals("2")) {
+							sList.get(i).setAns5(2);
+						}else if(sList.get(i).getRepliedFile().substring(33, 34).equals("3")) {
+							sList.get(i).setAns5(5);
+						}else if(sList.get(i).getRepliedFile().substring(33, 34).equals("4")) {
+							sList.get(i).setAns5(6);
+						}else if(sList.get(i).getRepliedFile().substring(33, 34).equals("5")) {
+							sList.get(i).setAns5(3);
+						}else if(sList.get(i).getRepliedFile().substring(33, 34).equals("6")) {
+							sList.get(i).setAns5(4);
+						}
+					}
+					
+				}
+						
+			}
+			// 입력
+			sList.get(i).setNo(i+1);
+			int insRes = surveyDao.insertResult(sList.get(i));
+			if(insRes == 1) {
+				System.out.println(i+"번째 입력성공!!");
+				checkCount++;
+			}	
+		}
+		System.out.println("총 입력성공 카운트 : "+checkCount);
+	}*/
+	
+	public void checkSexAgeServ() {
+		List<Xroshot> sList = surveyDao.selectManCount();
+		
+		int man = 0;
+		int woman = 0;
+		int age1=0; //10
+		int age2=0; //20
+		int age3=0; //30
+		int age4=0; //40
+		int age5=0; //50
+		int age6=0; //60
+		int loc1 = 0, loc2=0, loc3=0,loc4=0,loc5=0,loc6=0,loc7=0,loc8=0,loc9=0;
+		/*System.out.println("원형 : "+sList.get(0));
+		System.out.println("성별값 확인 : "+sList.get(0).substring(9, 10));
+		System.out.println("나이값 확인 : "+sList.get(0).substring(15, 16));*/
+		
+		int ansCnt1_1=0,ansCnt1_2=0,ansCnt1_3=0,ansCnt1_4=0,ansCnt1_5=0,ansCnt1_6=0,ansCnt1_7=0,ansCnt1_8=0; //가선거구
+		int ansCnt2_1=0,ansCnt2_2=0,ansCnt2_3=0,ansCnt2_4=0,ansCnt2_5=0,ansCnt2_6=0,ansCnt2_7=0,ansCnt2_8=0; //나선거구
+		int ansCnt3_1=0,ansCnt3_2=0,ansCnt3_3=0,ansCnt3_4=0,ansCnt3_5=0,ansCnt3_6=0,ansCnt3_7=0,ansCnt3_8=0; //다선거수
+		int ansCnt4_1=0,ansCnt4_2=0,ansCnt4_3=0,ansCnt4_4=0,ansCnt4_5=0,ansCnt4_6=0,ansCnt4_7=0,ansCnt4_8=0; //라
+		int ansCnt5_1=0,ansCnt5_2=0,ansCnt5_3=0,ansCnt5_4=0,ansCnt5_5=0,ansCnt5_6=0,ansCnt5_7=0,ansCnt5_8=0; //마
+		int ansCnt6_1=0,ansCnt6_2=0,ansCnt6_3=0,ansCnt6_4=0,ansCnt6_5=0,ansCnt6_6=0,ansCnt6_7=0,ansCnt6_8=0; //바
+		int ansCnt7_1=0,ansCnt7_2=0,ansCnt7_3=0,ansCnt7_4=0,ansCnt7_5=0,ansCnt7_6=0,ansCnt7_7=0,ansCnt7_8=0; //사
+		int ansCnt8_1=0,ansCnt8_2=0,ansCnt8_3=0,ansCnt8_4=0,ansCnt8_5=0,ansCnt8_6=0,ansCnt8_7=0,ansCnt8_8=0; //아
+		
+		for(int i=0; i<sList.size(); i++) {
+			//성별
+			if(sList.get(i).getRepliedFile().substring(8, 9).equals("1")) {
+				System.out.println("남성+1!!");
+				man++;
+			}else if(sList.get(i).getRepliedFile().substring(8, 9).equals("2")){
+				System.out.println("여성+1!!");
+				woman++;
+			}
+			//나이
+			if(sList.get(i).getRepliedFile().substring(14, 15).equals("1")) {
+				System.out.println("18이하");
+				age1++;
+			}else if(sList.get(i).getRepliedFile().substring(14, 15).equals("2")) {
+				System.out.println("20대");
+				age2++;
+			}else if(sList.get(i).getRepliedFile().substring(14, 15).equals("3")) {
+				System.out.println("30대");
+				age3++;
+			}else if(sList.get(i).getRepliedFile().substring(14, 15).equals("4")) {
+				System.out.println("40대");
+				age4++;
+			}else if(sList.get(i).getRepliedFile().substring(14, 15).equals("5")) {
+				System.out.println("50대");
+				age5++;
+			}else if(sList.get(i).getRepliedFile().substring(14, 15).equals("6")) {
+				System.out.println("60대!");
+				age6++;
+			}
+			
+			//지역
+			int id = sList.get(i).getMsgId();
+			
+			//1형
+			/*if(id >= 20498 && id <=20565 || id >= 21267 && id <=21327 || id >= 21475 && id <=21785 || id >= 22212 && id <=22443 ||id >= 22589 && id <=22838 ||id >= 22903 && id <=23029 || id >=23003) {
+				if(sList.get(i).getRepliedFile().substring(21, 22).equals("1")) {
+					System.out.println("가선거구");
+					loc1++;
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("2")) {
+					System.out.println("나선거구");
+					loc2++;
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("3")) {
+					System.out.println("다선거구");
+					loc3++;
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("4")) {
+					System.out.println("라선거구");
+					loc4++;
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("5")) {
+					System.out.println("마선거구");
+					loc5++;
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("6")) {
+					System.out.println("바선거구");
+					loc6++;
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("7")) {
+					System.out.println("사선거구");
+					loc7++;
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("8")) {
+					System.out.println("아선거구");
+					loc8++;
+				}
+			//2형
+			}else if(id >= 20566 && id <=20802 || id >= 21328 && id <=21474 || id >= 22444 && id <=22588 ||id >= 22839 && id <=22902) {
+				if(sList.get(i).getRepliedFile().substring(21, 22).equals("1")) {
+					loc3++;
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("2")) {
+					loc4++;
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("3")) {
+					loc5++;
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("4")) {
+					loc6++;
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("5")) {
+					loc7++;
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("6")) {
+					loc8++;
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("7")) {
+					loc1++;
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("8")) {
+					loc2++;
+				}
+			//3형
+			}else if(id >= 20803 && id <=21034 || id >= 21786 && id <=22073) {
+				if(sList.get(i).getRepliedFile().substring(21, 22).equals("1")) {
+					loc5++;
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("2")) {
+					loc6++;
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("3")) {
+					loc7++;
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("4")) {
+					loc8++;
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("5")) {
+					loc1++;
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("6")) {
+					loc2++;
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("7")) {
+					loc3++;
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("8")) {
+					loc4++;
+				}
+			//4형
+			}else if(id >= 21035 && id <=21266 || id >= 22074 && id <=22211) {
+				if(sList.get(i).getRepliedFile().substring(21, 22).equals("1")) {
+					loc7++;
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("2")) {
+					loc8++;
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("3")) {
+					loc1++;
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("4")) {
+					loc2++;
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("5")) {
+					loc3++;
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("6")) {
+					loc4++;
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("7")) {
+					loc5++;
+				}else if(sList.get(i).getRepliedFile().substring(21, 22).equals("8")) {
+					loc6++;
+				}	
+			}*/
+			
+		}
+		
+		int[] len = {9,15,21,27,33,39};
+		List<Integer> resList = new ArrayList<Integer>();
+		for(int i=0; i<len.length;i++) {
+			int resCnt = surveyDao.selectAgeCount(len[i]); 
+			resList.add(resCnt);
+		}
+		
+		//문항별 연령별 확인로직
+		/*List<String> rList = surveyDao.selectResForAgeCheck();
+		int age18=0, age20=0, age30=0, age40=0, age50=0, age60=0;
+		int age20_1=0,age20_2=0,age20_3=0,age20_4=0,age20_5=0,age20_6=0,age20_7=0,age20_8=0,age20_9=0; 
+		int age30_1=0,age30_2=0,age30_3=0,age30_4=0,age30_5=0,age30_6=0,age30_7=0,age30_8=0,age30_9=0;
+		
+		for(int i=0;i<rList.size(); i++) {
+			System.out.println(i+" 번째 원형 응답 : "+ rList.get(i));
+			System.out.println(i+" 번째 원형 길이 : "+ rList.get(i).length());
+			
+			if(rList.get(i).length() >= 17) {
+				if(rList.get(i).length() == 17) {
+					if(rList.get(i).substring(rList.get(i).length()-1, rList.get(i).length()).equals("2")) {
+						age20++;
+					}else if(rList.get(i).substring(rList.get(i).length()-1, rList.get(i).length()).equals("3")) {
+						age30++;
+					}
+				}else {
+					if(rList.get(i).substring(15, 16).equals("2")) {
+						age20++;
+						System.out.println("20대++");
+					}else if(rList.get(i).substring(15, 16).equals("3")) {
+						age30++;
+					}
+					if(rList.get(i).length() >= 23) {
+						if(rList.get(i).substring(15, 16).equals("2")) {
+							age20_1++;
+							System.out.println("20대++");
+						}else if(rList.get(i).substring(15, 16).equals("3")) {
+							age30_1++;
+						}
+					}
+					if(rList.get(i).length() >= 29) {
+						if(rList.get(i).substring(15, 16).equals("2")) {
+							age20_2++;
+							System.out.println("20대++");
+						}else if(rList.get(i).substring(15, 16).equals("3")) {
+							age30_2++;
+						}
+					}
+					if(rList.get(i).length() >= 35) {
+						if(rList.get(i).substring(15, 16).equals("2")) {
+							age20_3++;
+							System.out.println("20대++");
+						}else if(rList.get(i).substring(15, 16).equals("3")) {
+							age30_3++;
+						}
+					}
+					if(rList.get(i).length() >= 41) {
+						if(rList.get(i).substring(15, 16).equals("2")) {
+							age20_4++;
+							System.out.println("20대++");
+						}else if(rList.get(i).substring(15, 16).equals("3")) {
+							age30_4++;
+						}
+					}
+					if(rList.get(i).length() >= 47) {
+						if(rList.get(i).substring(15, 16).equals("2")) {
+							age20_5++;
+							System.out.println("20대++");
+						}else if(rList.get(i).substring(15, 16).equals("3")) {
+							age30_5++;
+						}
+					}
+					if(rList.get(i).length() >= 53) {
+						if(rList.get(i).substring(15, 16).equals("2")) {
+							age20_6++;
+							System.out.println("20대++");
+						}else if(rList.get(i).substring(15, 16).equals("3")) {
+							age30_6++;
+						}
+					}
+					if(rList.get(i).length() >= 59) {
+						if(rList.get(i).substring(15, 16).equals("2")) {
+							age20_7++;
+							System.out.println("20대++");
+						}else if(rList.get(i).substring(15, 16).equals("3")) {
+							age30_7++;
+						}
+					}
+					if(rList.get(i).length() >= 66) {
+						if(rList.get(i).substring(15, 16).equals("2")) {
+							age20_8++;
+							System.out.println("20대++");
+						}else if(rList.get(i).substring(15, 16).equals("3")) {
+							age30_8++;
+						}
+					}
+					if(rList.get(i).length() >= 73) {
+						if(rList.get(i).substring(15, 16).equals("2")) {
+							age20_9++;
+							System.out.println("20대++");
+						}else if(rList.get(i).substring(15, 16).equals("3")) {
+							age30_9++;
+						}
+					}
+				}
+				
+			}
+		}*/
+		
+		System.out.println("***********************************");
+		System.out.println("남성 : "+man+" ,여성 : "+woman);
+		System.out.println("====연령============================");
+		System.out.println("18세이하 : "+age1+ " 20대 : "+age2);
+		System.out.println("30대 : "+age3+" 40대 : "+age4);
+		System.out.println("50대 : "+age5+" 60대 : "+age6);
+		System.out.println("====선거구===========================");
+		/*System.out.println("가선거구 : "+loc1+" 나선거구 : "+loc2);
+		System.out.println("다선거구 : "+loc3+" 라선거구 : "+loc4);
+		System.out.println("마선거구 : "+loc5+" 바선거구 : "+loc6);
+		System.out.println("사선거구 : "+loc7+" 아선거구 : "+loc8);*/
+		System.out.println("====문항별응답자 총합====================");
+		System.out.println(resList);
+		/*System.out.println("====문항별20.30대응답자 총합====================");
+		System.out.println("20대 : 2번 : "+age20+" 3번 : "+age20_1+" 4번 : "+age20_2+" 5번 : "+age20_3+" 6번 : "+age20_4+" 7번 : "+age20_5+ " 8번  : "+age20_6 + " 9번  : "+age20_7+" 10번  : "+age20_8+" 11번 : "+age20_9);
+		System.out.println("30대 : 2번 : "+age30+" 3번 : "+age30_1+" 4번 : "+age30_2+" 5번 : "+age30_3+" 6번 : "+age30_4+" 7번 : "+age30_5+ " 8번  : "+age30_6 + " 9번  : "+age30_7+" 10번  : "+age30_8+" 11번 : "+age30_9);*/
+		System.out.println("***********************************");
+	}
+	
+	public void setTargerArs2() {
+		List<String> list = surveyDao.selectTels();
+		
+		String tel=null;
+		int success = 0;
+		int fail = 0;
+		for(int i=0; i<list.size(); i++) {
+			System.out.println("원형 확인 : "+list.get(i));
+			tel = "063"+list.get(i);
+			
+			System.out.println(i+ " 번째 전화번호 확인 : "+tel);
+			Sampling sampling = new Sampling();
+			sampling.setArsNum(207);
+			sampling.setSido("전북");
+			sampling.setSigungu("익산시");
+			sampling.setTel(tel);			
+			
+			int result = surveyDao.insertArsResultTb2(sampling);
+			if(result > 0) {
+				System.out.println(i+ "번째 입력성공!!");
+				success++;
+			}else if(result == 0) {
+				System.out.println(i+ "번째 입력실패!!");
+				fail++;
+			}
+		}
+		System.out.println("성공 : "+success+" , fail : "+fail);
+		
+	}
+	
+	public void setTargerArs3() {
+		List<Xroshot> list = surveyDao.selectLast();
+		
+		String tel=null;
+		int success = 0;
+		int fail = 0;
+		for(int i=0; i<list.size(); i++) {
+			/*System.out.println("원형 확인 : "+list.get(i));
+			tel = "063"+list.get(i);*/
+			
+			System.out.println(i+ " 번째 전화번호 확인 : "+list.get(i).getPhoneNumber());
+			Sampling sampling = new Sampling();
+			sampling.setArsNum(207);
+			sampling.setSido("전북");
+			sampling.setSigungu("익산시");
+			sampling.setTel(list.get(i).getPhoneNumber());			
+			
+			int result = surveyDao.insertArsResultTb2(sampling);
+			if(result > 0) {
+				System.out.println(i+ "번째 입력성공!!");
+				success++;
+			}else if(result == 0) {
+				System.out.println(i+ "번째 입력실패!!");
+				fail++;
+			}
+		}
+		System.out.println("성공 : "+success+" , fail : "+fail);
+		
+	}
+	public void removeRepeatServ() {
+		int count =0;
+		List<Xroshot> list = surveyDao.selectAllResArs();
+		for(int i=0; i<list.size(); i++) {
+			List<Integer> chkList = surveyDao.selectArsResultKis(list.get(i).getPhoneNumber());
+			if(chkList != null) {
+				for(int j=0; j<chkList.size(); j++) {
+					System.out.println(j+" 번째 값 : "+chkList.get(j));
+					int result = surveyDao.updateArsResult(list.get(i));
+					
+					if(result > 0) {
+						count++;
+						System.out.println(count+" 개째 수정중!!");
+					}
+				}
+			}
+			/*if(chkList.size() > 1) {
+				int result = surveyDao.deleteRepeat(chkList.get(0));
+				
+				if(result > 0) {
+					count++;
+					System.out.println(count+" 개째 삭제중!!");
+				}
+			}*/
+		}
+		System.out.println("총 "+count+ " 개 수정완료!");
+	}
+	
+	public void reCheck() {
+		List<Result> list = surveyDao.selectResultTb(206);
+		
+		int reCount = 0;
+		for(int i=0;i<list.size(); i++) {
+			int check = surveyDao.selectCntTel(list.get(i).getTel());
+			
+			if(check > 0) {
+				System.out.println(i+" 번째 중복있음!!");
+				surveyDao.deleteRepeat(list.get(i).getNum());
+				reCount++;
+			}
+		}
+		System.out.println("TOTAL RE-COUNT : "+reCount);
+	}
+	
+	public void lastInsert() {
+		List<Xroshot> list = surveyDao.selectLast();
+		
+		int success = 0;
+		int fail = 0;
+		for(int i=0; i< list.size(); i++) {
+			Sampling sampling = new Sampling();
+			sampling.setArsNum(207);
+			sampling.setSido("전북");
+			sampling.setSigungu("익산시");
+			sampling.setTel(list.get(i).getPhoneNumber());
+			
+			int result = surveyDao.insertArsResultTb2(sampling);
+			if(result > 0) {
+				System.out.println(i+ "번째 입력성공!!");
+				success++;
+			}else if(result == 0) {
+				System.out.println(i+ "번째 입력실패!!");
+				fail++;
+			}
+			
+			/*List<Integer> nList = surveyDao.selectArsResultKis(list.get(i).getPhoneNumber());*/
+			/*System.out.println(i+"번째 사이즈"+nList.size());
+			if(nList.size() > 1) error++;*/
+			
+		}
+		System.out.println("최종 success 카운트 : "+success);
+		System.out.println("최종 fail 카운트 : "+fail);
+	}
+	
+	//결번삭제(익산)
+	public void removeOverlap() {
+		int result = surveyDao.deleteOverlap();
+		
+		System.out.println("****결번 데이터 삭제******************");
+		System.out.println("삭제 카운트 : "+result);
+		System.out.println("*********************************");
+	}
+	
+	//ARS응답결과
+	public void ArsStat() {
+		int total = 0; //총 조사대상자
+		int noCall = 0; //전화받지않음
+		int retired = 0; //결번
+		int wrongNumber = 0; //잘못된번			
+	}
+	
+	//데이터 넣기
+	public void addHome35() {
+		List<User> list = surveyDao.selectDataUser();
+		
+		int count=0;
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i).getTel() != null && list.get(i).getTel() != "") {
+				
+			}
+			if(list.get(i).getTel().length() == 7) list.get(i).setTel("063"+list.get(i).getTel());
+			else if(list.get(i).getTel().substring(0,1).equals("7")) list.get(i).setTel("0"+list.get(i).getTel());
+			
+			int overlapCnt = surveyDao.selectOverlapHome35(list.get(i).getTel());
+			if(overlapCnt == 0) {
+				int result = surveyDao.insertHome35(list.get(i));
+				/*int result = surveyDao.insertHome35(list.get(i));*/
+				
+				if(result == 1) {
+					System.out.println(i+" 번째 입력성공");
+					count++;
+				}
+			}
+			
+		}
+		System.out.println("최종입력 카운트 : "+count);
+	}
+	
+	// 전북대 데이터 추출 및 홈디비에 넣기
+	public void addHome35FromJbuniv() {
+		String[] localList = {"전주시","완주군","진안군","무주군","장수군","남원시","임실군","순창군","정읍시","고창군","부안군","김제시","군산시"};
+		List<Integer> succList = new ArrayList<Integer>();
+		for(int j=0; j<localList.length; j++) {
+			List<User> list = surveyDao.selectJbuniv(localList[j]);
+			
+			int count = 0;
+			for(int i=0; i<list.size(); i++) {
+				list.get(i).setTel(list.get(i).getTel().replaceAll("-", ""));
+				System.out.println(i+" 번째 데이터 확인 : "+list.get(i).getTel());
+				
+				list.get(i).setSido("전북");
+				list.get(i).setSigungu(localList[j]);
+				
+				int overlapCnt = surveyDao.selectOverlapHome35(list.get(i).getTel());
+				if(overlapCnt == 0) {
+					int result = surveyDao.insertHome35(list.get(i));
+					
+					if(result == 1) {
+						System.out.println(i+" 번째 입력성공");
+						count++;
+					}
+				}				
+			}
+			succList.add(count);
+		}
+		System.out.println("***************************************");
+		System.out.println("순서 : "+localList);
+		System.out.println("성공목록 확인 : "+succList);
+		
+	}
+	
+	//생진원 - 입력
+	public int addBioResServ(BioUser bioUser, BioResponse bioResponse) {
+		int result = surveyDao.insertBioUser(bioUser);
+		int resResult = 0;
+		if(result == 1) {
+			bioResponse.setUserNo(bioUser.getNo());
+			resResult = surveyDao.insertBioRes(bioResponse);
+		}
+		
+		return resResult;
+	}
+	
+	//생진청 - 응답수조회
+	public int readBioResCount() {
+		return surveyDao.selectBioResCount();
+	}
+	
+	
+	//RDD
+	public void setSampleRddServ() {
+		/*정읍 String[] kukbun = {"530","531","532","533","534","535","536","537","538","570","571"};*/
+		
+		String[] kukbun = {"221","222","223","224","220","225","226","227","228","251","252","250","253","254","259","255","270","271","272","273","274","275",
+				"276","277","278","240","241","242","243","244","245","246","211","212","214","210","213","280","281","282","283","284","285","286","287","288",
+				"230","231","232"};
+		String tel = "063";
+		
+		int successCount = 0;
+		int failCount = 0;
+		for(int i=0; i<kukbun.length; i++) {
+			for(int j=0; j<9999; j++) {
+				if(j < 9) {
+					tel += kukbun[i]+"000"+String.valueOf(j+1);
+					System.out.println("************************");
+					System.out.println("10번 미만 전화번호 확인 : "+tel);
+					
+				}else if(j >= 9 && j < 99) {
+					tel += kukbun[i]+"00"+String.valueOf(j+1);
+					System.out.println("************************");
+					System.out.println("100번 미만 전화번호 확인 : "+tel);
+					
+				}else if(j >= 99 && j < 999) {
+					tel += kukbun[i]+"0"+String.valueOf(j+1);
+					System.out.println("************************");
+					System.out.println("1000번 미만 전화번호 확인 : "+tel);
+					
+				}else if(j >= 999) {
+					tel += kukbun[i]+String.valueOf(j+1);
+					System.out.println("************************");
+					System.out.println("10000번 미만 전화번호 확인 : "+tel);
+					
+				}
+				//입력할 샘플링 객체 생성
+				Sampling sampling = new Sampling();
+				sampling.setSido("전북");
+				sampling.setSigungu("전주시");
+				sampling.setTel(tel);
+				sampling.setArsNum(210);
+				
+				//DB인서트
+				int result = surveyDao.insertArsResultTb2(sampling);
+				if(result == 1) {
+					System.out.println(kukbun[i]+ "국번의 "+(j+1)+ " 번 데이터 입력 성공~!!");
+					successCount++;
+				}else if(result == 0) {
+					System.out.println(kukbun[i]+ "국번의 "+(j+1)+ " 번 데이터 입력 실패~!!");
+					failCount++;
+				}
+				//초기화
+				tel = "063";
+			}
+		}
+		System.out.println("총 입력성공 : "+successCount+" 건");
+		System.out.println("총 입력실패 : "+failCount+" 건");
+		//기관번호 삭제로직 추가
+		
+	}
+	
+	//063추가 및 삭제
+	public void addLocalNumServ() {
+		List<ExceptionTel> list = surveyDao.selectExceptionNum();
+		
+		int successCount = 0;
+		int failCount = 0;
+		for(int i=0; i<list.size(); i++) {
+			list.get(i).setTel("063"+list.get(i).getTel());
+			System.out.println("************************");
+			System.out.println((i+1)+" 번째 전화번호 확인 : "+list.get(i).getTel());
+			int result = surveyDao.deleteExcTel(list.get(i).getTel());
+			
+			if(result == 1) {
+				System.out.println((i+1)+" 번째 전화번호 삭제성공~!!");
+				successCount++;
+			}else {
+				System.out.println((i+1)+" 번째 전화번호 삭제실패~!!");
+				failCount++;
+			}
+		}
+		System.out.println("총 삭제성공 : "+successCount+" 건");
+		System.out.println("총 삭제실패 : "+failCount+" 건");
+	}
+	
+	//사업체번호 구분
+	public void isCompany() {
+		List<Xroshot> list = surveyDao.selectResJj();
+		System.out.println("조회결과 : "+list);
+		
+		int succ = 0;
+		int fail = 0;
+		for(int i=0; i<list.size(); i++) {
+			list.get(i).setNo(i+1);
+			
+			int count = surveyDao.selectDateForCompare(list.get(i).getPhoneNumber());
+			
+			if(count == 0) {
+				list.get(i).setIsCompany("가정집");
+			}else {
+				list.get(i).setIsCompany("사업체");
+			}
+			
+			int result = surveyDao.insertResJj(list.get(i));
+			
+			if(result == 0) {
+				System.out.println(i+" 번째 입력 실패~!!");
+				succ++;
+			}
+			else if(result == 1) {
+				System.out.println(i+" 번째 입력 성공~!!");
+				fail++;
+			}
+		}
+		System.out.println("성공 : "+succ);
+		System.out.println("실패 : "+fail);
+		
+	}
+	
+	//전주시장 로테이션 2형 1형값으로 정리
+	public void changLotationTwoToOne() {
+		List<Xroshot> list = surveyDao.selectResJj();
+		
+		int succ = 0;
+		int fail = 0;
+		for(int i=0; i<list.size(); i++) {
+			list.get(i).setNo(i+1);
+			
+			int count = surveyDao.selectDateForCompare(list.get(i).getPhoneNumber());
+			
+			if(count == 0) {
+				list.get(i).setIsCompany("가정집");
+			}else {
+				list.get(i).setIsCompany("사업체");
+			}
+			
+			if(list.get(i).getMsgId() >= 33893 && list.get(i).getMsgId() <= 34132) { //1 > 2형
+				if(list.get(i).getAns4() == 1) {
+					list.get(i).setAns4(2);
+				}else if(list.get(i).getAns4() == 2) {
+					list.get(i).setAns4(1);
+				}
+			}else if(list.get(i).getMsgId() >= 34373 && list.get(i).getMsgId() <= 34612) { // 2형
+				if(list.get(i).getAns4() == 1) {
+					list.get(i).setAns4(2);
+				}else if(list.get(i).getAns4() == 2) {
+					list.get(i).setAns4(1);
+				}
+			}else if(list.get(i).getMsgId() >= 34853 && list.get(i).getMsgId() <= 35092) {
+				if(list.get(i).getAns4() == 1) {
+					list.get(i).setAns4(2);
+				}else if(list.get(i).getAns4() == 2) {
+					list.get(i).setAns4(1);
+				}
+			}else if(list.get(i).getMsgId() >= 35333 && list.get(i).getMsgId() <= 35812) {
+				if(list.get(i).getAns4() == 1) {
+					list.get(i).setAns4(2);
+				}else if(list.get(i).getAns4() == 2) {
+					list.get(i).setAns4(1);
+				}
+			}else if(list.get(i).getMsgId() >= 36533 && list.get(i).getMsgId() <= 36852) {
+				if(list.get(i).getAns4() == 1) {
+					list.get(i).setAns4(2);
+				}else if(list.get(i).getAns4() == 2) {
+					list.get(i).setAns4(1);
+				}
+			}else if(list.get(i).getMsgId() >= 37253 && list.get(i).getMsgId() <= 37492) {
+				if(list.get(i).getAns4() == 1) {
+					list.get(i).setAns4(2);
+				}else if(list.get(i).getAns4() == 2) {
+					list.get(i).setAns4(1);
+				}
+			}
+			
+			int result = surveyDao.insertResJj(list.get(i));
+			
+			if(result == 1) {
+				System.out.println(i+" 번째 입력 성공~!!");
+				succ++;
+			}
+			else if(result == 0) {
+				System.out.println(i+" 번째 입력 실패~!!");
+				fail++;
+			}
+		}
+		System.out.println("성공 : "+succ);
+		System.out.println("실패 : "+fail);
+	}
+	
+	//정읍시장 로테이션 정리
+	public void changLotationTwoToOne2() {
+		List<Xroshot> list = surveyDao.selectResJj();
+		
+		int succ = 0;
+		int fail = 0;
+		for(int i=0; i<list.size(); i++) {
+			list.get(i).setNo(i+1);			
+			
+			if(list.get(i).getMsgId() >= 32433 && list.get(i).getMsgId() <= 32672) { //2형
+				if(list.get(i).getAns5().equals("1")) {
+					list.get(i).setAns5("6");
+				}else if(list.get(i).getAns5().equals("2")) {
+					list.get(i).setAns5("7");
+				}else if(list.get(i).getAns5().equals("3")) {
+					list.get(i).setAns5("1");
+				}else if(list.get(i).getAns5().equals("4")) {
+					list.get(i).setAns5("2");
+				}else if(list.get(i).getAns5().equals("5")) {
+					list.get(i).setAns5("3");
+				}else if(list.get(i).getAns5().equals("6")) {
+					list.get(i).setAns5("4");
+				}else if(list.get(i).getAns5().equals("7")) {
+					list.get(i).setAns5("5");
+				}
+			}else if(list.get(i).getMsgId() >= 32673 && list.get(i).getMsgId() <= 32912) { // 3형
+				if(list.get(i).getAns5().equals("1")) {
+					list.get(i).setAns5("4");
+				}else if(list.get(i).getAns5().equals("2")) {
+					list.get(i).setAns5("5");
+				}else if(list.get(i).getAns5().equals("3")) {
+					list.get(i).setAns5("6");
+				}else if(list.get(i).getAns5().equals("4")) {
+					list.get(i).setAns5("7");
+				}else if(list.get(i).getAns5().equals("5")) {
+					list.get(i).setAns5("1");
+				}else if(list.get(i).getAns5().equals("6")) {
+					list.get(i).setAns5("2");
+				}else if(list.get(i).getAns5().equals("7")) {
+					list.get(i).setAns5("3");
+				}
+			}else if(list.get(i).getMsgId() >= 32913 && list.get(i).getMsgId() <= 33152) { //4형
+				if(list.get(i).getAns5().equals("1")) {
+					list.get(i).setAns5("2");
+				}else if(list.get(i).getAns5().equals("2")) {
+					list.get(i).setAns5("3");
+				}else if(list.get(i).getAns5().equals("3")) {
+					list.get(i).setAns5("4");
+				}else if(list.get(i).getAns5().equals("4")) {
+					list.get(i).setAns5("5");
+				}else if(list.get(i).getAns5().equals("5")) {
+					list.get(i).setAns5("6");
+				}else if(list.get(i).getAns5().equals("6")) {
+					list.get(i).setAns5("7");
+				}else if(list.get(i).getAns5().equals("7")) {
+					list.get(i).setAns5("1");
+				}
+			}else if(list.get(i).getMsgId() >= 33153 && list.get(i).getMsgId() <= 33392) { //5형
+				if(list.get(i).getAns5().equals("1")) {
+					list.get(i).setAns5("7");
+				}else if(list.get(i).getAns5().equals("2")) {
+					list.get(i).setAns5("1");
+				}else if(list.get(i).getAns5().equals("3")) {
+					list.get(i).setAns5("2");
+				}else if(list.get(i).getAns5().equals("4")) {
+					list.get(i).setAns5("3");
+				}else if(list.get(i).getAns5().equals("5")) {
+					list.get(i).setAns5("4");
+				}else if(list.get(i).getAns5().equals("6")) {
+					list.get(i).setAns5("5");
+				}else if(list.get(i).getAns5().equals("7")) {
+					list.get(i).setAns5("6");
+				}
+			}else if(list.get(i).getMsgId() >= 33393 && list.get(i).getMsgId() <= 33632) { //6형
+				if(list.get(i).getAns5().equals("1")) {
+					list.get(i).setAns5("5");
+				}else if(list.get(i).getAns5().equals("2")) {
+					list.get(i).setAns5("6");
+				}else if(list.get(i).getAns5().equals("3")) {
+					list.get(i).setAns5("7");
+				}else if(list.get(i).getAns5().equals("4")) {
+					list.get(i).setAns5("1");
+				}else if(list.get(i).getAns5().equals("5")) {
+					list.get(i).setAns5("2");
+				}else if(list.get(i).getAns5().equals("6")) {
+					list.get(i).setAns5("3");
+				}else if(list.get(i).getAns5().equals("7")) {
+					list.get(i).setAns5("4");
+				}
+			}else if(list.get(i).getMsgId() >= 33633) { //7형
+				if(list.get(i).getAns5().equals("1")) {
+					list.get(i).setAns5("3");
+				}else if(list.get(i).getAns5().equals("2")) {
+					list.get(i).setAns5("4");
+				}else if(list.get(i).getAns5().equals("3")) {
+					list.get(i).setAns5("5");
+				}else if(list.get(i).getAns5().equals("4")) {
+					list.get(i).setAns5("6");
+				}else if(list.get(i).getAns5().equals("5")) {
+					list.get(i).setAns5("7");
+				}else if(list.get(i).getAns5().equals("6")) {
+					list.get(i).setAns5("1");
+				}else if(list.get(i).getAns5().equals("7")) {
+					list.get(i).setAns5("2");
+				}
+			}
+			
+			int result = surveyDao.insertResJj(list.get(i));
+			
+			if(result == 1) {
+				System.out.println(i+" 번째 입력 성공~!!");
+				succ++;
+			}
+			else if(result == 0) {
+				System.out.println(i+" 번째 입력 실패~!!");
+				fail++;
+			}
+		}
+		System.out.println("성공 : "+succ);
+		System.out.println("실패 : "+fail);
 	}
 }

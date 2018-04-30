@@ -1,0 +1,254 @@
+#include "QuaternionToEuler.h"
+#include "MadgwickAHRS.h"
+#include <MPU9250.h>
+#include <Wire.h>
+#include <ESP8266WiFi.h>
+#define AHRS true         // Set to false for basic data read
+#define SerialDebug true  // Set to true to get Serial output for debugging
+
+MPU9250 myIMU;
+QTE myQTE;
+
+#define LED_PIN 13
+bool blinkState = false;
+
+#define MPU9250_WHO_AM_I                0x75
+#define MPU9250_MAG_ADDRESS             0x0C
+
+const char* ssid     = "KIS"; // 접속할 와이파이 이름 한글은 안돼요
+const char* password = "kis2880488"; // 접속할 와이파이 비밀번호
+const char* host = "bestpoll.kr";
+
+int g_Farm = 255;
+int g_SensorId = 8;
+int g_Active = 999;
+
+
+int16_t g_Ax, g_Ay, g_Az;
+int16_t g_Gx, g_Gy, g_Gz;
+int16_t g_Mx, g_My, g_Mz;
+
+int16_t tempCount;
+
+
+unsigned long start_time;
+
+void setup(){
+	Wire.begin(); //I2C통신 준비
+	// TWBR = 12;  // 400 kbit/sec I2C speed
+	Serial.begin(38400); //38400 bits/s
+
+	Serial.println();
+	Serial.println();
+	Serial.print("Connecting to ");
+	Serial.println(ssid);
+  
+	WiFi.begin(ssid, password); // 와이파이에 연결하는 함수 입니다.
+  
+	// 와이파이에 연결이 될 때 까지 대기
+	while (WiFi.status() != WL_CONNECTED) {
+		delay(500);
+		Serial.print(".");
+	}
+
+	Serial.println("");
+	Serial.println("WiFi connected");  
+	
+	// Read the WHO_AM_I register, this is a good test of communication
+	byte c = myIMU.readByte(MPU9250_MAG_ADDRESS, MPU9250_WHO_AM_I); 
+	Serial.print("MPU9250 "); Serial.print("I AM "); Serial.print(c, HEX);
+	Serial.print(" I should be "); Serial.println(0x71, HEX);
+	
+	if (c == 0x71) { // WHO_AM_I should always be 0x71
+		Serial.println("MPU9250 is online...");
+
+  	    // Calibrate gyro and accelerometers, load biases in bias registers
+	    myIMU.calibrateMPU9250(myIMU.gyroBias, myIMU.accelBias);
+
+
+	    myIMU.initMPU9250();
+	    // Initialize device for active mode read of acclerometer, gyroscope, and
+	    // temperature
+	    Serial.println("MPU9250 initialized for active data mode....");
+
+	    // Read the WHO_AM_I register of the magnetometer, this is a good test of
+	    // communi cation
+	    byte d = myIMU.readByte(AK8963_ADDRESS, WHO_AM_I_AK8963);
+	    Serial.print("AK8963 ");
+	    Serial.print("I AM ");
+	    Serial.print(d, HEX);
+	    Serial.print(" I should be ");
+	    Serial.println(0x48, HEX);
+
+	    // Get magnetometer calibration from AK8963 ROM
+	    myIMU.initAK8963(myIMU.factoryMagCalibration);
+	    // Initialize device for active mode read of magnetometer
+	    Serial.println("AK8963 initialized for active data mode....");
+
+	    // Get sensor resolutions, only need to do this once
+	    myIMU.getAres();
+	    myIMU.getGres();
+	    myIMU.getMres();
+
+	    // The next call delays for 4 seconds, and then records about 15 seconds of
+	    // data to calculate bias and scale.
+	    myIMU.magCalMPU9250(myIMU.magBias, myIMU.magScale);
+	    Serial.println("AK8963 mag biases (mG)");
+	    Serial.println(myIMU.magBias[0]);
+	    Serial.println(myIMU.magBias[1]);
+    	Serial.println(myIMU.magBias[2]);
+
+	    Serial.println("AK8963 mag scale (mG)");
+	    Serial.println(myIMU.magScale[0]);
+	    Serial.println(myIMU.magScale[1]);
+	    Serial.println(myIMU.magScale[2]);
+	    delay(2000); // Add delay to see results before serial spew of data
+	    
+
+  	}else { // if (c == 0x71)
+  
+	 
+	    Serial.print("Could not connect to MPU9250: 0x");
+	    Serial.println(c, HEX);
+	    while(1) ; // Loop forever if communication doesn't happen
+  	}
+}
+
+void loop(){
+	start_time = micros();
+    myIMU.readAccelData(myIMU.accelCount);  // Read the x/y/z adc values
+    
+    // Now we'll calculate the accleration value into actual g's
+    // This depends on scale being set
+    myIMU.ax = (float)myIMU.accelCount[0] * myIMU.aRes; // - myIMU.accelBias[0];
+    myIMU.ay = (float)myIMU.accelCount[1] * myIMU.aRes; // - myIMU.accelBias[1];
+    myIMU.az = (float)myIMU.accelCount[2] * myIMU.aRes; // - myIMU.accelBias[2];
+
+    myIMU.ax = (float)(-1.0)*myIMU.ax;
+    myIMU.ay = (float)(-1.0)*myIMU.ay;
+    myIMU.az = (float)(-1.0)*myIMU.az;
+
+    myIMU.readGyroData(myIMU.gyroCount);  // Read the x/y/z adc values
+
+    // Calculate the gyro value into actual degrees per second
+    // This depends on scale being set
+    myIMU.gx = (float)myIMU.gyroCount[0] * myIMU.gRes;
+    myIMU.gy = (float)myIMU.gyroCount[1] * myIMU.gRes;
+    myIMU.gz = (float)myIMU.gyroCount[2] * myIMU.gRes;
+
+    myIMU.readMagData(myIMU.magCount);  // Read the x/y/z adc values
+
+    // Calculate the magnetometer values in milliGauss
+    // Include factory calibration per data sheet and user environmental
+    // corrections
+    // Get actual magnetometer value, this depends on scale being set
+    myIMU.mx = (float)myIMU.magCount[0] * myIMU.mRes
+               * myIMU.factoryMagCalibration[0] - myIMU.magBias[0];
+    myIMU.my = (float)myIMU.magCount[1] * myIMU.mRes
+               * myIMU.factoryMagCalibration[1] - myIMU.magBias[1];
+    myIMU.mz = (float)myIMU.magCount[2] * myIMU.mRes
+               * myIMU.factoryMagCalibration[2] - myIMU.magBias[2];
+
+    myIMU.mx = (float)(-1.0)*myIMU.ax;
+    myIMU.my = (float)(-1.0)*myIMU.my;
+    myIMU.mz = (float)(-1.0)*myIMU.mz;
+    
+
+    Serial.print(" g_Ax = "); Serial.print(myIMU.ax);
+    Serial.print(" g_AY = "); Serial.print(myIMU.ay);
+    Serial.print(" g_Az = "); Serial.println(myIMU.az);
+  
+    
+    Serial.print(" g_Gx = "); Serial.print(myIMU.gx);
+    Serial.print(" g_Gy = "); Serial.print(myIMU.gy);
+    Serial.print(" g_Gz = "); Serial.println(myIMU.gz);
+
+    Serial.print(" g_Mx = "); Serial.print(myIMU.mx);
+    Serial.print(" g_My = "); Serial.print(myIMU.my);
+    Serial.print(" g_Mz = "); Serial.println(myIMU.mz);
+
+	// Must be called before updating quaternions!
+	myIMU.updateTime();
+	
+	void Madgwick::update(float gx, float gy, float gz, float ax, float ay, float az, float mx, float my, float mz)
+  
+	Serial.print("q0 = ");   Serial.print(q0);
+	Serial.print("q1 = ");   Serial.print(q1); 
+	Serial.print("q2 = ");   Serial.print(q2);
+	Serial.print("q3 = ");   Serial.println(q3);
+
+	myQTE.ConvertQuaterToEuler(q0,q1,q2,q3);
+	
+	Serial.print("pi = ");   Serial.print(pi);
+	Serial.print(" theta = ");   Serial.print(theta);
+	Serial.print(" psi = ");   Serial.print(psi); Serial.println(" degree");
+
+	// 값 보내는 곳
+	Serial.print("connecting to ");
+	Serial.println(host);
+  
+	// Use WiFiClient class to create TCP connections
+    WiFiClient client;
+    const int httpPort = 80;
+	if (!client.connect(host, httpPort)) {
+	    Serial.println("connection failed");
+	    return;
+	}
+ 
+	// 접속할 사이트 경로 "/"는 최상위 경로이며 "/하위/하위2/하위3/대상파일" 과 같은 구조를 가집니다.
+	String postStr0 = String(g_Farm);
+	String postStr = String(g_SensorId);
+	String postStr1 = String(myIMU.ax);
+	String postStr2 = String(myIMU.ay);
+	String postStr3 = String(myIMU.az);
+	String postStr4 = String(myIMU.gx);
+	String postStr5 = String(myIMU.gy);
+	String postStr6 = String(myIMU.gz);
+	String postStr7 = String(myIMU.mx);
+	String postStr8 = String(myIMU.my);
+	String postStr9 = String(myIMU.mz);
+	String postStr10 = String(q0);
+	String postStr11 = String(q1);
+	String postStr12 = String(q2);
+	String postStr13 = String(q3);
+	String postStr14 = String(pi);
+	String postStr15 = String(theta);
+	String postStr16 = String(psi);
+	String postStr17 = String(tempCount);
+	String postStr18 = String(g_Active);
+	    
+	String url="/gikimi_test/Db_list_show/sensor.jsp?g_Farm=" + postStr0 + "&g_SensorId=" + postStr + "&myIMU.ax=" + postStr1 +"&myIMU.ay=" + postStr2 + "&myIMU.az=" + postStr3 + "&myIMU.gx=" + postStr4 +"&myIMU.gy=" + postStr5 + "&myIMU.gz=" + postStr6 + "&myIMU.mx=" + postStr7 + "&myIMU.my=" + postStr8 + "&myIMU.mz=" + postStr9  + "&q0=" + postStr10 + "&q1=" + postStr11 + "&q2=" + postStr12 + "&q3=" + postStr13 + "&pi=" + postStr14 + "&theta=" + postStr15 + "&psi=" + postStr16 + "&tempCount=" + postStr17 + "&g_Active=" + postStr18;
+  
+	Serial.print("Requesting URL: ");
+	Serial.println(url);
+  
+	// This will send the request to the server
+	client.print(String("POST ") + url + " HTTP/1.1\r\n" +
+		"Host: " + host + "\r\n" + 
+		"Connection: close\r\n\r\n");
+	client.print("Content-Type: application/x-www-form-urlencoded\n"); 
+	client.print("Content-Length: "); 
+	client.print(postStr.length());
+	blinkState = !blinkState;
+	digitalWrite(LED_PIN, blinkState);
+	delay(10000); //5초마다 HTTP 요청을 보냅니다.
+
+
+	unsigned long timeout = millis();
+	while (client.available() == 0) {//5초동안 응답이 없다면 에러처리 합니다.
+		if (millis() - timeout > 5000) {
+			Serial.println(">>> Client Timeout !");
+			client.stop();
+			return;
+		}
+	}
+
+  
+	// Read all the lines of the reply from server and print them to Serial
+	while(client.available()){//서버로부터 받은 응답을 출력합니다.
+	    String line = client.readStringUntil('\r');
+	    Serial.print(line);
+	}
+}
+</body>
+</html>
