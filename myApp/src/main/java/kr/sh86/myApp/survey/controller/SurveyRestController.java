@@ -1,5 +1,6 @@
 package kr.sh86.myApp.survey.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import kr.sh86.myApp.survey.domain.ResData;
 import kr.sh86.myApp.survey.domain.Response;
 import kr.sh86.myApp.survey.service.SurveyService;
 
@@ -49,5 +51,37 @@ public class SurveyRestController {
 	public List<String> sendMmsReCtrl(){
 		List<String> list = surveyService.sendMmsNoResServ();
 		return list;
+	}
+	
+	//신보응답자 조회 getResList
+	@RequestMapping(value="/getResList", method = RequestMethod.POST)
+	public Map<String, Object> getResListCtrl(@RequestParam(value="startDate")String startDate, 
+			@RequestParam(value="endDate")String endDate){
+		List<ResData> list = surveyService.readSinboResDataServ(startDate, endDate);
+		Map<String, Object> map = new HashMap<String, Object>(); 
+		map.put("list", list);
+		return map;
+	}
+	
+	//여론조사 응답현황 getResInfo
+	@RequestMapping(value="/getResInfo", method = RequestMethod.POST)
+	public Map<String, Object> getResInfoCtrl(@RequestParam(value="startDate")String startDate, 
+			@RequestParam(value="time")String time,
+			@RequestParam(value="min")String min,
+			@RequestParam(value="type",defaultValue="2")int type,
+			@RequestParam(value="endDate", defaultValue="none")String endDate, 
+			@RequestParam(value="endTime", defaultValue="none")String endTime,
+			@RequestParam(value="endMin", defaultValue="none")String endMin){
+		Map<String, Object> map = surveyService.readResInfoServ(startDate, time, min, type, endDate, endTime, endMin); 		
+		return map;
+	}
+	
+	//응답자 표본에서 삭제 deleteResList
+	@RequestMapping(value="/deleteResList", method = RequestMethod.POST)
+	public Map<String, Object> deleteResListCtrl(@RequestParam(value="startDate")String startDate, 
+			@RequestParam(value="time")String time,
+			@RequestParam(value="min")String min){
+		Map<String, Object> map = surveyService.removeResListServ(startDate, time, min); 		
+		return map;
 	}
 }

@@ -1,6 +1,7 @@
 package kr.sh86.myApp.survey.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +10,11 @@ import org.springframework.stereotype.Repository;
 import kr.sh86.myApp.survey.domain.Ars;
 import kr.sh86.myApp.survey.domain.BioResponse;
 import kr.sh86.myApp.survey.domain.BioUser;
+import kr.sh86.myApp.survey.domain.Dialing;
 import kr.sh86.myApp.survey.domain.ExceptionTel;
+import kr.sh86.myApp.survey.domain.Home35;
 import kr.sh86.myApp.survey.domain.Mms;
+import kr.sh86.myApp.survey.domain.ResData;
 import kr.sh86.myApp.survey.domain.Response;
 import kr.sh86.myApp.survey.domain.Result;
 import kr.sh86.myApp.survey.domain.Sample;
@@ -169,6 +173,10 @@ public class SurveyDao {
 		return sqlSession.insert("SurveyDao.insertArsResultTb2", sampling);
 	}
 	
+	//결과테이블 추가
+	public int insertArsResultTb3(Sampling sampling) {
+		return sqlSession.insert("SurveyDao.insertArsResultTb3", sampling);
+	}
 	//모든응답조회
 	public List<Xroshot> selectAllResArs(){
 		return sqlSession.selectList("SurveyDao.selectAllResArs");
@@ -293,5 +301,84 @@ public class SurveyDao {
 	//insertResJj
 	public int insertResJj(Xroshot xroshot) {
 		return sqlSession.insert("SurveyDao.insertResJj", xroshot);
+	}
+	
+	//지역별 국번 조회
+	public List<Dialing> selectDialing(Dialing dailing){
+		return sqlSession.selectList("SurveyDao.selectDialing", dailing);
+	}
+	
+	//지역별 국번 조회
+	public List<ExceptionTel> selectExcTel(ExceptionTel excTel){
+		return sqlSession.selectList("SurveyDao.selectExcTel", excTel);
+	}
+	
+	//표본테이블 삭제
+	public int deleteArsResult() {
+		return sqlSession.delete("SurveyDao.deleteArsResult");
+	}
+	
+	// 총발송
+	public int selectTotalSend(Map<String, Object> params) {
+		return sqlSession.selectOne("SurveyDao.selectTotalSend", params);
+	}
+	// 접촉/비접촉등 사례
+	public int selectres2(Map<String, Object> params) {
+		return sqlSession.selectOne("SurveyDao.selectres2",params);
+	}
+	
+	// 타겟삭제
+	public int deleteResultKis(Map<String, Object> params) {
+		return sqlSession.delete("SurveyDao.deleteResultKis", params);
+	}
+	
+	// 응답현황
+	public List<Xroshot> selectResList(Map<String, Object> params){
+		return sqlSession.selectList("SurveyDao.selectResList", params);
+	}
+	
+	// 지역응답자들 정보조회
+	public List<Xroshot> selectLocalByRes(Map<String, Object> params){
+		return sqlSession.selectList("SurveyDao.selectLocalByRes",params);
+	}
+	
+	// 자사 가정집 DB 지역정보 수정
+	public int updateHomeDbByRes(Home35 home35){
+		return sqlSession.update("SurveyDao.updateHomeDbByRes",home35);
+	}
+		
+	//신보 - 조사대상자수
+	public int selSinboTotalCnt(Map<String, Object> params) {
+		return sqlSession.selectOne("SurveyDao.selSinboTotalCnt", params);
+	}
+	
+	//신보 - 응답자수
+	public int selSinboResCnt(Map<String, Object> params) {
+		return sqlSession.selectOne("SurveyDao.selSinboResCnt", params);
+	}
+	
+	//신보 - 부재
+	public int selSinboBujeCnt(Map<String, Object> params) {
+		return sqlSession.selectOne("SurveyDao.selSinboBujeCnt", params);
+	}
+	
+	//신보 - 추후응답
+	public int selSinboAfterCnt(Map<String, Object> params) {
+		return sqlSession.selectOne("SurveyDao.selSinboAfterCnt", params);
+	}
+	
+	//신보 - 미응답
+	public int selSinboRejectCnt(Map<String, Object> params) {
+		return sqlSession.selectOne("SurveyDao.selSinboRejectCnt", params);
+	}
+	
+	//신보 - 문자1,2차
+	public int selSinboMmsCnt(Map<String, Object> params) {
+		return sqlSession.selectOne("SurveyDao.selSinboMmsCnt", params);
+	}
+	
+	//신보 - 응답현황표
+	public List<ResData> selSinboResList(Map<String, Object> params){
+		return sqlSession.selectList("SurveyDao.selSinboResList", params);
 	}
 }

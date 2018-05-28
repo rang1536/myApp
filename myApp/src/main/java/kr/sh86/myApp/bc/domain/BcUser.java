@@ -22,21 +22,30 @@ public class BcUser {
 	private String poJobCate;
 	private int poFavor; //즐겨찾기 1:아님 2:즐겨찾기 추가
 	private String poFullAdd;
-	private String poBcImgPAth;
+	private String poBcImgPath;
 	private String poBcImgName;
 	private int poFavorCate;
+	private String poSangseAddr;
 	
+	
+	public String getPoSangseAddr() {
+		return poSangseAddr;
+	}
+	public void setPoSangseAddr(String poSangseAddr) {
+		this.poSangseAddr = poSangseAddr;
+	}
 	public int getPoFavorCate() {
 		return poFavorCate;
 	}
 	public void setPoFavorCate(int poFavorCate) {
 		this.poFavorCate = poFavorCate;
 	}
-	public String getPoBcImgPAth() {
-		return poBcImgPAth;
+	
+	public String getPoBcImgPath() {
+		return poBcImgPath;
 	}
-	public void setPoBcImgPAth(String poBcImgPAth) {
-		this.poBcImgPAth = poBcImgPAth;
+	public void setPoBcImgPath(String poBcImgPath) {
+		this.poBcImgPath = poBcImgPath;
 	}
 	public String getPoBcImgName() {
 		return poBcImgName;
@@ -177,8 +186,10 @@ public class BcUser {
 				+ poZip1 + ", poZip2=" + poZip2 + ", poSido=" + poSido + ", poGuGun=" + poGuGun + ", poDong=" + poDong
 				+ ", poAddr=" + poAddr + ", poBizName=" + poBizName + ", poBizDepartment=" + poBizDepartment
 				+ ", poBizPosition=" + poBizPosition + ", poRelationShip=" + poRelationShip + ", poJobCate=" + poJobCate
-				+ ", poFavor=" + poFavor + ", poFullAdd=" + poFullAdd + ", poBcImgPAth=" + poBcImgPAth
-				+ ", poBcImgName=" + poBcImgName + ", poFavorCate=" + poFavorCate + "]";
+				+ ", poFavor=" + poFavor + ", poFullAdd=" + poFullAdd + ", poBcImgPath=" + poBcImgPath
+				+ ", poBcImgName=" + poBcImgName + ", poFavorCate=" + poFavorCate + ", poSangseAddr=" + poSangseAddr
+				+ "]";
 	}
+	
 	
 }

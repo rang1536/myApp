@@ -1,0 +1,82 @@
+.sidebar-menu {margin: 0;padding: 0; }
+.sidebar-menu li { float:left; position: relative;margin: 0;padding: 0; }
+
+
+
+
+
+
+
+
+.sidebar-menu li a{display: block; color:#000; padding-bottom:20px;}
+	
+.sidebar-menu li.active > .sidebar-submenu {display: block;color:#fff;}
+.sidebar-menu a{color:#000;}
+.sidebar-menu a:hover{color:#6e5923;}
+		.sidebar-menu .sidebar-submenu {color:#fff;
+		display: none; 
+		
+		
+		margin: 0 1px;
+		}
+		.sidebar-menu .sidebar-submenu { color:#fff;
+		}
+		
+.sidebar-submenu li{ float:left; color:#fff;}
+.sidebar-menu .sidebar-submenu > li{font-size: 13px; }
+.sidebar-menu .sidebar-submenu > li > a {display: block;font-size: 13px; line-height:30px; color:#fff; }
+.sidebar-menu .sidebar-submenu > li > a:hover {display: block;font-size: 13px; line-height:30px; color:#9c8d6c; }
+		.sidebar-menu .sidebar-submenu > li > a > .fa {
+		width: 20px; }
+		.sidebar-menu .sidebar-submenu > li > a > .fa-angle-left,
+		.sidebar-menu .sidebar-submenu > li > a > .fa-angle-down {
+		width: auto; }
+		.sidebar-menu .sidebar-submenu > li.active > a{ color:#9c8d6c; }
+		
+		 .sidebar-menu .sidebar-submenu > li > a:hover{ 
+		}
+		
+/*		
+.sub_01submenu{ position:absolute; width:620px; padding-top:25px; left:-20px;}
+.sub_01submenu li{ background-color:#6e5923; float:left;}*/
+		
+		
+	
+.sub_01submenu{ position:absolute; width:890px; padding-top:15px; left:-25px; background-image:url(../img/inc/s_menu_bg.png); background-repeat:no-repeat;}
+.sub_01submenu li{ float:left;background-color:#6e5923; height:30px;}
+		
+.sub_02submenu{ position:absolute; width:890px;  padding-top:15px;left:-30px; background-image:url(../img/inc/s_menu_bg.png); background-repeat:no-repeat;}
+.sub_02submenu li{ background-color:#6e5923; float:left;height:30px;}
+		
+		
+
+.sub_03submenu{ position:absolute; width:890px;  padding-top:15px;left:-27px; background-image:url(../img/inc/s_menu_bg.png); background-repeat:no-repeat;}
+.sub_03submenu li{ background-color:#6e5923; float:left;height:30px;}
+
+
+.submenuicon{ float:none;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

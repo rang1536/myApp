@@ -49,9 +49,12 @@ public class HomeController {
 			/*surveyService.lastResult2Serv();*/
 			/*surveyService.changLotationTwoToOne2();*/
 			/*surveyService.setSampleRddServ();*/
-			/*surveyService.changLotationTwoToOne();*/
-			bcService.induCodeAddServ();
-			return "redirect:list";
+			/*surveyService.overlapHome35Serv();*/
+			/*surveyService.addLocalNumServ();*/
+			/*surveyService.addLocalNumServ("고창군");*/
+			/*surveyService.setSampleRdd2Serv();*/
+			model.addAttribute("list", surveyService.readSinboResInfoServ());
+			return "ars/resList";
 		}else if(userNo == 100) {
 			int count = surveyService.readBioResCount();
 			model.addAttribute("count", count);
@@ -68,6 +71,12 @@ public class HomeController {
 		model.addAttribute("lastQuNum", user.getResComplete());*/
 		/*return "/glocal/a";*/
 		return "/bio/a";
+	}
+	
+	@RequestMapping(value = "/sbList", method = RequestMethod.GET)
+	public String sbListCtrl(Model model) {
+		model.addAttribute("list", surveyService.readSinboResInfoServ());
+		return "/sinbo/sbList";
 	}
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
@@ -91,5 +100,11 @@ public class HomeController {
 		int result = surveyService.addBioResServ(bioUser, bioResponse);
 		
 		return "bio/b";
+	}
+	
+	//휴넷 - 수신거부 
+	@RequestMapping(value = "/rej", method = RequestMethod.GET)
+	public String rejCtrl() {		
+		return "bcApp/reject";
 	}
 }

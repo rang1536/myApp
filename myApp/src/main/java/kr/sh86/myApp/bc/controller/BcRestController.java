@@ -10,10 +10,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import kr.sh86.myApp.bc.domain.BcGroup;
 import kr.sh86.myApp.bc.domain.BcUser;
 import kr.sh86.myApp.bc.domain.FavorCate;
+import kr.sh86.myApp.bc.domain.GroupCate;
 import kr.sh86.myApp.bc.service.BcService;
+import kr.sh86.myApp.util.UtilFile;
 
 @CrossOrigin(origins="*")
 @RestController
@@ -24,8 +28,9 @@ public class BcRestController {
 	
 	//모든 명함조회
 	@RequestMapping(value="/getBcAll",  method = RequestMethod.POST)
-	public List<BcUser> getBcAllCtrl(){
-		return bcService.readBcAllServ();
+	public List<BcUser> getBcAllCtrl(@RequestParam(value="poNum", defaultValue="0")int poNum,
+			@RequestParam(value="checkBackNNext")String checkBackNNext){
+		return bcService.readBcAllServ(poNum, checkBackNNext);
 	}
 	
 	//즐겨찾기 changeFavor
@@ -92,9 +97,77 @@ public class BcRestController {
 	}
 	
 	//모바일기기 전화번호부 입력 addHpList
-	/*@RequestMapping(value="/addHpList",  method = RequestMethod.POST)
-	public List<BcUser> addHpListCtrl(@RequestParam(value="checkedName")String checkedName,
+	@RequestMapping(value="/addHpList",  method = RequestMethod.POST)
+	public Map<String, Object> addHpListCtrl(@RequestParam(value="checkedName")String checkedName,
 			@RequestParam(value="checkedHp")String checkedHp){
-		return bcService.readFavorListByCateServ(cateNum);
-	}*/
+		return bcService.addPhoneListServ(checkedName, checkedHp);
+	}
+	
+	//파일업로드
+	@RequestMapping(value="/fileUpload",  method = RequestMethod.POST)
+	public Map<String, Object> fileUploadCtrl(MultipartHttpServletRequest request){
+		System.out.println("파일업로드~!!");
+		System.out.println("파일이름 : "+request.getFile("photo"));
+		System.out.println("pk확인 : "+request.getParameter("poNum"));
+		
+		/*UtilFile utilFile = new UtilFile();
+		utilFile.singleUploadFile(request);*/
+		int result = bcService.modifyBcImgServ(request);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("result", "succ");
+		
+		return map;
+	}
+	
+	//이미지 미리보기 위한 최근 업로드 사진 조회
+	@RequestMapping(value="/addBcUser",  method = RequestMethod.POST)
+	public Map<String, Object> getPhotoCtrl(BcUser bcUser){
+		System.out.println("폼값 확인 : "+bcUser);
+		return bcService.addBcUserServ(bcUser);
+	}
+	
+	//선택된 번호 문자발송 smsSendByChecked
+	@RequestMapping(value="/smsSendByChecked",  method = RequestMethod.POST)
+	public Map<String, Object> smsSendByCheckedCtrl(@RequestParam(value="checkedName")String checkedName,
+			@RequestParam(value="checkedHp")String checkedHp,
+			@RequestParam(value="smsMsg")String smsMsg){
+		return bcService.sendMmsForContractServ(checkedName, checkedHp, smsMsg);
+	}
+	
+	//==========================================================================================================
+	
+	//전화번호부 그룹핑 하기 
+	@RequestMapping(value="/addHpGrouping",  method = RequestMethod.POST)
+	public Map<String, Object> addHpGroupingCtrl(@RequestParam(value="checkedName")String checkedName,
+			@RequestParam(value="checkedHp")String checkedHp,
+			@RequestParam(value="telNum")String telNum,
+			@RequestParam(value="groupNo")int groupNo){
+		//System.out.println("checkedName : "+checkedName);
+		//System.out.println("checkedHp : "+checkedHp);
+		//System.out.println("telNum : "+telNum);
+		//System.out.println("groupNo : "+groupNo);
+		return bcService.addPhoneListServ(checkedName, checkedHp, telNum, groupNo);
+	}
+	
+	//전화번호부 그룹 카테고리 조회 getGroupCateAll
+	@RequestMapping(value="/getGroupCateAll",  method = RequestMethod.POST)
+	public List<GroupCate> getGroupCateAllCtrl(){
+		return bcService.readGroupCateAllServ();
+	}
+	
+	//전화번호부 그룹핑 된 목록 조회
+	@RequestMapping(value="/getListByGroup",  method = RequestMethod.POST)
+	public List<BcGroup> getListByGroupCtrl(@RequestParam(value="groupNo", defaultValue="0")int groupNo,
+			@RequestParam(value="telNum")String telNum){
+		System.out.println("groupNo : "+groupNo);
+		System.out.println("telNum : "+telNum);
+		return bcService.readListByGroupServ(groupNo, telNum);
+	}
+	
+	//문자수신거부 huNetRejCheck
+	@RequestMapping(value="/huNetRejCheck",  method = RequestMethod.POST)
+	public Map<String, Object> huNetRejCheckCtrl(@RequestParam(value="rejHp")String rejHp){
+		return bcService.bcRejectServ(rejHp);
+	}
+	
 }

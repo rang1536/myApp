@@ -36,10 +36,12 @@
 
 
 <!-- 전체 명함 조회 -->
-<select id="selectBcAll" resultType="kr.sh86.myApp.bc.domain.BcUser">
+<select id="selectBcAll" parameterType="Map" resultType="kr.sh86.myApp.bc.domain.BcUser">
 	SELECT *
 	FROM BC.BC_USERS
-	ORDER BY PO_NAME
+	WHERE PO_NUM &gt;= #{startNum}
+	AND PO_NUM &lt;= #{endNum}
+	ORDER BY PO_NUM DESC
 </select>
 
 <!-- 즐겨찾기 추가 -->
@@ -67,7 +69,7 @@
 		<if test="relationShip != '관계'">AND PO_RELATIONSHIP LIKE '%'||#{relationShip}||'%'</if>
 		<if test="searchType == 'favor'">AND PO_FAVOR = 2</if>
 	</trim>
-	ORDER BY PO_NAME
+	ORDER BY PO_NAME 
 </select>
 
 <!-- 명함삭제 -->
@@ -115,15 +117,156 @@
 	ORDER BY PO_NAME
 </select>
 
+<!-- 전화번호부 업로드전 중복체크 -->
+<select id="selectReCheckHp" parameterType="String" resultType="int">
+	SELECT COUNT(*)
+	FROM BC.BC_USERS
+	WHERE PO_TEL2 = #{hp}
+</select>
+
 <!-- 모바일기기 전화번호부 입력 -->
 <insert id="insertPhoneList" parameterType="kr.sh86.myApp.bc.domain.BcUser">
+	<selectKey keyProperty="poNum" resultType="int" order="BEFORE">
+		SELECT BCUSER_SEQ.NEXTVAL FROM DUAL
+	</selectKey>
 	INSERT INTO BC.BC_USERS(
 		PO_NUM, 
 		PO_NAME, 
-		PO_TEL2)
+		PO_TEL2
+		<if test="poFax != null and poFax != ''">,PO_FAX</if>
+		<if test="poZip1 != null and poZip1 != ''">,PO_ZIP1</if>
+		<if test="poSido != null and poSido != ''">,PO_SIDO</if>
+		<if test="poGuGun != null and poGuGun != ''">,PO_GUGUN</if>
+		<if test="poDong != null and poDong != ''">,PO_DONG</if>
+		<if test="poAddr != null and poAddr != ''">,PO_ADDR</if>
+		<if test="poBizName != null and poBizName != ''">,PO_BIZ_NAME</if>
+		<if test="poBizDepartment != null and poBizDepartment != ''">,PO_BIZ_DEPARTMENT</if>
+		<if test="poBizPosition != null and poBizPosition != ''">,PO_BIZ_POSITION</if>
+		<if test="poRelationShip != null and poRelationShip != ''">,PO_RELATIONSHIP</if>
+		<if test="poJobCate != null and poJobCate != ''">,PO_JOBCATE</if>
+		<if test="poFavor != null and poFavor != ''">,PO_FAVOR</if>
+		)		
 	VALUES(
-		BCUSER_SEQ.NEXTVAL, 
+		#{poNum}, 
 		#{poName},
-		#{poTel2})
+		#{poTel2}
+		<if test="poFax != null and poFax != ''">,#{poFax}</if>
+		<if test="poZip1 != null and poZip1 != ''">,#{poZip1}</if>
+		<if test="poSido != null and poSido != ''">,#{poSido}</if>
+		<if test="poGuGun != null and poGuGun != ''">,#{poGuGun}</if>
+		<if test="poDong != null and poDong != ''">,#{poDong}</if>
+		<if test="poAddr != null and poAddr != ''">,#{poAddr}</if>
+		<if test="poBizName != null and poBizName != ''">,#{poBizName}</if>
+		<if test="poBizDepartment != null and poBizDepartment != ''">,#{poBizDepartment}</if>
+		<if test="poBizPosition != null and poBizPosition != ''">,#{poBizPosition}</if>
+		<if test="poRelationShip != null and poRelationShip != ''">,#{poRelationShip}</if>
+		<if test="poJobCate != null and poJobCate != ''">,#{poJobCate}</if>
+		<if test="poFavor != null and poFavor != ''">,#{poFavor}</if>
+		)
 </insert>
+
+<!--이미지정보 수정  -->
+<update id="updateBcImg" parameterType="kr.sh86.myApp.bc.domain.BcUser">
+	UPDATE BC.BC_USERS
+	SET PO_BC_IMGPATH = #{poBcImgPath},
+		PO_BC_IMGNAME = #{poBcImgName}
+	WHERE PO_NUM = #{poNum}
+</update>
+
+<select id="selectLastestPk" resultType="int">
+	SELECT MAX(PO_NUM)
+	FROM BC.BC_USERS
+</select>
+
+<select id="selectLastestData" parameterType="kr.sh86.myApp.bc.domain.BcUser" resultType="kr.sh86.myApp.bc.domain.BcUser">
+	SELECT *
+	FROM BC.BC_USERS
+	WHERE PO_NUM = #{poNum}
+</select>
+
+<!-- 문자발송 -->
+<insert id="insertMms" parameterType="kr.sh86.myApp.bc.domain.Mms">
+	INSERT INTO XROSHOT.SDK_MMS_SEND(
+		msg_id, 
+		user_id, 
+		schedule_type, 
+		subject, 
+		now_date, 
+		send_date, 
+		callback, 
+		dest_count, 
+		dest_info, 
+		mms_msg)
+	VALUES(
+		XROSHOT.SDK_MMS_SEQ.NEXTVAL,
+		'mystat03',
+		#{scheduleType},
+		#{subject},
+		TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS'),
+		TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS'),
+		#{callback},
+		#{destCount},
+		#{destInfo},
+		#{mmsMsg})
+</insert>
+
+<!-- ============================================================================================ -->
+
+<!-- 전화번호부 중복체크 -->
+<select id="selectReCheckHpByGroup" parameterType="kr.sh86.myApp.bc.domain.BcGroup" resultType="int">
+	SELECT COUNT(*)
+	FROM BC.BC_GROUP
+	WHERE BC_HP = #{bcHp}
+	AND BC_ORDER_HP = #{bcOrderHp}
+</select>
+
+<!-- 전화번호부 그룹핑 -->
+<insert id="insertHpByGroup" parameterType="kr.sh86.myApp.bc.domain.BcGroup">
+	INSERT INTO BC.BC_GROUP(
+		BC_NO, BC_NAME, BC_HP, BC_ORDER_HP 
+		<if test="bcCate != null and bcCate != ''">,BC_CATE</if>
+		)
+	VALUES(
+		BC_GROUP_SEQ.NEXTVAL, #{bcName}, #{bcHp}, #{bcOrderHp}
+		<if test="bcCate != null and bcCate != ''">,#{bcCate}</if>
+		)
+</insert>
+
+<!-- 그룹 카테고리 조회 -->
+<select id="selectGroupCateAll" resultType="kr.sh86.myApp.bc.domain.GroupCate">
+	SELECT *
+	FROM BC.GROUP_CATE
+</select>
+
+<!-- 그룹핑 된 테이터 조회 -->
+<select id="selectListByGroup" parameterType="kr.sh86.myApp.bc.domain.BcGroup" resultType="kr.sh86.myApp.bc.domain.BcGroup">
+	SELECT *
+	FROM BC.BC_GROUP
+	WHERE BC_REJECT = 1
+		  <if test="bcCate neq 0">AND BC_CATE = #{bcCate}</if>
+		  <if test="bcOrderHp neq null and bcOrderHp neq '' ">AND BC_ORDER_HP = #{bcOrderHp}</if>	
+</select>
+
+<!-- 수신거부 번호 입력 -->
+<insert id="insertBcReject" parameterType="kr.sh86.myApp.bc.domain.BcReject">
+	INSERT INTO BC.BC_REJECT(REJ_HP)
+	VALUES(#{rejHp})
+</insert>
+
+<!-- 수신거부 한 번호가 그룹핑 되어 있는지 목록 조회 -->
+<select id="selectBcGroupByHp" parameterType="kr.sh86.myApp.bc.domain.BcGroup" resultType="kr.sh86.myApp.bc.domain.BcGroup">
+	SELECT *
+	FROM BC.BC_GROUP
+	WHERE BC_HP = #{bcHp}
+	AND BC_REJECT = 1
+</select>
+
+<!-- 그룹핑 된 목록에 수신거부 체크하기 -->
+<update id="updateBcGroupRej" parameterType="kr.sh86.myApp.bc.domain.BcGroup">
+	UPDATE BC.BC_GROUP
+	SET BC_REJECT = #{bcReject}
+	WHERE BC_HP = #{bcHp}
+</update>
+
+
 </mapper>

@@ -23,8 +23,8 @@
 		<!-- db의 컬럼과 dto의 프로퍼티명을 자동으로 매핑 -->
 		<property name="mapperLocations">
 			<list>
-				<value>classpath:kr//sh86/myApp/survey/dao/SurveyMapper.xml</value>
-				<value>classpath:kr//sh86/myApp/bc/dao/BcMapper.xml</value>
+				<value>classpath:kr/sh86/myApp/survey/dao/SurveyMapper.xml</value>
+				<value>classpath:kr/sh86/myApp/bc/dao/BcMapper.xml</value>
 			</list>
 		</property>
 	</bean>

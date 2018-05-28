@@ -11,7 +11,7 @@ public class Xroshot {
 	private int ans2;
 	private int ans3;
 	private int ans4;
-	private String ans5;
+	private int ans5;
 	private int ans6;
 	private int ans7;
 	private int ans8;
@@ -88,10 +88,11 @@ public class Xroshot {
 		this.ans4 = ans4;
 	}
 	
-	public String getAns5() {
+	
+	public int getAns5() {
 		return ans5;
 	}
-	public void setAns5(String ans5) {
+	public void setAns5(int ans5) {
 		this.ans5 = ans5;
 	}
 	public int getAns6() {

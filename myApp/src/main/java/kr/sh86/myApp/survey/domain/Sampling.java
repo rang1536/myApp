@@ -12,7 +12,15 @@ public class Sampling {
 	private String tel;
 	private String dong;
 	
+	private String local;
 	
+	
+	public String getLocal() {
+		return local;
+	}
+	public void setLocal(String local) {
+		this.local = local;
+	}
 	public String getDong() {
 		return dong;
 	}
@@ -70,8 +78,8 @@ public class Sampling {
 	@Override
 	public String toString() {
 		return "Sampling [num=" + num + ", arsNum=" + arsNum + ", sido=" + sido + ", sigungu=" + sigungu + ", sample="
-				+ sample + ", dataInDate=" + dataInDate + ", name=" + name + ", tel=" + tel + "]";
+				+ sample + ", dataInDate=" + dataInDate + ", name=" + name + ", tel=" + tel + ", dong=" + dong
+				+ ", local=" + local + "]";
 	}
-	
 	
 }

@@ -24,7 +24,56 @@
 
     <!-- Custom styles for this template -->
     <link href="resources/css/agency.min.css" rel="stylesheet">
-
+	
+	<script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+	<link href="resources/js/jquery.modal.css" type="text/css" rel="stylesheet" />
+    <script src="resources/js/jquery.modal.min.js"></script>
+    
+    <script>
+    //팝업창
+    function localChoice(){
+    	var html = '';
+    	html += '<table>';
+    	html += '	<tr>';
+    	html += '		<td>조사지역을 선택해주세요</td>';
+    	html += '	</tr>';
+    	html += '	<tr>';
+    	html += '		<td>';
+    	html += '			<select id="local" style="width:100%;">';
+    	html += '				<option value="전주시">전주시</option>';
+    	html += '				<option value="전주시">익산시</option>';
+    	html += '				<option value="전주시">군산시</option>';
+    	html += '				<option value="전주시">정읍시</option>';
+    	html += '				<option value="전주시">김제시</option>';
+    	html += '				<option value="전주시">부안군</option>';
+    	html += '				<option value="전주시">고창군</option>';
+    	html += '				<option value="전주시">남원시</option>';
+    	html += '				<option value="전주시">순창군</option>';
+    	html += '				<option value="전주시">임실군</option>';
+    	html += '				<option value="전주시">장수군</option>';
+    	html += '				<option value="전주시">무주군</option>';
+    	html += '				<option value="전주시">진안군</option>';
+    	html += '			</select>';
+    	html += '		</td>';
+    	html += '	</tr>';
+    	html += '</table>';
+    	
+    	modal({
+	        type: 'info',
+	        title: '지역선택',
+	        text: html,
+	        buttons: [{
+	    		text: '닫기', //Button Text
+	    		val: 'close', //Button Value
+	    		eKey: true, //Enter Keypress
+	    		addClass: 'btn-light-blue', //Button Classes (btn-large | btn-small | btn-green | btn-light-green | btn-purple | btn-orange | btn-pink | btn-turquoise | btn-blue | btn-light-blue | btn-light-red | btn-red | btn-yellow | btn-white | btn-black | btn-rounded | btn-circle | btn-square | btn-disabled)
+	    		onClick: function(dialog) {
+	    			return true;
+	    		}
+	    	}]
+	    });
+	}
+    </script>
   </head>
 
   <body id="page-top">
@@ -119,7 +168,7 @@
         </div>
         <div class="row">
           <div class="col-md-4 col-sm-6 portfolio-item">
-            <a class="portfolio-link" href="http://bestpoll.kr/">
+            <a class="portfolio-link" href = "#" onclick="localChoice();">
               <div class="portfolio-hover">
                 <div class="portfolio-hover-content">
                   <i class="fa fa-plus fa-3x"></i>
@@ -133,17 +182,17 @@
             </div>
           </div>
           <div class="col-md-4 col-sm-6 portfolio-item">
-            <a class="portfolio-link" href="http://sh86.kr/rdaMobile">
+            <a class="portfolio-link" href="sbList">
               <div class="portfolio-hover">
                 <div class="portfolio-hover-content">
                   <i class="fa fa-plus fa-3x"></i>
                 </div>
               </div>
-              <img class="img-fluid" src="resources/img/portfolio/rdamain.jpg" alt="">
+              <img class="img-fluid" src="resources/img/portfolio/sbmain.PNG" alt="">
             </a>
             <div class="portfolio-caption">
-              <h4>RDA-MOBILE</h4>
-              <p class="text-muted">목장 개체들의 질병예측시스템</p>
+              <h4>신용보증재단</h4>
+              <p class="text-muted">만족도조사 현황표</p>
             </div>
           </div>
           <div class="col-md-4 col-sm-6 portfolio-item">

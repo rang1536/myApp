@@ -444,7 +444,7 @@
 <insert id="insertArsResultTb2" parameterType="kr.sh86.myApp.survey.domain.Sampling">
 	INSERT INTO bestpoll_ars.ars_result_kis(
 		num, 
-		ars_num, 
+		<if test="arsNum != null and arsNum != ''">ars_num,</if> 
 		tel, 
 		sido, 
 		sigungu,
@@ -453,13 +453,35 @@
 		data_in_date)
 	VALUES(
 		bestpoll_ars.ars_result_kis_seq.nextval, 
-		#{arsNum}, 
+		<if test="arsNum != null and arsNum != ''">#{arsNum},</if>  
 		#{tel}, 
 		#{sido}, 
 		#{sigungu},
 		0,
 		-2,
 		to_char(sysdate,'YYYY-MM-DD'))
+</insert>
+
+<!-- 입력 -->
+<insert id="insertArsResultTb3" parameterType="kr.sh86.myApp.survey.domain.Sampling">
+	INSERT INTO bestpoll_ars.ars_result_kis_${local}(
+		num 
+		<if test="arsNum != null and arsNum != ''">,ars_num</if> 
+		,tel 
+		,sido 
+		,sigungu
+		,result
+		,tcs_result
+		,data_in_date)
+	VALUES(
+		#{num}
+		<if test="arsNum != null and arsNum != ''">,#{arsNum}</if>  
+		,#{tel} 
+		,#{sido} 
+		,#{sigungu}
+		,0
+		,-2
+		,to_char(sysdate,'YYYY-MM-DD'))
 </insert>
 
 <select id="selectResultTb" parameterType="int" resultType="kr.sh86.myApp.survey.domain.Result">
@@ -763,11 +785,11 @@
 				  nvl(substr(replied_file, 9,1),'') as ans1, 
 				  nvl(substr(replied_file, 15,1),'') as ans2,
 				  nvl(substr(replied_file, 21,1),'') as ans3,
-				  nvl(substr(replied_file, 27,1),'') as ans4
+				  nvl(substr(replied_file, 27,1),'') as ans4,
+				  nvl(substr(replied_file, 33,1),'') as ans5
 	FROM xroshot.sdk_vms_report_detail 
-	WHERE send_date > '20180429090000' 
-	AND length(replied_file) >= 27
-	AND substr(replied_file, 21, 1) != 3
+	WHERE send_date > '20180516090000' 
+	AND length(replied_file) >= 33
 	ORDER BY SEND_DATE DESC
 </select>
 
@@ -793,9 +815,168 @@
 
 <insert id="insertResJj" parameterType="kr.sh86.myApp.survey.domain.Xroshot">
 	INSERT INTO BESTPOLL_ARS.TB_RESULT(
-		no, result, result2, senddate, stime, rtime, duration, a1, a2, a3, a4, iscompany)
+		no, result, result2, senddate, stime, rtime, duration, a1, a2, a3, a4, a5)
 	VALUES(
-		#{no}, #{result}, #{tcsResult}, #{sendDate}, #{stime}, #{rtime}, #{duration}, #{ans1}, #{ans2}, #{ans3}, #{ans4}, #{isCompany})
+		#{no}, #{result}, #{tcsResult}, #{sendDate}, #{stime}, #{rtime}, #{duration}, #{ans1}, #{ans2}, #{ans3}, #{ans4}, #{ans5})
 </insert>
+
+<!-- 지역별 국번 조회 -->
+<select id="selectDialing" parameterType="kr.sh86.myApp.survey.domain.Dialing" resultType="kr.sh86.myApp.survey.domain.Dialing">
+	SELECT *
+	FROM BESTPOLL_ARS.ARS_DIALING
+	WHERE LOCAL LIKE '%'||#{local}||'%'
+</select>
+
+<!-- 제외번호 조회 -->
+<select id="selectExcTel" parameterType="kr.sh86.myApp.survey.domain.ExceptionTel" resultType="kr.sh86.myApp.survey.domain.ExceptionTel">
+	SELECT *
+	FROM BESTPOLL_ARS.ARS_EXCEPTION_TEL
+	WHERE LOCAL LIKE '%'||#{local}||'%'
+</select>
+
+<!-- 표본 테이블 삭제 -->
+<delete id="deleteArsResult">
+	DELETE 
+	FROM BESTPOLL_ARS.ARS_RESULT_KIS
+</delete>
+
+<!-- **크로샷 응답현황 조회 -->
+
+<!-- 총발송 -->
+<select id="selectTotalSend" parameterType="Map" resultType="int">
+	select count(*) 
+	from XROSHOT.SDK_VMS_REPORT_DETAIL 
+	where send_date > #{sendDate}
+	<if test="endDate != none">AND send_date &lt; #{endDate}</if>		
+</select>
+
+<!-- 접촉/비접촉등 사례 -->
+<select id="selectres2" parameterType="Map" resultType="int">
+	select count(*) 
+	from XROSHOT.SDK_VMS_REPORT_DETAIL 
+	where send_date > #{sendDate}
+	and result = #{result}
+	<if test="endDate != none">AND send_date &lt; #{endDate}</if>
+</select>
+
+<!-- 타겟삭제 -->
+<delete id="deleteResultKis" parameterType="Map">
+	delete 
+	from bestpoll_ars.ars_result_kis 
+	where tel in (select phone_number 
+				  from XROSHOT.SDK_VMS_REPORT_DETAIL 
+				  where send_date > #{sendDate}
+				  and result = #{result})
+</delete>
+
+<!-- 응답현황 -->
+<select id="selectResList" parameterType="Map" resultType="kr.sh86.myApp.survey.domain.Xroshot">
+	SELECT rownum as no, send_date, duration, 
+		nvl(substr(replied_file, 9,1),'') as ans1, 
+		nvl(substr(replied_file, 15,1),'') as ans2,
+		nvl(substr(replied_file, 21,1),'') as ans3,
+		nvl(substr(replied_file, 27,1),'') as ans4,
+		nvl(substr(replied_file, 33,1),'') as ans5
+	FROM xroshot.sdk_vms_report_detail 
+	WHERE send_date > #{sendDate}
+	<if test="endDate != none">AND send_date &lt; #{endDate}</if>
+	AND length(replied_file) >= 33
+	ORDER BY SEND_DATE DESC
+</select>
+
+<!-- 지역선택된 데이터 조회 -->
+<select id="selectLocalByRes" parameterType="Map" resultType="kr.sh86.myApp.survey.domain.Xroshot">
+	SELECT send_date, phone_number, 
+		nvl(substr(replied_file, 9,1),'') as ans1, 
+		nvl(substr(replied_file, 15,1),'') as ans2,
+		nvl(substr(replied_file, 21,1),'') as ans3,
+		nvl(substr(replied_file, 27,1),'') as ans4,
+		nvl(substr(replied_file, 33,1),'') as ans5
+	FROM xroshot.sdk_vms_report_detail 
+	WHERE send_date > #{sendDate}
+	AND length(replied_file) >= #{localLen}
+	ORDER BY SEND_DATE DESC
+</select>
+
+<!-- 자사 가정집 DB수정 -->
+<update id="updateHomeDbByRes" parameterType="kr.sh86.myApp.survey.domain.Home35">
+	UPDATE KIS_STAT.HOME_35
+	SET t_sigungu = #{tSiGunGu},
+		t_is = #{tIs}
+		<if test="tDong != null and tDong !=''">,t_dong = #{tDong}</if>
+	WHERE t_telno = #{tTelno}
+</update>
+
+<!-- **신용보증재단 만족도조사  시작-->
+
+<!-- 1. 조사대상자수 -->
+<select id="selSinboTotalCnt" parameterType="Map" resultType="int">
+	SELECT COUNT(*) 
+	FROM ADMIN.SINBO 
+	WHERE SB_TAKEDATE &gt;= #{startDate} 
+	AND SB_TAKEDATE &lt;= #{endDate}
+</select>
+
+<!-- 2. 응답자수 -->
+<select id="selSinboResCnt" parameterType="Map" resultType="int">
+	SELECT COUNT(*) 
+	FROM ADMIN.SINBO 
+	WHERE SB_TAKEDATE &gt;= #{startDate}  
+	AND SB_TAKEDATE &lt;= #{endDate} 
+	AND SB_RESCHECK = '응답'
+</select>
+
+<!-- 3. 부재 -->
+<select id="selSinboBujeCnt" parameterType="Map" resultType="int">
+	SELECT COUNT(*) 
+	FROM ADMIN.SINBO 
+	WHERE SB_TAKEDATE &gt;= #{startDate} 
+	AND SB_TAKEDATE &lt;= #{endDate} 
+	AND SB_ARSRESULT LIKE '부재'||'%' 
+	AND SB_REJECT = 0 
+	AND SB_RESCHECK = '미응답'
+</select>
+
+<!-- 4. 추후응답 -->
+<select id="selSinboAfterCnt" parameterType="Map" resultType="int">
+	SELECT COUNT(*) 
+	FROM ADMIN.SINBO 
+	WHERE SB_TAKEDATE &gt;= #{startDate} 
+	AND SB_TAKEDATE &lt;= #{endDate} 
+	AND SB_ARSRESULT = '추후응답'
+	AND SB_RESCHECK = '미응답'
+</select>
+
+<!-- 5. 응답거부 -->
+<select id="selSinboRejectCnt" parameterType="Map" resultType="int">
+	SELECT COUNT(*) 
+	FROM ADMIN.SINBO 
+	WHERE SB_TAKEDATE &gt;= #{startDate} 
+	AND SB_TAKEDATE &lt;= #{endDate} 
+	AND SB_REJECT = 1 
+	AND SB_RESCHECK = '미응답' 
+</select>
+
+<!-- 6. 문자1,2차 -->
+<select id="selSinboMmsCnt" parameterType="Map" resultType="int">
+	SELECT COUNT(*) 
+	FROM ADMIN.SINBO 
+	WHERE SB_TAKEDATE &gt;= #{startDate} 
+	AND SB_TAKEDATE &lt;= #{endDate}
+	AND SB_RESCHECK= '미응답' 
+	AND SB_ORDERCOUNT &lt;= 3 
+	AND SB_REJECT = 0 
+	AND SB_ARSRESULT IS NULL
+</select>
+
+<!-- 7.응답현황 조회 -->
+<select id="selSinboResList" parameterType="Map" resultType="kr.sh86.myApp.survey.domain.ResData">
+	SELECT a.survey_no, a.q1, a.q2, a.q3, a.q4, a.q5, a.q6, a.mem_id,
+		b.sb_num, b.sb_rrn, b.sb_add, b.sb_branch, b.sb_josaja, b.sb_hp, b.sb_dateofest, b.sb_rescheck, b.sb_takedate, b.sb_upstream
+	FROM KIS_2017.jjac_survey004 a, ADMIN.SINBO b
+	WHERE a.MEM_ID = b.SB_NUM
+	AND b.SB_TAKEDATE &gt;= #{startDate}
+	AND b.SB_TAKEDATE &lt;= #{endDate}
+</select>
 
 </mapper>
