@@ -1,5 +1,6 @@
 package kr.sh86.myApp.survey.service;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,10 +24,13 @@ import kr.sh86.myApp.survey.domain.Result;
 import kr.sh86.myApp.survey.domain.Sample;
 import kr.sh86.myApp.survey.domain.Sampling;
 import kr.sh86.myApp.survey.domain.SbResult;
+import kr.sh86.myApp.survey.domain.Sinbo;
 import kr.sh86.myApp.survey.domain.User;
 import kr.sh86.myApp.survey.domain.Users;
 import kr.sh86.myApp.survey.domain.Xroshot;
 import kr.sh86.myApp.util.UtilDate;
+import kr.sh86.myApp.util.ExcelRead;
+import kr.sh86.myApp.util.ReadOption;
 
 @Service
 public class SurveyService {
@@ -34,6 +38,15 @@ public class SurveyService {
 	@Autowired
 	private SurveyDao surveyDao;
 	
+	//신보 - 회원번호 검색
+	public Map<String, Object> readSbNumServ(String sbHp){
+		Map<String, Object> map = new HashMap<String, Object>();
+		int sbNum = surveyDao.selectSbNum(sbHp);
+		map.put("sbNum", sbNum);
+		map.put("result", "succ");
+		
+		return map;
+	}
 	//응답부분입력
 	public Map<String, Object> createResServ(Users user){
 		//리턴값 세팅(성공여부, 응답번호)
@@ -225,6 +238,141 @@ public class SurveyService {
 		mms.setMmsMsg(msg);
 		
 		return mms;
+	}
+	
+	//신보 문자보내기
+	public Map<String, Object> sendSmsSinboServ(String order, String msg){
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		final int scheduleType = 0;
+		final String subject = "신용보증재단 만족도조사";
+		final String callback = "0632880488"; //발송번호는 등록된 번호만 가능. 추후 대표님 폰등은 필요하면 따로 등록.
+		msg += "\r\n조사응답바로가기 : http://bestpoll.kr/19/0726.jsp?SB_NUM=";
+		String msg2 = "\r\n\r\n";
+		msg2 += "수신거부 bestpoll.kr/19/rej.jsp?SB_NUM=";
+		String mmsMsg = null;
+		
+		/*System.out.println("msg : "+msg);
+		Mms mms = new Mms();
+		String destInfo = "윤재호"+"^"+"01038390401";
+		mmsMsg = msg + "1111" + msg2 + "1111";
+		int destCount = 1;
+		mms = setMms(scheduleType, subject, callback, destInfo, destCount, mmsMsg);
+		
+		int result = surveyDao.sendMmsToSelected(mms);
+		if(result == 1) {
+			System.out.println(" 번째 문자발송 성공!!");
+		}*/
+		
+		//발송자 조회
+		List<Sinbo> list = new ArrayList<Sinbo>();
+		if(order.equals("first")) {
+			list = surveyDao.selSinboFirTarget();
+		}else if(order.equals("second")) {
+			list = surveyDao.selSinboSecTarget();	
+		}else if(order.equals("last")) {
+			list = surveyDao.selSinboLastTarget();	
+		}
+		
+		UtilDate utilDate = new UtilDate();
+		String today = utilDate.getCurrentDate();
+		
+		//문자발송
+		int succ = 0;
+		int fail = 0;
+		for(int i=0; i<list.size(); i++) {
+			Mms mms = new Mms();
+			String destInfo = list.get(i).getSbCeo()+"^"+list.get(i).getSbHp();
+			mmsMsg = msg + list.get(i).getSbNum() + msg2 + list.get(i).getSbNum();
+			int destCount = 1;
+			mms = setMms(scheduleType, subject, callback, destInfo, destCount, mmsMsg);
+			
+			int result = surveyDao.sendMmsToSelected(mms);
+			if(result == 1) {
+				System.out.println(" 번째 문자발송 성공!!");
+				if(order.equals("first")) {
+					list.get(i).setSbOrderCount("1");
+				}else {
+					if(Integer.parseInt(list.get(i).getSbOrderCount()) == 1) {
+						list.get(i).setSbSecDate(today);
+					}else if(Integer.parseInt(list.get(i).getSbOrderCount()) == 2) {
+						list.get(i).setSbThiDate(today);
+					}
+					list.get(i).setSbOrderCount(String.valueOf(Integer.parseInt(list.get(i).getSbOrderCount()+1)));					
+				}
+				list.get(i).setSbResCheck("미응답");
+				int upResult = surveyDao.updateSinboState(list.get(i));
+				if(upResult == 1) {
+					succ++;
+				}else {
+					fail++;
+				}
+			}else {
+				fail++;
+			}
+		}
+		map.put("succ", succ);
+		map.put("fail", fail);
+		return map;
+	}
+	
+	//신보 문자보내기2 - 전화면접후 부재중, 추후응답자 조회하여 문자 마지막 발송
+	public Map<String, Object> sendSmsSinboLastServ(){
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		final int scheduleType = 0;
+		final String subject = "신용보증재단 만족도조사";
+		final String callback = "0632880488"; //발송번호는 등록된 번호만 가능. 추후 대표님 폰등은 필요하면 따로 등록.
+		String msg = "전북신용보증재단 서비스 만족도 조사입니다.\r\n" + 
+				"아래 링크를 눌러 조사에 응답해 주시면 더욱 좋은 서비스로 보답 하겠습니다.\r\n" + 
+				"편하신 시간에 응답해 주시기 바랍니다.\r\n" + 
+				"\r\n" + 
+				"응답하기 : http://bestpoll.kr/19/0726.jsp?SB_NUM=";
+		String msg2 = "\r\n\r\n";
+		msg2 += "수신거부 bestpoll.kr/19/rej.jsp?SB_NUM=";
+		String mmsMsg = null;
+		
+		//발송자 조회
+		List<Sinbo> list = surveyDao.selSinboLastTarget(); //부재중
+		List<Sinbo> list2 = surveyDao.selSinboLastTarget2(); //추후응답
+		
+		UtilDate utilDate = new UtilDate();
+		String today = utilDate.getCurrentDate();
+		
+		//문자발송
+		int succ = 0;
+		int fail = 0;
+		for(int i=0; i<list.size(); i++) {
+			Mms mms = new Mms();
+			String destInfo = list.get(i).getSbCeo()+"^"+list.get(i).getSbHp();
+			mmsMsg = msg + list.get(i).getSbNum() + msg2 + list.get(i).getSbNum();
+			int destCount = 1;
+			mms = setMms(scheduleType, subject, callback, destInfo, destCount, mmsMsg);
+			
+			int result = surveyDao.sendMmsToSelected(mms);
+			if(result == 1) {
+				succ++;
+			}else {
+				fail++;
+			}
+		}
+		for(int i=0; i<list2.size(); i++) {
+			Mms mms = new Mms();
+			String destInfo = list2.get(i).getSbCeo()+"^"+list2.get(i).getSbHp();
+			mmsMsg = msg + list2.get(i).getSbNum() + msg2 + list2.get(i).getSbNum();
+			int destCount = 1;
+			mms = setMms(scheduleType, subject, callback, destInfo, destCount, mmsMsg);
+			
+			int result = surveyDao.sendMmsToSelected(mms);
+			if(result == 1) {
+				succ++;
+			}else {
+				fail++;
+			}
+		}
+		map.put("succ", succ);
+		map.put("fail", fail);
+		return map;
 	}
 	
 	//문자 - mms발송
@@ -1869,9 +2017,13 @@ public class SurveyService {
 	public List<SbResult> readSinboResInfoServ(){
 		String startDate = "";
 		String endDate = "";
+		UtilDate utilDate = new UtilDate();
+		String nowDate = utilDate.getNowDate(); //mm-dd
+		String nowMonth = nowDate.substring(0, 2);
+		int loop = Integer.parseInt(nowMonth)-3;
 		List<SbResult> list = new ArrayList<SbResult>();
 		
-		for(int i=0; i<2; i++) {
+		for(int i=0; i<loop; i++) {
 			Map<String, Object> params = new HashMap<String, Object>();
 			if(i==0){
 				startDate = "2018-04-01";
@@ -1879,6 +2031,9 @@ public class SurveyService {
 			}else if(i == 1){
 				startDate = "2018-05-03";
 				endDate = "2018-06-02";
+			}else if(i == 2){
+				startDate = "2018-06-04";
+				endDate = "2018-07-02";
 			}			
 			params.put("startDate", startDate);
 			params.put("endDate", endDate);
@@ -1898,7 +2053,7 @@ public class SurveyService {
 	}
 	
 	//신보 - 응답현황표
-	public List<ResData> readSinboResDataServ(String startDate, String endDate){
+	public List<ResData> readSinboResDataServ(String startDate, String endDate, String type){
 		//파라미터 세팅
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("startDate", startDate);
@@ -1906,139 +2061,141 @@ public class SurveyService {
 		
 		List<ResData> list = surveyDao.selSinboResList(params); //기간내 응답현황 목록조회
 		
-		UtilDate utilDate = new UtilDate();
-		for(int i=0; i<list.size(); i++) {
-			if(list.get(i).getSbRrn() != null) { // 성별, 연령 세팅
-				String sexCheck = list.get(i).getSbRrn().substring(7, 8);
-				String ageCheck = list.get(i).getSbRrn().substring(0, 2);
+		if(type.equals("after")) {
+			UtilDate utilDate = new UtilDate();
+			for(int i=0; i<list.size(); i++) {
+				if(list.get(i).getSbRrn() != null) { // 성별, 연령 세팅
+					String sexCheck = list.get(i).getSbRrn().substring(7, 8);
+					String ageCheck = list.get(i).getSbRrn().substring(0, 2);
+					
+					//성별
+					if(sexCheck.equals("1") || sexCheck.equals("3") || sexCheck.equals("5")) { //남
+						list.get(i).setSbSex("1");
+					}else if(sexCheck.equals("2") || sexCheck.equals("4") || sexCheck.equals("6")){ //여
+						list.get(i).setSbSex("2");
+					}
+					
+					//촐생년도 계산
+					if(Integer.parseInt(ageCheck) > 30 && Integer.parseInt(ageCheck) < 99) {
+						ageCheck = "19"+ageCheck;
+					}else if(Integer.parseInt(ageCheck) < 25) {
+						ageCheck = "20"+ageCheck;
+					}
+					
+					//연령
+					int ageChk = 2018-Integer.parseInt(ageCheck);
+					if(ageChk < 20) { //10대
+						list.get(i).setSbAge("1");
+					}else if(ageChk > 19 && ageChk < 30) { //20대
+						list.get(i).setSbAge("2");
+					}else if(ageChk > 29 && ageChk < 40) { //30대
+						list.get(i).setSbAge("3");
+					}else if(ageChk > 39 && ageChk < 50) { //40대
+						list.get(i).setSbAge("4");
+					}else if(ageChk > 49 && ageChk < 60) { //50대
+						list.get(i).setSbAge("5");
+					}else if(ageChk > 59) { //60대
+						list.get(i).setSbAge("6");
+					}				
+				} //성별,연령 끝
 				
-				//성별
-				if(sexCheck.equals("1") || sexCheck.equals("3") || sexCheck.equals("5")) { //남
-					list.get(i).setSbSex("1");
-				}else if(sexCheck.equals("2") || sexCheck.equals("4") || sexCheck.equals("6")){ //여
-					list.get(i).setSbSex("2");
+				//지역
+				if(list.get(i).getSbAdd() != null) {
+					String local = list.get(i).getSbAdd();
+					System.out.println(i+ " 번째 로컬 확인 : "+local);
+					
+					if(local.contains("전주")) list.get(i).setSbLocal("1");
+					else if(local.contains("군산")) list.get(i).setSbLocal("2");
+					else if(local.contains("익산")) list.get(i).setSbLocal("3");
+					else if(local.contains("정읍")||local.contains("고창")) list.get(i).setSbLocal("4");
+					else if(local.contains("김제")||local.contains("부안")) list.get(i).setSbLocal("5");
+					else if(local.contains("남원")||local.contains("임실")||local.contains("순창")) list.get(i).setSbLocal("6");
+					else if(local.contains("완주")||local.contains("진안")||local.contains("무주")||local.contains("장수")) list.get(i).setSbLocal("7");
 				}
 				
-				//촐생년도 계산
-				if(Integer.parseInt(ageCheck) > 30 && Integer.parseInt(ageCheck) < 99) {
-					ageCheck = "19"+ageCheck;
-				}else if(Integer.parseInt(ageCheck) < 25) {
-					ageCheck = "20"+ageCheck;
+				//업종
+				if(list.get(i).getSbUpStream() != null) {
+					String biz = list.get(i).getSbUpStream();
+					System.out.println(i+ " 번째 업종 확인 : "+biz);
+					
+					if(biz.contains("도매")||biz.contains("소매")) {
+						System.out.println(i+ " 번째 업종 도소매 ");
+						list.get(i).setSbBusiness("1");
+					}else if(biz.contains("숙박")||biz.contains("음식점")) {
+						System.out.println(i+ " 번째 업종 숙박음식점 ");
+						list.get(i).setSbBusiness("2");
+					}else if(biz.contains("건설")||biz.contains("제조")) {
+						System.out.println(i+ " 번째 업종 건설제조 ");
+						list.get(i).setSbBusiness("3");
+					}else if(biz.contains("서비스")) {
+						System.out.println(i+ " 번째 업종 서비스 ");
+						list.get(i).setSbBusiness("4");
+					}else {
+						System.out.println(i+ " 번째 업종 기타 ");
+						list.get(i).setSbBusiness("5");
+					}
 				}
 				
-				//연령
-				int ageChk = 2018-Integer.parseInt(ageCheck);
-				if(ageChk < 20) { //10대
-					list.get(i).setSbAge("1");
-				}else if(ageChk > 19 && ageChk < 30) { //20대
-					list.get(i).setSbAge("2");
-				}else if(ageChk > 29 && ageChk < 40) { //30대
-					list.get(i).setSbAge("3");
-				}else if(ageChk > 39 && ageChk < 50) { //40대
-					list.get(i).setSbAge("4");
-				}else if(ageChk > 49 && ageChk < 60) { //50대
-					list.get(i).setSbAge("5");
-				}else if(ageChk > 59) { //60대
-					list.get(i).setSbAge("6");
-				}				
-			} //성별,연령 끝
-			
-			//지역
-			if(list.get(i).getSbAdd() != null) {
-				String local = list.get(i).getSbAdd().substring(5, 7);
-				System.out.println(i+ " 번째 로컬 확인 : "+local);
+				//업력
+				if(list.get(i).getSbDateOfEst() != null) {
+					int year = utilDate.getDiffDay(utilDate.getCurrentDate(), list.get(i).getSbDateOfEst())*(-1);
+					System.out.println(i+" 번째 업력 리턴값 확인 : "+ year);
+					
+					if(year <= 365) { //1년차
+						list.get(i).setSbYears("1");
+					}else if(year > 365 && year <= 730) { //2년차
+						list.get(i).setSbYears("2");
+					}else if(year > 720 && year <= 1460) { //3~4년차
+						list.get(i).setSbYears("3");
+					}else if(year > 1460 && year <= 3650) { //5~10년차
+						list.get(i).setSbYears("4");
+					}else if(year > 3650) { //11년차
+						list.get(i).setSbYears("5");
+					}
+				}
 				
-				if(local.equals("전주")) list.get(i).setSbLocal("1");
-				else if(local.equals("군산")) list.get(i).setSbLocal("2");
-				else if(local.equals("익산")) list.get(i).setSbLocal("3");
-				else if(local.equals("정읍")||local.equals("고창")) list.get(i).setSbLocal("4");
-				else if(local.equals("김제")||local.equals("부안")) list.get(i).setSbLocal("5");
-				else if(local.equals("남원")||local.equals("임실")||local.equals("순창")) list.get(i).setSbLocal("6");
-				else if(local.equals("완주")||local.equals("진안")||local.equals("무주")||local.equals("장수")) list.get(i).setSbLocal("7");
-			}
-			
-			//업종
-			if(list.get(i).getSbUpStream() != null) {
-				String biz = list.get(i).getSbUpStream();
-				System.out.println(i+ " 번째 업종 확인 : "+biz);
+				//지점세팅
+				if(list.get(i).getSbBranch() != null) {
+					String branch = list.get(i).getSbBranch();
+					
+					if(branch.equals("본점")) list.get(i).setSbBranch("1");
+					else if(branch.equals("군산지점")) list.get(i).setSbBranch("2");
+					else if(branch.equals("익산지점")) list.get(i).setSbBranch("3");
+					else if(branch.equals("정읍지점")) list.get(i).setSbBranch("4");
+					else if(branch.equals("남원지점")) list.get(i).setSbBranch("5");
+				}
 				
-				if(biz.contains("도매")||biz.contains("소매")) {
-					System.out.println(i+ " 번째 업종 도소매 ");
-					list.get(i).setSbBusiness("1");
-				}else if(biz.contains("숙박")||biz.contains("음식점")) {
-					System.out.println(i+ " 번째 업종 숙박음식점 ");
-					list.get(i).setSbBusiness("2");
-				}else if(biz.contains("건설")||biz.contains("제조")) {
-					System.out.println(i+ " 번째 업종 건설제조 ");
-					list.get(i).setSbBusiness("3");
-				}else if(biz.contains("서비스")) {
-					System.out.println(i+ " 번째 업종 서비스 ");
-					list.get(i).setSbBusiness("4");
-				}else {
-					System.out.println(i+ " 번째 업종 기타 ");
-					list.get(i).setSbBusiness("5");
+				//조사자세팅
+				if(list.get(i).getSbJosaja() != null) {
+					String josaja = list.get(i).getSbJosaja();
+					
+					if(josaja.equals("곽선욱")) list.get(i).setSbJosaja("1");
+					else if(josaja.equals("권석표")) list.get(i).setSbJosaja("2");
+					else if(josaja.equals("기호형")) list.get(i).setSbJosaja("3");
+					else if(josaja.equals("김나현")) list.get(i).setSbJosaja("4");
+					else if(josaja.equals("김상길")) list.get(i).setSbJosaja("5");
+					else if(josaja.equals("김태헌")) list.get(i).setSbJosaja("6");
+					else if(josaja.equals("김항우")) list.get(i).setSbJosaja("7");
+					else if(josaja.equals("김혜영")) list.get(i).setSbJosaja("8");
+					else if(josaja.equals("문소정")) list.get(i).setSbJosaja("9");
+					else if(josaja.equals("박순천")) list.get(i).setSbJosaja("10");
+					else if(josaja.equals("박현성")) list.get(i).setSbJosaja("11");
+					else if(josaja.equals("변미희정")) list.get(i).setSbJosaja("12");
+					else if(josaja.equals("송현")) list.get(i).setSbJosaja("13");
+					else if(josaja.equals("유승용")) list.get(i).setSbJosaja("14");
+					else if(josaja.equals("이윤정")) list.get(i).setSbJosaja("15");
+					else if(josaja.equals("이종백")) list.get(i).setSbJosaja("16");
+					else if(josaja.equals("이지원")) list.get(i).setSbJosaja("17");
+					else if(josaja.equals("이지현")) list.get(i).setSbJosaja("18");
+					else if(josaja.equals("이진영")) list.get(i).setSbJosaja("19");
+					else if(josaja.equals("이채명")) list.get(i).setSbJosaja("20");
+					else if(josaja.equals("조두만")) list.get(i).setSbJosaja("21");
+					else if(josaja.equals("천상민")) list.get(i).setSbJosaja("22");
+					else if(josaja.equals("최규수")) list.get(i).setSbJosaja("23");
+					else if(josaja.equals("황희망")) list.get(i).setSbJosaja("24");
 				}
 			}
-			
-			//업력
-			if(list.get(i).getSbDateOfEst() != null) {
-				int year = utilDate.getDiffDay(utilDate.getCurrentDate(), list.get(i).getSbDateOfEst())*(-1);
-				System.out.println(i+" 번째 업력 리턴값 확인 : "+ year);
-				
-				if(year <= 365) { //1년차
-					list.get(i).setSbYears("1");
-				}else if(year > 365 && year <= 730) { //2년차
-					list.get(i).setSbYears("2");
-				}else if(year > 720 && year <= 1460) { //3~4년차
-					list.get(i).setSbYears("3");
-				}else if(year > 1460 && year <= 3650) { //5~10년차
-					list.get(i).setSbYears("4");
-				}else if(year > 3650) { //11년차
-					list.get(i).setSbYears("5");
-				}
-			}
-			
-			//지점세팅
-			if(list.get(i).getSbBranch() != null) {
-				String branch = list.get(i).getSbBranch();
-				
-				if(branch.equals("본점")) list.get(i).setSbBranch("1");
-				else if(branch.equals("군산지점")) list.get(i).setSbBranch("2");
-				else if(branch.equals("익산지점")) list.get(i).setSbBranch("3");
-				else if(branch.equals("정읍지점")) list.get(i).setSbBranch("4");
-				else if(branch.equals("남원지점")) list.get(i).setSbBranch("5");
-			}
-			
-			//조사자세팅
-			if(list.get(i).getSbJosaja() != null) {
-				String josaja = list.get(i).getSbJosaja();
-				
-				if(josaja.equals("곽선욱")) list.get(i).setSbJosaja("1");
-				else if(josaja.equals("권석표")) list.get(i).setSbJosaja("2");
-				else if(josaja.equals("기호형")) list.get(i).setSbJosaja("3");
-				else if(josaja.equals("김나현")) list.get(i).setSbJosaja("4");
-				else if(josaja.equals("김상길")) list.get(i).setSbJosaja("5");
-				else if(josaja.equals("김태헌")) list.get(i).setSbJosaja("6");
-				else if(josaja.equals("김항우")) list.get(i).setSbJosaja("7");
-				else if(josaja.equals("김혜영")) list.get(i).setSbJosaja("8");
-				else if(josaja.equals("문소정")) list.get(i).setSbJosaja("9");
-				else if(josaja.equals("박순천")) list.get(i).setSbJosaja("10");
-				else if(josaja.equals("박현성")) list.get(i).setSbJosaja("11");
-				else if(josaja.equals("변미희정")) list.get(i).setSbJosaja("12");
-				else if(josaja.equals("송현")) list.get(i).setSbJosaja("13");
-				else if(josaja.equals("유승용")) list.get(i).setSbJosaja("14");
-				else if(josaja.equals("이윤정")) list.get(i).setSbJosaja("15");
-				else if(josaja.equals("이종백")) list.get(i).setSbJosaja("16");
-				else if(josaja.equals("이지원")) list.get(i).setSbJosaja("17");
-				else if(josaja.equals("이지현")) list.get(i).setSbJosaja("18");
-				else if(josaja.equals("이진영")) list.get(i).setSbJosaja("19");
-				else if(josaja.equals("이채명")) list.get(i).setSbJosaja("20");
-				else if(josaja.equals("조두만")) list.get(i).setSbJosaja("21");
-				else if(josaja.equals("천상민")) list.get(i).setSbJosaja("22");
-				else if(josaja.equals("최규수")) list.get(i).setSbJosaja("23");
-				else if(josaja.equals("황희망")) list.get(i).setSbJosaja("24");
-			}
-		}
+		}	
 		
 		return list;
 	}
@@ -2164,5 +2321,51 @@ public class SurveyService {
 		System.out.println("성공 : "+succ);
 		System.out.println("실패 : "+fail);
 		
+	}
+	
+	//신보 엑셀업로드
+	public Map<String, Object> insertSinboExcelServ(File destFile) {
+		int succ = 0;
+		
+		ReadOption readOption = new ReadOption();
+		readOption.setFilePath(destFile.getAbsolutePath());
+		readOption.setOutputColumns("A","B","C","D","E","F","G","H","I");
+		readOption.setStartRow(2);
+		  
+		List<Map<String, String>> excelContent = ExcelRead.read(readOption);
+		  
+		Sinbo sinbo = null;
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		//신보 마지막 시퀀스 조회
+		int lastSeq = surveyDao.selSinboLastSbNum();
+		
+		for(Map<String, String> excelRow : excelContent){		  
+			sinbo = new Sinbo();
+			sinbo.setSbNum(lastSeq+1);
+			sinbo.setSbCompany(excelRow.get("A"));
+			sinbo.setSbDateOfEst(excelRow.get("B"));
+			sinbo.setSbCeo(excelRow.get("C"));
+			if(excelRow.get("D") != null) sinbo.setSbRrn(excelRow.get("D"));
+			sinbo.setSbAdd(excelRow.get("E"));
+			sinbo.setSbBranch(excelRow.get("F"));
+			sinbo.setSbJosaja(excelRow.get("G"));
+			sinbo.setSbHp(excelRow.get("H"));
+			sinbo.setSbUpStream(excelRow.get("I"));
+			sinbo.setSbReject(0);
+			sinbo.setSbOrderCount("0");
+		
+			lastSeq++;
+			
+			int result = surveyDao.insertSinboExcel(sinbo);
+			System.out.println("check : "+sinbo);
+			
+			if(result == 1) {
+				System.out.println("엑셀파일 입력 성공~!!");
+				succ++;			
+			}
+		}
+		map.put("succ", succ);
+		return map;
 	}
 }

@@ -4,6 +4,13 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="SurveyDao">
 
+<!-- 신보 - 회원번호 검색 -->
+<select id="selectSbNum" parameterType="String" resultType="int">
+	SELECT SB_NUM
+	FROM ADMIN.SINBO
+	WHERE SB_HP = #{sbHp}
+</select>
+
 <!-- 입력 -->
 <insert id="insertRes" parameterType="kr.sh86.myApp.survey.domain.Response">
 	<selectKey keyProperty="resNo" resultType="int" order="BEFORE">
@@ -979,4 +986,77 @@
 	AND b.SB_TAKEDATE &lt;= #{endDate}
 </select>
 
+<!-- 문자1차발송자 조회 -->
+<select id="selSinboFirTarget" resultType="kr.sh86.myApp.survey.domain.Sinbo">
+	SELECT SB_NUM, SB_CEO, SB_HP
+	FROM ADMIN.SINBO 
+	WHERE SB_TAKEDATE = TO_CHAR(SYSDATE,'YYYY-MM-DD')
+</select>
+
+<!-- 문자발송자 정보 수정 -->
+<update id="updateSinboState" parameterType="kr.sh86.myApp.survey.domain.Sinbo">
+	UPDATE ADMIN.SINBO 
+	SET SB_ORDERCOUNT = #{sbOrderCount}, 
+		SB_RESCHECK= #{sbResCheck}
+		<if test="sbFirDate != null and sbFirDate != ''">,SB_FIRDATE = TO_CHAR(SYSDATE,'YYYY-MM-DD')</if>
+		<if test="sbSecDate != null and sbSecDate != ''">,SB_SECDATE = TO_CHAR(SYSDATE,'YYYY-MM-DD')</if>
+		<if test="sbThiDate != null and sbThiDate != ''">,SB_THIDATE = TO_CHAR(SYSDATE,'YYYY-MM-DD')</if>
+	WHERE SB_NUM = #{sbNum}
+</update>
+
+<!-- 문자2,3차발송자 조회 -->
+<select id="selSinboSecTarget" resultType="kr.sh86.myApp.survey.domain.Sinbo">
+	SELECT SB_NUM, SB_CEO, SB_HP, SB_ORDERCOUNT 
+	FROM ADMIN.SINBO 
+	WHERE SB_ORDERCOUNT &gt; 0
+	AND SB_ORDERCOUNT &lt; 4 
+	AND SB_RESCHECK = '미응답'
+	AND SB_TAKEDATE &gt;= '2018-06-04'
+	AND SB_TAKEDATE &lt; TO_CHAR(SYSDATE,'YYYY-MM-DD') 
+	AND SB_REJECT = 0
+</select>
+
+<!-- 문자 전화조사후 부재,추후응답 발송자 조회 -->
+<select id="selSinboLastTarget" resultType="kr.sh86.myApp.survey.domain.Sinbo">
+	SELECT SB_NUM, SB_CEO, SB_HP, SB_ORDERCOUNT 
+	FROM ADMIN.SINBO 
+	WHERE SB_ORDERCOUNT &gt; 0
+	AND SB_RESCHECK = '미응답'
+	AND SB_ARSRESULT LIKE '부재'||'%'
+	AND SB_TAKEDATE &gt;= '2018-05-03'
+	AND SB_TAKEDATE &lt;= TO_CHAR(SYSDATE,'YYYY-MM-DD') 
+	AND SB_REJECT = 0
+</select>
+
+<!-- 문자 전화조사후 부재,추후응답 발송자 조회 -->
+<select id="selSinboLastTarget2" resultType="kr.sh86.myApp.survey.domain.Sinbo">
+	SELECT SB_NUM, SB_CEO, SB_HP, SB_ORDERCOUNT 
+	FROM ADMIN.SINBO 
+	WHERE SB_ORDERCOUNT &gt; 0
+	AND SB_RESCHECK = '미응답'
+	AND SB_ARSRESULT LIKE '추후응답'||'%'
+	AND SB_TAKEDATE &gt;= '2018-05-03'
+	AND SB_TAKEDATE &lt;= TO_CHAR(SYSDATE,'YYYY-MM-DD') 
+	AND SB_REJECT = 0
+</select>
+
+<!-- 신보 - 마지막 시퀀스 조회 -->
+<select id="selSinboLastSbNum" resultType="int">
+	SELECT MAX(SB_NUM)
+	FROM ADMIN.SINBO
+</select>
+
+<!-- 신보 - 엑셀 데이터 입력 -->
+<insert id="insertSinboExcel" parameterType="kr.sh86.myApp.survey.domain.Sinbo">
+	INSERT INTO ADMIN.SINBO(
+		SB_NUM, SB_COMPANY, SB_DATEOFEST, SB_CEO
+		<if test="sbRrn != null and sbRrn != ''">, SB_RRN</if>
+		, SB_ADD, SB_BRANCH, SB_JOSAJA, SB_HP, SB_UPSTREAM, SB_TAKEDATE, SB_ORDERCOUNT, SB_REJECT
+	)
+	VALUES(
+		#{sbNum},#{sbCompany},#{sbDateOfEst},#{sbCeo}
+		<if test="sbRrn != null and sbRrn != ''">,#{sbRrn}</if>
+		,#{sbAdd},#{sbBranch},#{sbJosaja},#{sbHp},#{sbUpStream},TO_CHAR(SYSDATE, 'YYYY-MM-DD'),#{sbOrderCount},#{sbReject}
+	)
+</insert>
 </mapper>

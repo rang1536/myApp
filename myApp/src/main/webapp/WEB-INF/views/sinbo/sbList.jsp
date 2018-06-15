@@ -41,6 +41,23 @@
 		}
 		.firTh{background-color:#FFF2E6;width:12%;border-bottom : 1px solid #ddd;text-align:center;}
 		.firTd{border-bottom : 1px solid #ddd;text-align:center;}
+		.loader{width: 100%;
+			height: 100%;
+			top: 0;
+			left: 0;
+			position: fixed;
+			display: block;
+			opacity: 0.8;
+			background: white;
+			z-index: 99;
+			text-align: center;
+		}
+		.loader img{
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			z-index: 100;
+		}
 	</style>
 	
 	<script>
@@ -68,7 +85,8 @@
 		    $('#nowDate').text("현재시간 : "+year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds);
 		}
 		
-		function getList(){
+		function getList(type){
+			$('.loader').css('display','');
 			var startDate = $('#startDate').val();
 			var endDate = $('#endDate').val();
 			
@@ -79,7 +97,7 @@
 		          processing: false,
 		          ordering: true,
 		          serverSide: false,
-		          searching: true,
+		          searching: false,
 		          //lengthMenu : [ [ 3, 5, 10, -1 ], [ 3, 5, 10, "All" ] ],
 		          pageLength: 50,
 		          bPaginate: false,
@@ -100,11 +118,11 @@
 		             sInfo : "총_TOTAL_건 중, _START_건부터_END_건까지 표시",
 		             sInfoEmpty : "0 건 중, 0부터 0 까지 표시", 
 		             sInfoFiltered : "(총 _MAX_ 건에서 추출 )",
-		             sSearch : "상세 검색 : "                
+		             /* sSearch : "상세 검색 : " */                
 		       },
 			    ajax : {
 			   
-			      "url":"getResList?startDate="+startDate+"&endDate="+endDate,
+			      "url":"getResList?startDate="+startDate+"&endDate="+endDate+"&type="+type,
 			      "type":"POST",
 			      "dataSrc": function(json){
 						var list = json.list;			    	   
@@ -127,22 +145,86 @@
 				      {data: "q5"},
 				      {data: "q6"}
 				  ],
-			         initComplete : function() {
-			  
+			         initComplete : function() {		  
 			        	 $('#payList_filter').prepend( $('#buttonWrap')) ;
-			        	 
+			        	 $('.loader').css('display','none');
 			         } 
 			   });
 		}
+		
+		function sendMms(order){
+			if(confirm('문자를 보내시겠습니까?')){
+				$('.loader').css('display','');
+				
+				$.ajax({
+					url : 'sendSmsSinbo',
+					data : {'order':order, 'msg':$('#msg').val()},
+					type : 'post',
+					dataType : 'json',
+					success : function(data){
+						$('.loader').css('display','none');
+						
+						alert(data.succ+' 건 성공!!  '+data.fail+' 건 실패!!');
+					}
+				})
+			}
+			
+		}
+		
+		$(document).on('click','#btn-upload',function(){
+			var formData = new FormData($("#event")[0]);
+			$('.loader').css('display','');
+			
+	        $.ajax({
+	            type : 'post',
+	            url : 'addSinboExcel',
+	            data : formData,
+	            processData : false,
+	            contentType : false,
+	            success : function(data) {
+	            	$('.loader').css('display','none');
+	            	alert(data.succ+" 건 등록 하였습니다.");           
+	            },
+	            error : function(error) {
+	            	$('.loader').css('display','none');
+	                alert("등록에 실패하였습니다.");
+	                console.log(error);
+	                console.log(error.status);
+	            }
+	        });
+		})
+		
+		$(document).on('click','#surveyBtn',function(){
+			var sbHp = $('#sbHp').val();
+			
+			if(sbHp == null || sbHp == ''){
+				alert('핸드폰번호를 입력하세요');
+				return;
+			}
+			
+			$.ajax({
+				url : 'getSbNum',
+				data : {'sbHp':sbHp},
+				dataType : 'json',
+				type : 'post',
+				success : function(data){
+					location.href = "http://bestpoll.kr/19/0726.jsp?SB_NUM="+data.sbNum;
+				}
+			})
+		})
 	</script>
 </head>
 <body>
+	<div class="loader" style="display:none;">
+		<img src="resources/img/2.gif" alt="loading">
+	</div>
+	
 	<div class="container">
 		<h2 style="text-align:center;background-color:#662500;color:#F6F6F6;">전북 신용보증재단 서비스만족도 조사 현황표</h2>
 		<h3>조사시작 : 2018.04.01 ~ </h3>
 		<h3 id="nowDate" style="background-color:#FAECC5"></h3>
 		<br/>
-		<button type="button" onclick="javascript:window.location.reload(true);" style="width:100%;height:30px;font-weight:bold;background-color:#662500;color:#F6F6F6;font-size:17px;">응답현황 최신화</button>
+		<button type="button" onclick="javascript:window.location.reload(true);" style="width:100%;height:30px;font-weight:bold;background-color:#662500;color:#F6F6F6;font-size:17px;">응답현황 최신화  <span class="glyphicon glyphicon-refresh"></span></button>
 		<table style="border:1px solid #000000;width:100%;">
 			<tr>
 				<th rowspan="2" class="firTh">-</th>
@@ -172,12 +254,54 @@
 				</tr>
 			</c:forEach>		
 		</table>
+		
+		<br/><br/>
+		<table style="width:100%;">
+			<tr>
+				<td style="width:70%;"><input type="text" name="sbHp" id="sbHp" class="form-control" style="width:95%;" placeholder="전화번호 숫자만 입력"/></td>
+				<td style="width:30%;"><button type="button" class="btn btn-info btn-block" id="surveyBtn">설문응답바로가기</button></td>
+			</tr>
+		</table>
+		
+		<br/><br/>
+		<form name="event" id="event" enctype="multipart/form-data" method="post" action="<c:url value="eventWrite"/>">
+			<table style="width:100%;border:1px solid #ddd;">
+				<tr>
+					<td style="width:70%;"><input type="file" name="excelFile" id="excelFile" /></td>
+					<td style="width:30%;"><button type="button" class="btn btn-success btn-block" id="btn-upload">조사대상 업로드</button></td>
+				</tr>
+			</table>
+		</form>
+		
+		
+		<br/><br/>
+		<table style="width:100%;">
+			<tr>
+				<td style="width:45%;" rowspan="3">
+					<p style="background-color:#662500;color:#F6F6F6;font-size:17px;">문자내용 <span class="glyphicon glyphicon-envelope"></span></p>
+					<textarea style="width:100%;height:200px;" name="msg" id="msg">
+전북신용보증재단 서비스 만족도 조사입니다.
+아래 링크를 눌러 조사에 응답해 주시면 더욱 좋은 서비스로 보답 하겠습니다.
+편하신 시간에 응답해 주시기 바랍니다.
+					</textarea>
+				</td>
+				<td style="width:50%;text-align:center;"><button type="button" class="btn btn-info btn-block" onclick="sendMms('first')" style="width:60%;margin-left:40px;height:85%;">신규데이터 문자발송 <span class="glyphicon glyphicon-share-alt"></span></button></td>
+			</tr>
+			<tr>
+				<td style="width:50%;text-align:center;"><button type="button" class="btn btn-warning btn-block" onclick="sendMms('second')" style="width:60%;margin-left:40px;height:85%;">문자1,2차 문자발송  <span class="glyphicon glyphicon-share-alt"></span></button></td>
+			</tr>
+			<tr>
+				<td style="width:50%;text-align:center;"><button type="button" class="btn btn-danger btn-block" onclick="sendMms('last')" style="width:60%;margin-left:40px;height:85%;">부재, 추후응답 문자발송  <span class="glyphicon glyphicon-share-alt"></span></button></td>
+			</tr>
+		</table>
+		
 		<br/><br/>
 		<table style="width:100%;">
 			<tr>
 				<td><input type="date" name="startDate" id="startDate" class="form-control"/></td>
 				<td><input type="date" name="startDate" id="endDate" class="form-control"/></td>
-				<td><button type="button" onclick="getList();" class="btn btn-primary">응답현황 검색</button></td>
+				<td><button type="button" onclick="getList('after');" class="btn btn-primary">응답현황(보정)</button></td>
+				<td><button type="button" onclick="getList('before');" class="btn btn-success">응답현황(원본)</button></td>
 			</tr>
 		</table>
 		

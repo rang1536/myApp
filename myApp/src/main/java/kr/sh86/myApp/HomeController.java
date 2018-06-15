@@ -53,8 +53,11 @@ public class HomeController {
 			/*surveyService.addLocalNumServ();*/
 			/*surveyService.addLocalNumServ("고창군");*/
 			/*surveyService.setSampleRdd2Serv();*/
+			/*surveyService.setSampleRddServ("정읍시");*/
+			/*surveyService.sendSmsSinboLastServ();*/
 			model.addAttribute("list", surveyService.readSinboResInfoServ());
-			return "ars/resList";
+			/*return "ars/resList";*/
+			return "sinbo/sbList";
 		}else if(userNo == 100) {
 			int count = surveyService.readBioResCount();
 			model.addAttribute("count", count);

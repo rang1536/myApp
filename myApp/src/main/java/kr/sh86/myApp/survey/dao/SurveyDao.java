@@ -19,6 +19,7 @@ import kr.sh86.myApp.survey.domain.Response;
 import kr.sh86.myApp.survey.domain.Result;
 import kr.sh86.myApp.survey.domain.Sample;
 import kr.sh86.myApp.survey.domain.Sampling;
+import kr.sh86.myApp.survey.domain.Sinbo;
 import kr.sh86.myApp.survey.domain.User;
 import kr.sh86.myApp.survey.domain.Users;
 import kr.sh86.myApp.survey.domain.Xroshot;
@@ -27,6 +28,11 @@ import kr.sh86.myApp.survey.domain.Xroshot;
 public class SurveyDao {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
+	
+	//신보 검색회원번호
+	public int selectSbNum(String sbHp) {
+		return sqlSession.selectOne("SurveyDao.selectSbNum", sbHp);
+	}
 	
 	//신규 응답입력
 	public int insertRes(Response response) {
@@ -380,5 +386,40 @@ public class SurveyDao {
 	//신보 - 응답현황표
 	public List<ResData> selSinboResList(Map<String, Object> params){
 		return sqlSession.selectList("SurveyDao.selSinboResList", params);
+	}
+	
+	//신보 - 문자1차발송자 조회
+	public List<Sinbo> selSinboFirTarget(){
+		return sqlSession.selectList("SurveyDao.selSinboFirTarget");
+	}
+	
+	//신보 - 문자 2,3차 발송자 조회
+	public List<Sinbo> selSinboSecTarget(){
+		return sqlSession.selectList("SurveyDao.selSinboSecTarget");
+	}
+	
+	//신보 - 문자발송자 정보수정
+	public int updateSinboState(Sinbo sinbo){
+		return sqlSession.update("SurveyDao.updateSinboState", sinbo);
+	}
+	
+	//신보 - 마지막 발송
+	public List<Sinbo> selSinboLastTarget(){
+		return sqlSession.selectList("SurveyDao.selSinboLastTarget");
+	}
+	
+	//신보 - 마지막 발송
+	public List<Sinbo> selSinboLastTarget2(){
+		return sqlSession.selectList("SurveyDao.selSinboLastTarget2");
+	}
+	
+	//신보 - 마지막 pk조회
+	public int selSinboLastSbNum() {
+		return sqlSession.selectOne("SurveyDao.selSinboLastSbNum");
+	}
+	
+	//신보 - 엑셀업로드
+	public int insertSinboExcel(Sinbo sinbo) {
+		return sqlSession.insert("SurveyDao.insertSinboExcel", sinbo);
 	}
 }
