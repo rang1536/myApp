@@ -55,13 +55,10 @@ public class HomeController {
 			/*surveyService.setSampleRdd2Serv();*/
 			/*surveyService.setSampleRddServ("정읍시");*/
 			/*surveyService.sendSmsSinboLastServ();*/
-			model.addAttribute("list", surveyService.readSinboResInfoServ());
+			/*model.addAttribute("list", surveyService.readSinboResInfoServ());*/
 			/*return "ars/resList";*/
-			return "sinbo/sbList";
-		}else if(userNo == 100) {
-			int count = surveyService.readBioResCount();
-			model.addAttribute("count", count);
-			return "bio/state";
+			/*return "sinbo/sbList";*/
+			return "privercy/a";
 		}
 		
 		/*Users user = surveyService.readUserServ(userNo);
@@ -73,7 +70,7 @@ public class HomeController {
 		model.addAttribute("check", map.get("check"));
 		model.addAttribute("lastQuNum", user.getResComplete());*/
 		/*return "/glocal/a";*/
-		return "/bio/a";
+		return "privercy/a";
 	}
 	
 	@RequestMapping(value = "/sbList", method = RequestMethod.GET)
