@@ -449,41 +449,41 @@
 				</tr>
 				<tr>
 					<td class="qTd">D_Q1. [เพศ] เพศของคุณคืออะไร?  </td>
-					<td class="aTd"><input type="radio" name="dQ1" value="1" /> ชาย</td>
-					<td class="aTd"><input type="radio" name="dQ1" value="2" /> หญิง</td>
+					<td class="aTd"><input type="radio" name="dQ1" value="1" /> 남성</td>
+					<td class="aTd"><input type="radio" name="dQ1" value="2" /> 여성</td>
 				</tr>
 				<tr>
-					<td class="qTd">D_Q2. [อายุ] คุณอายุเท่าไหร่ </td>
-					<td class="aTd" colspan="2">만 <input type="text" name="dQ2"/> ปี</td>
+					<td class="qTd">D_Q2. [연령] 나이는 어떻게 되시나요?</td>
+					<td class="aTd" colspan="2">만 <input type="text" name="dQ2"/> 세</td>
 				</tr>
 				<tr>
-					<td class="qTd">D_Q3. [ที่อยู่] ที่อยู่ปัจจุบันของคุณอยู่ที่ไหน ?</td>
+					<td class="qTd">D_Q3. [거주지] 현재 거주하는 지역은 어디인가요?</td>
 					<td class="aTd" style="width:25%;"><input type="radio" name="dQ3" value="1" /> 대한민국</td>
 					<td class="aTd"><input type="radio" name="dQ3" value="2" /> 태국</td>
 				</tr>
 				<tr>
-					<td class="qTd" rowspan="3">D_Q4. [อาชีพ] อาชีพของคุณคืออะไร?[เลือกได้คำตอบเดียว]</td>
-					<td class="aTd" style="width:25%;"><input type="radio" name="dQ4" value="1" /> นักเรียนมัธยมหรือต่ำกว่า </td>
-					<td class="aTd"><input type="radio" name="dQ4" value="2" /> นักศึกษาวิทยาลัย </td>
+					<td class="qTd" rowspan="3">D_Q4. [직업] 직업은 무엇입니까?</td>
+					<td class="aTd" style="width:25%;"><input type="radio" name="dQ4" value="1" /> 고등학생 이하</td>
+					<td class="aTd"><input type="radio" name="dQ4" value="2" /> 대학생</td>
 				</tr>
 				<tr>
-					<td class="aTd" style="width:25%;"><input type="radio" name="dQ4" value="3" /> แรงงาน</td>
-					<td class="aTd"><input type="radio" name="dQ4" value="4" /> แม่บ้าน</td>
+					<td class="aTd" style="width:25%;"><input type="radio" name="dQ4" value="3" /> 직장인</td>
+					<td class="aTd"><input type="radio" name="dQ4" value="4" /> 주부</td>
 				</tr>
 				<tr>
-					<td class="aTd"><input type="radio" name="dQ4" value="5" /> ว่างงาน</td>
-					<td class="aTd" style="width:25%;"><input type="radio" name="dQ4" value="6" /> อื่น ๆ (<input type="text" name="dQ4Etc" />)</td>
+					<td class="aTd"><input type="radio" name="dQ4" value="5" /> 무직</td>
+					<td class="aTd" style="width:25%;"><input type="radio" name="dQ4" value="6" /> 기타 (<input type="text" name="dQ4Etc" />)</td>
 				</tr>
 				<tr>
-					<td class="qTd">D_Q5. จำนวนคนในครอบครัวที่อยู่ด้วยกันครอบครัวของคุณมีกี่คน ?</td>
-					<td class="aTd" colspan="2"> <input type="text" name="dQ5"/> รวมทุกคน</td>
+					<td class="qTd">D_Q5. [동거 가족수] 현재 같이 살고 있는 가족 수는 몇 명입니까?</td>
+					<td class="aTd" colspan="2">총 <input type="text" name="dQ5"/> 명</td>
 				</tr>
 				<tr>
-					<td class="qTd">D_Q6. [รายได้ส่วนบุคคล] รายได้เฉลี่ยต่อเดือนสำหรับแต่ละเดือนของคุณคือเท่าไหร่ </td>
+					<td class="qTd">D_Q6. [개인소득] 귀하의 한 달 평균 수입은 대략 어느 정도 입니까?</td>
 					<td class="aTd" colspan="2"> <input type="text" name="dQ6"/> </td>
 				</tr>
 				<tr>
-					<td class="qTd">D_Q7. [รายได้ของครอบครัว] รายได้รวมต่อเดือนเฉลี่ยของครอบครัวทั้งหมดคือเท่าใด </td>
+					<td class="qTd">D_Q7. [가구소득] 현재 함께 살고 있는 가족 모두의 한 달 평균 총 수입은 어느 정도입니까?</td>
 					<td class="aTd" colspan="2"> <input type="text" name="dQ7"/> </td>
 				</tr>
 				
@@ -499,111 +499,111 @@
 	<div style="width:100%;display:none;" id="section2">
 		<br/>
 		<p style="width:100%;height:30px;font-size:18px;color:#000000;font-weight:bold;">
-			<font style="border-top:4px solid #003399;">&nbsp;&nbsp;▶ส่วนที่2 .</font> การรับรู้การคุ้มครองลิขสิทธิ์
+			<font style="border-top:4px solid #003399;">&nbsp;&nbsp;▶ Part II.</font> 저작권 보호 관련 인식
 		</p>
 		<br/>
 		
 		<form id="part2Form">
 			<table style="width:100%;border:1px solid #ddd;">
 				<tr>
-					<th style="width:50%;background-color:#ddd;">Question</th>
-					<th style="width:50%;background-color:#ddd;" colspan="2">Answer</th>
+					<th style="width:50%;background-color:#ddd;">문항</th>
+					<th style="width:50%;background-color:#ddd;" colspan="2">답변</th>
 				</tr>
 				<tr>
-					<td class="qTd" rowspan="8">R_Q1. คุณแยกงานที่ถูกกฎหมายและงานที่ลอกเลียนแบบทางออนไลน์ได้ด้วยเหตุผลใด?</td>
-					<td class="aTd" style="text-align:left;padding:1%;height:20px;"><input type="radio" name="rQ1" value="1" /> ประเภทของโฆษณาที่แสดงในแบนเนอร์ของเว็ปไซต์</td>
+					<td class="qTd" rowspan="8">R_Q1. 귀하께서는 온라인상에서 합법 저작물과 불법 복제물을 어떤 기준으로 구분하십니까?</td>
+					<td class="aTd" style="text-align:left;padding:1%;height:20px;"><input type="radio" name="rQ1" value="1" /> 사이트 배너에 표시되는 광고의 종류</td>
 				</tr>
 				<tr>
-					<td class="aTd" style="text-align:left;padding:1%;height:20px;"><input type="radio" name="rQ1" value="2" /> การเข้าถึงการใช้ผลงาน เช่นไม่ว่าจะเป็นการชำระเงิน และจำนวนเงินที่ต้องชำระ</td>
+					<td class="aTd" style="text-align:left;padding:1%;height:20px;"><input type="radio" name="rQ1" value="2" /> 콘텐츠 이용 시, 결제 여부 및 결제 금액</td>
 				</tr>
 				<tr>
-					<td class="aTd" style="text-align:left;padding:1%;height:20px;"><input type="radio" name="rQ1" value="3" /> ช่องทางการเชื่อมต่อเว็บไซต์ (เช่นไม่สามารถเชื่อมต่อโดยตรง, การเข้าถึงโดยพิมพ์ที่อยู่โดยตรง)</td>
+					<td class="aTd" style="text-align:left;padding:1%;height:20px;"><input type="radio" name="rQ1" value="3" /> 사이트 접속 경로 (예: 직접 검색이 되지않고, 주소를 직접 입력하여 접속)</td>
 				</tr>
 				<tr>
-					<td class="aTd" style="text-align:left;padding:1%;height:20px;"><input type="radio" name="rQ1" value="4" /> คุณภาพของผลงาน เช่น คุณภาพของภาพ,คุณภาพเสียง,คำบรรยาย</td>
+					<td class="aTd" style="text-align:left;padding:1%;height:20px;"><input type="radio" name="rQ1" value="4" /> 화질, 음질, 자막 등 콘텐츠의 품질</td>
 				</tr>
 				<tr>
-					<td class="aTd" style="text-align:left;padding:1%;height:20px;"><input type="radio" name="rQ1" value="5" /> มีคำยืนยันว่ามีการระบุลิขสิทธิ์ ในช่องทางการใช้ในงานผลงานนั้น</td>
+					<td class="aTd" style="text-align:left;padding:1%;height:20px;"><input type="radio" name="rQ1" value="5" /> 이용 경로의 저작권OK 지정 여부 확인</td>
 				</tr>
 				<tr>
-					<td class="aTd" style="text-align:left;padding:1%;height:20px;"><input type="radio" name="rQ1" value="6" /> หากคุณใช้ผลงานโฆษณาฟรีได้ คุณจะสงสัยว่ามันเป็นงานที่ลอกเลียนแบบที่ผิดกฎหมาย </td>
+					<td class="aTd" style="text-align:left;padding:1%;height:20px;"><input type="radio" name="rQ1" value="6" /> 무료, 광고 기반형 콘텐츠 이용 시 일단 불법 복제물로 의심한다 </td>
 				</tr>
 				<tr>
-					<td class="aTd" style="text-align:left;padding:1%;height:20px;"><input type="radio" name="rQ1" value="7" /> ไม่แยกแยะ </td>
+					<td class="aTd" style="text-align:left;padding:1%;height:20px;"><input type="radio" name="rQ1" value="7" /> 구분하지 않는다 </td>
 				</tr>
 				<tr>
-					<td class="aTd" style="text-align:left;padding:1%;height:20px;"><input type="radio" name="rQ1" value="8" /> อื่น ๆ (<input type="text" name="rQ1Etc"/>) </td>
-				</tr>
-				
-				<tr>
-					<td class="qTd" rowspan="5">R_Q2. คุณคิดอย่างไรกับการละเมิดลิขสิทธิ์เนื่องจากการจำหน่ายและ การใช้งานลอกเลียนแบบละเมิดลิขสิทธิ์</td>
-					<td class="aTd" style="text-align:left;padding:1%;height:20px;"><input type="radio" name="rQ2" value="1" /> ไม่ร้ายแรงเลย</td>
-				</tr>
-				<tr>
-					<td class="aTd" style="text-align:left;padding:1%;height:20px;"><input type="radio" name="rQ2" value="2" /> ไม่ร้ายแรง </td>
-				</tr>
-				<tr>
-					<td class="aTd" style="text-align:left;padding:1%;height:20px;"><input type="radio" name="rQ2" value="3" /> เป็นเรื่องปกติ </td>
-				</tr>
-				<tr>
-					<td class="aTd" style="text-align:left;padding:1%;height:20px;"><input type="radio" name="rQ2" value="4" /> ร้ายแรง </td>
-				</tr>
-				<tr>
-					<td class="aTd" style="text-align:left;padding:1%;height:20px;"><input type="radio" name="rQ2" value="5" /> ร้ายแรงมาก </td>
+					<td class="aTd" style="text-align:left;padding:1%;height:20px;"><input type="radio" name="rQ1" value="8" /> 기타 (<input type="text" name="rQ1Etc"/>) </td>
 				</tr>
 				
 				<tr>
-					<td class="qTd" rowspan="11">R_Q3. คุณคิดว่าวิธีใดมีประสิทธิภาพมากที่สุดในการกำจัดสำเนาลอกเลียนแบบที่ผิดกฎหมาย?</td>
-					<td class="aTd" style="text-align:left;padding:1%;height:20px;"><input type="radio" name="rQ3" value="1" /> กำจัดสำเนาที่ผิดกฎหมายและปิดช่องทางที่งานสำเนาลอกเลียนแบบที่ผิดกฎหมายสามารถเผยแผ่ได้ และการควบคุมอย่างเคร่งครัด</td>
+					<td class="qTd" rowspan="5">R_Q2. 귀하께서는 불법 복제물 유통 및 이용으로 인한 저작권 침해 문제에 대해 어떻게 생각하십니까?</td>
+					<td class="aTd" style="text-align:left;padding:1%;height:20px;"><input type="radio" name="rQ2" value="1" /> 전혀 심각하지 않다</td>
 				</tr>
 				<tr>
-					<td class="aTd" style="text-align:left;padding:1%;height:20px;"><input type="radio" name="rQ3" value="2" /> ลงโทษผู้ผลิตและผู้อัปโหลดสำเนาลอกเลียนแบบที่ผิดกฎหมาย (รวมถึงบุคคลที่ส่งแชร์)</td>
+					<td class="aTd" style="text-align:left;padding:1%;height:20px;"><input type="radio" name="rQ2" value="2" /> 심각하지 않다 </td>
+				</tr>
+				<tr>
+					<td class="aTd" style="text-align:left;padding:1%;height:20px;"><input type="radio" name="rQ2" value="3" /> 보통이다 </td>
+				</tr>
+				<tr>
+					<td class="aTd" style="text-align:left;padding:1%;height:20px;"><input type="radio" name="rQ2" value="4" /> 심각하다 </td>
+				</tr>
+				<tr>
+					<td class="aTd" style="text-align:left;padding:1%;height:20px;"><input type="radio" name="rQ2" value="5" /> 매우 심각하다 </td>
+				</tr>
+				
+				<tr>
+					<td class="qTd" rowspan="11">R_Q3. 불법 복제물 근절을 위해 가장 효과적인 방법은 무엇이라고 생각하십니까?</td>
+					<td class="aTd" style="text-align:left;padding:1%;height:20px;"><input type="radio" name="rQ3" value="1" /> 불법 복제물 단속 강화를 통한 불법 복제물 제거 및 경로 폐쇄</td>
+				</tr>
+				<tr>
+					<td class="aTd" style="text-align:left;padding:1%;height:20px;"><input type="radio" name="rQ3" value="2" /> 불법 복제물 생산자 처벌</td>
 				</tr>
 				<tr>
 					<td class="aTd" style="text-align:left;padding:1%;height:20px;"><input type="radio" name="rQ3" value="3" /> 불법 복제물 업로더(공유한 자) 처벌</td>
 				</tr>
 				<tr>
-					<td class="aTd" style="text-align:left;padding:1%;height:20px;"><input type="radio" name="rQ3" value="4" /> ผู้ประกอบการต้องลงโทษเว็บไซต์แชร์สำเนาที่ผิดกฎหมาย</td>
+					<td class="aTd" style="text-align:left;padding:1%;height:20px;"><input type="radio" name="rQ3" value="4" /> 불법 복제물 공유 사이트 등 운영자 처벌</td>
 				</tr>
 				<tr>
-					<td class="aTd" style="text-align:left;padding:1%;height:20px;"><input type="radio" name="rQ3" value="5" /> การลงโทษผู้ดาวน์โหลดสำเนาที่ลอกเลียนแบบผิดกฎหมาย (ผู้ใช้)</td>
+					<td class="aTd" style="text-align:left;padding:1%;height:20px;"><input type="radio" name="rQ3" value="5" /> 불법 복제물 다운로더(이용자) 처벌</td>
 				</tr>
 				<tr>
-					<td class="aTd" style="text-align:left;padding:1%;height:20px;"><input type="radio" name="rQ3" value="6" /> การศึกษาและการส่งเสริมการคุ้มครองลิขสิทธิ์ </td>
+					<td class="aTd" style="text-align:left;padding:1%;height:20px;"><input type="radio" name="rQ3" value="6" /> 저작권 보호에 대한 교육 및 홍보 </td>
 				</tr>
 				<tr>
-					<td class="aTd" style="text-align:left;padding:1%;height:20px;"><input type="radio" name="rQ3" value="7" /> การเสริมสร้างกฎหมายคุ้มครองลิขสิทธิ์ </td>
+					<td class="aTd" style="text-align:left;padding:1%;height:20px;"><input type="radio" name="rQ3" value="7" /> 저작권 보호 관련 법규 강화 </td>
 				</tr>
 				<tr>
-					<td class="aTd" style="text-align:left;padding:1%;height:20px;"><input type="radio" name="rQ3" value="8" /> มาตรการคุ้มครองทางเทคนิค </td>
+					<td class="aTd" style="text-align:left;padding:1%;height:20px;"><input type="radio" name="rQ3" value="8" /> 기술적 보호조치 </td>
 				</tr>
 				<tr>
-					<td class="aTd" style="text-align:left;padding:1%;height:20px;"><input type="radio" name="rQ3" value="9" /> ลดราคาของเนื้อหาของแท้ </td>
+					<td class="aTd" style="text-align:left;padding:1%;height:20px;"><input type="radio" name="rQ3" value="9" /> 정품 콘텐츠의 가격 인하 </td>
 				</tr>
 				<tr>
-					<td class="aTd" style="text-align:left;padding:1%;height:20px;"><input type="radio" name="rQ3" value="10" /> การขยายผลงานของแท้ที่มีอยู่ (การรักษาความปลอดภัยเนื้อหาการขยายช่องทางการใช้งาน ฯลฯ )</td>
+					<td class="aTd" style="text-align:left;padding:1%;height:20px;"><input type="radio" name="rQ3" value="10" /> 이용 가능한 정품 콘텐츠 확대 (콘텐츠 확보, 이용 경로 확대 등) </td>
 				</tr>
 				<tr>
-					<td class="aTd" style="text-align:left;padding:1%;height:20px;"><input type="radio" name="rQ3" value="11" /> อื่น ๆ (<input type="text" name="rQ3Etc"/>) </td>
+					<td class="aTd" style="text-align:left;padding:1%;height:20px;"><input type="radio" name="rQ3" value="11" /> 기타 (<input type="text" name="rQ3Etc"/>) </td>
 				</tr>
 				
 				<tr>
-					<td class="qTd" colspan="2">R_Q4. การรับรู้และระดับการปฏิบัติตามลิขสิทธิ์ของคุณอยู่ในระดับใด</td>
+					<td class="qTd" colspan="2">R_Q4. 귀하의 저작권에 대한 인식 및 준수 수준은 어느 정도라고 생각하십니까?</td>
 				</tr>
 			</table>
 			<table style="width:100%;border:1px solid #ddd;">
 				<tr>
-					<th rowspan="2" style="width:9%;background-color:#ddd;">ประเภท</th>
-					<th style="width:9%;background-color:#ddd;">ต่ำที่สุด</th>
+					<th rowspan="2" style="width:9%;background-color:#ddd;">구분</th>
+					<th style="width:9%;background-color:#ddd;">매우낮음</th>
 					<th style="width:9%;background-color:#ddd;"></th>
 					<th style="width:9%;background-color:#ddd;"></th>
 					<th style="width:9%;background-color:#ddd;"></th>
-					<th style="width:9%;background-color:#ddd;">ปกติ</th>
+					<th style="width:9%;background-color:#ddd;">보통</th>
 					<th style="width:9%;background-color:#ddd;"></th>
 					<th style="width:9%;background-color:#ddd;"></th>
 					<th style="width:9%;background-color:#ddd;"></th>
 					<th style="width:9%;background-color:#ddd;"></th>
-					<th style="width:9%;background-color:#ddd;">สูงที่สุด</th>
+					<th style="width:9%;background-color:#ddd;">매우높음</th>
 				</tr>
 				<tr>
 					<th style="background-color:#ddd;">1</th>
@@ -618,7 +618,7 @@
 					<th style="background-color:#ddd;">10</th>
 				</tr>
 				<tr>
-					<td style="text-align:center;border-right:1px solid #ddd;border-bottom:1px solid #ddd;">1.ระดับการรับรู้</td>
+					<td style="text-align:center;border-right:1px solid #ddd;border-bottom:1px solid #ddd;">인식수준</td>
 					<td style="text-align:center;border-right:1px solid #ddd;border-bottom:1px solid #ddd;"><input type="radio" name="rQ41" value="1"/></td>
 					<td style="text-align:center;border-right:1px solid #ddd;border-bottom:1px solid #ddd;"><input type="radio" name="rQ41" value="2"/></td>
 					<td style="text-align:center;border-right:1px solid #ddd;border-bottom:1px solid #ddd;"><input type="radio" name="rQ41" value="3"/></td>
@@ -631,7 +631,7 @@
 					<td style="text-align:center;border-right:1px solid #ddd;border-bottom:1px solid #ddd;"><input type="radio" name="rQ41" value="10"/></td>
 				</tr>
 				<tr>
-					<td style="text-align:center;border-right:1px solid #ddd;border-bottom:1px solid #ddd;">2.ระดับการปฏิบัติตาม</td>
+					<td style="text-align:center;border-right:1px solid #ddd;border-bottom:1px solid #ddd;">준수수준</td>
 					<td style="text-align:center;border-right:1px solid #ddd;border-bottom:1px solid #ddd;"><input type="radio" name="rQ42" value="1"/></td>
 					<td style="text-align:center;border-right:1px solid #ddd;border-bottom:1px solid #ddd;"><input type="radio" name="rQ42" value="2"/></td>
 					<td style="text-align:center;border-right:1px solid #ddd;border-bottom:1px solid #ddd;"><input type="radio" name="rQ42" value="3"/></td>
@@ -646,9 +646,9 @@
 			</table>
 			<table style="width:100%;border:1px solid #ddd;">
 				<tr>
-					<td class="qTd" style="width:50%;">R_Q5. คุณมีประสบการณ์เข้าการฝึกอบรมข้อมูลหรือสื่อส่งเสริมการขายที่เกี่ยวข้องกับการคุ้มครองลิขสิทธิ์หรือไม่?</td>
-					<td class="aTd" style="text-align:center;height:20px;width:25%;"><input type="radio" name="rQ5" value="1" /> มี</td>
-					<td class="aTd" style="text-align:center;height:20px;width:25%;"><input type="radio" name="rQ5" value="2" /> ไม่มี</td>
+					<td class="qTd" style="width:50%;">R_Q5. 귀하께서는 저작권 보호와 관련된 교육, 정보, 홍보물을 경험이 있습니까?</td>
+					<td class="aTd" style="text-align:center;height:20px;width:25%;"><input type="radio" name="rQ5" value="1" /> 있다</td>
+					<td class="aTd" style="text-align:center;height:20px;width:25%;"><input type="radio" name="rQ5" value="2" /> 없다</td>
 				</tr>		
 			</table>
 			
@@ -662,15 +662,15 @@
 	<div style="width:100%;display:none;" id="section3">
 		<br/>
 		<p style="width:100%;height:30px;font-size:18px;color:#000000;font-weight:bold;">
-			<font style="border-top:4px solid #003399;">&nbsp;&nbsp;▶ส่วนที่3.</font> สถานะการใช้งานของประเภทผลงานจองเกาหลีตามช่องทางการจัดจำหน่าย
+			<font style="border-top:4px solid #003399;">&nbsp;&nbsp;▶ Part III.</font> 한국 콘텐츠 장르, 유통경로별 이용 실태
 		</p>
 		<div style="width:100%;padding:1%;">
 			<p style="width:90%;border:1px solid #000000;padding:1%;">
-				* คำอธิบาย<br/>
-				จัดเก็บ - การดาวน์โหลด โดยการซื้อแพ็คเกจหรือคัดลอกไฟล์หรือการดาวน์โหลดเนื้อหาไปไฟล์ของตนเอง<br/>
-				การชม - การดูไฟล์โดยไม่ได้ดาวน์โหลด เช่น ผ่านการสตรีมมิ่ง<br/>
-				ชำระเงิน - คุณซื้อเนื้อหาของแท้สำหรับราคาซื้อปลีก<br/>
-				ฟรี - การเข้าถึงเนื้อหาอย่างฟรีไม่ต้องเสียเงินหรือราคาที่ต่ำกว่าราคาที่ระบุไว้
+				* 용어설명<br/>
+				입수 - 다운로드 등에 의해 콘텐츠 파일을 자신의 단말기에 다운로드 하거나 복사하는 행위, 패키지를 구입하는 행위<br/>
+				시청 - 스트리밍 등을 통해 파일을 입수하지 않고 열람하는 행위<br/>
+				유료 - 정품 콘텐츠를 정가를 지불하고 구입한 경우<br/>
+				무료 - 유료 콘텐츠를 무료로 이용했거나 정가에 비해 낮은 가격으로 이용한 경우
 			</p>
 		</div>
 		
@@ -681,97 +681,97 @@
 					<th style="background-color:#ddd;" colspan="3">답변</th>
 				</tr> -->
 				<tr>
-					<td class="qTd" colspan="6">K_Q1. โปรดระบุว่าคุณมีประสบการณ์ซื้อ,จัดเก็บหรือรับชมผลงานของภาพยนตร์เกาหลี,รายการทีวีต่างๆ,เพลง,เกมและเว็บการ์ตูนผ่านอินเทอร์เน็ตโทรศัพท์มือถือหรือร้านค้าในช่วง 3 เดือน</td>
+					<td class="qTd" colspan="6">K_Q1. 최근 3개월 동안 한국의 영화, 방송, 음악, 게임, 웹툰의 콘텐츠를 인터넷이나 휴대전화, 매장을 통해 입수·시청한 경험 유무와 입수·시청 건수를 적어주세요.</td>
 				</tr>
 				<tr>
-					<th rowspan="2" colspan="2" style="width:20%;background-color:#ddd;">ประเภท</th>
-					<th colspan="2" style="background-color:#ddd;">การรับ</th>
-					<th colspan="2" style="background-color:#ddd;">การชม(เพลย์)</th>
+					<th rowspan="2" colspan="2" style="width:20%;background-color:#ddd;">장르</th>
+					<th colspan="2" style="background-color:#ddd;">입수</th>
+					<th colspan="2" style="background-color:#ddd;">시청(플레이)</th>
 				</tr>
 				<tr>
-					<th style="width:12%;background-color:#ddd;">ประสบการณ์</th>
-					<th style="width:12%;background-color:#ddd;">จำนวน</th>
-					<th style="width:12%;background-color:#ddd;">ประสบการณ์</th>
-					<th style="width:12%;background-color:#ddd;">จำนวน</th>
+					<th style="width:12%;background-color:#ddd;">경험</th>
+					<th style="width:12%;background-color:#ddd;">건수</th>
+					<th style="width:12%;background-color:#ddd;">경험</th>
+					<th style="width:12%;background-color:#ddd;">건수</th>
 				</tr>
 				<tr>
-					<td class="aTd" colspan="2">ภาพยนต์</td>
+					<td class="aTd" colspan="2">영화</td>
 					<td class="aTd" style="width:20%;text-align:center;">
-						<input type="radio" name="kQ11" value="1"/> มี&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="radio" name="kQ11" value="2"/> ไม่มี
+						<input type="radio" name="kQ11" value="1"/> 있다&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="radio" name="kQ11" value="2"/> 없다
 					</td>
-					<td class="aTd" style="width:10%;"><input type="text" name="kQ11Etc" style="width:70%;"/> จำนวน </td>
+					<td class="aTd" style="width:10%;"><input type="text" name="kQ11Etc" style="width:70%;"/> 건 </td>
 					<td class="aTd" style="width:20%;">
-						<input type="radio" name="kQ12" value="1"/> มี&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="radio" name="kQ12" value="2"/> ไม่มี
+						<input type="radio" name="kQ12" value="1"/> 있다&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="radio" name="kQ12" value="2"/> 없다
 					</td>
-					<td class="aTd" style="width:10%;"><input type="text" name="kQ12Etc" style="width:70%;"/> จำนวน </td>
+					<td class="aTd" style="width:10%;"><input type="text" name="kQ12Etc" style="width:70%;"/> 건 </td>
 				</tr>
 				<tr>
-					<td class="aTd" colspan="2">รายการต่างๆ</td>
+					<td class="aTd" colspan="2">방송</td>
 					<td class="aTd" style="width:20%;">
-						<input type="radio" name="kQ21" value="1"/> มี&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="radio" name="kQ21" value="2"/> ไม่มี
+						<input type="radio" name="kQ21" value="1"/> 있다&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="radio" name="kQ21" value="2"/> 없다
 					</td>
-					<td class="aTd" style="width:10%;"><input type="text" name="kQ21Etc" style="width:70%;"/> จำนวน </td>
+					<td class="aTd" style="width:10%;"><input type="text" name="kQ21Etc" style="width:70%;"/> 건 </td>
 					<td class="aTd" style="width:20%;">
-						<input type="radio" name="kQ22" value="1"/> มี&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="radio" name="kQ22" value="2"/> ไม่มี
+						<input type="radio" name="kQ22" value="1"/> 있다&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="radio" name="kQ22" value="2"/> 없다
 					</td>
-					<td class="aTd" style="width:10%;"><input type="text" name="kQ22Etc" style="width:70%;"/> จำนวน </td>
+					<td class="aTd" style="width:10%;"><input type="text" name="kQ22Etc" style="width:70%;"/> 건 </td>
 				</tr>
 				<tr>
-					<td class="aTd" colspan="2">เพลง</td>
+					<td class="aTd" colspan="2">음악</td>
 					<td class="aTd" style="width:20%;">
-						<input type="radio" name="kQ31" value="1"/> มี&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="radio" name="kQ31" value="2"/> ไม่มี
+						<input type="radio" name="kQ31" value="1"/> 있다&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="radio" name="kQ31" value="2"/> 없다
 					</td>
-					<td class="aTd" style="width:10%;"><input type="text" name="kQ31Etc" style="width:70%;"/> จำนวน </td>
+					<td class="aTd" style="width:10%;"><input type="text" name="kQ31Etc" style="width:70%;"/> 건 </td>
 					<td class="aTd" style="width:20%;">
-						<input type="radio" name="kQ32" value="1"/> มี&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="radio" name="kQ32" value="2"/> ไม่มี
+						<input type="radio" name="kQ32" value="1"/> 있다&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="radio" name="kQ32" value="2"/> 없다
 					</td>
-					<td class="aTd" style="width:10%;"><input type="text" name="kQ32Etc" style="width:70%;"/> จำนวน </td>
+					<td class="aTd" style="width:10%;"><input type="text" name="kQ32Etc" style="width:70%;"/> 건 </td>
 				</tr>
 				<tr>
-					<td class="aTd" style="width:10%;" rowspan="2">เกม</td>
-					<td class="aTd" style="width:20%;">ออนไลน์</td>
+					<td class="aTd" style="width:10%;" rowspan="2">게임</td>
+					<td class="aTd" style="width:20%;">온라인</td>
 					<td class="aTd" style="width:20%;">
-						<!-- <input type="radio" name="kQ41" value="1"/> มี&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="radio" name="kQ41" value="2"/> ไม่มี -->
+						<input type="radio" name="kQ41" value="1"/> 있다&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="radio" name="kQ41" value="2"/> 없다
 					</td>
-					<td class="aTd" style="width:10%;"><!-- <input type="text" name="kQ41Etc" style="width:70%;"/> จำนวน  --></td>
+					<td class="aTd" style="width:10%;"><input type="text" name="kQ41Etc" style="width:70%;"/> 건 </td>
 					<td class="aTd" style="width:20%;">
-						<input type="radio" name="kQ42" value="1"/> มี&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="radio" name="kQ42" value="2"/> ไม่มี
+						<input type="radio" name="kQ42" value="1"/> 있다&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="radio" name="kQ42" value="2"/> 없다
 					</td>
-					<td class="aTd" style="width:10%;"><input type="text" name="kQ42Etc" style="width:70%;"/> จำนวน </td>
+					<td class="aTd" style="width:10%;"><input type="text" name="kQ42Etc" style="width:70%;"/> 건 </td>
 				</tr>
 				<tr>
-					<td class="aTd" style="width:20%;">ออฟไลน์</td>
+					<td class="aTd" style="width:20%;">비온라인</td>
 					<td class="aTd" style="width:20%;">
-						<input type="radio" name="kQ51" value="1"/> มี&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="radio" name="kQ51" value="2"/> ไม่มี
+						<input type="radio" name="kQ51" value="1"/> 있다&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="radio" name="kQ51" value="2"/> 없다
 					</td>
-					<td class="aTd" style="width:10%;"><input type="text" name="kQ51Etc" style="width:70%;"/> จำนวน </td>
+					<td class="aTd" style="width:10%;"><input type="text" name="kQ51Etc" style="width:70%;"/> 건 </td>
 					<td class="aTd" style="width:20%;">
-						<input type="radio" name="kQ52" value="1"/> มี&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="radio" name="kQ52" value="2"/> ไม่มี
+						<input type="radio" name="kQ52" value="1"/> 있다&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="radio" name="kQ52" value="2"/> 없다
 					</td>
-					<td class="aTd" style="width:10%;"><input type="text" name="kQ52Etc" style="width:70%;"/> จำนวน </td>
+					<td class="aTd" style="width:10%;"><input type="text" name="kQ52Etc" style="width:70%;"/> 건 </td>
 				</tr>
 				<tr>
-					<td class="aTd" colspan="2">เว็บการ์ตูน</td>
+					<td class="aTd" colspan="2">웹툰</td>
 					<td class="aTd" style="width:20%;">
-						<input type="radio" name="kQ61" value="1"/> มี&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="radio" name="kQ61" value="2"/> ไม่มี
+						<input type="radio" name="kQ61" value="1"/> 있다&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="radio" name="kQ61" value="2"/> 없다
 					</td>
-					<td class="aTd" style="width:10%;"><input type="text" name="kQ61Etc" style="width:70%;"/> จำนวน </td>
+					<td class="aTd" style="width:10%;"><input type="text" name="kQ61Etc" style="width:70%;"/> 건 </td>
 					<td class="aTd" style="width:20%;">
-						<input type="radio" name="kQ62" value="1"/> มี&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="radio" name="kQ62" value="2"/> ไม่มี
+						<input type="radio" name="kQ62" value="1"/> 있다&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="radio" name="kQ62" value="2"/> 없다
 					</td>
-					<td class="aTd" style="width:10%;"><input type="text" name="kQ62Etc" style="width:70%;"/> จำนวน </td>
+					<td class="aTd" style="width:10%;"><input type="text" name="kQ62Etc" style="width:70%;"/> 건 </td>
 				</tr>
 			</table>
 			
@@ -785,59 +785,59 @@
 	<div style="width:100%;display:none;" id="section4">
 		<br/>
 		<p style="width:100%;height:30px;font-size:18px;color:#000000;font-weight:bold;">
-			<font style="border-top:4px solid #003399;">&nbsp;&nbsp;▶ ส่วนที่ 4.</font> ภาพยนตร์ (รวมภาพเคลื่อนไหว)
+			<font style="border-top:4px solid #003399;">&nbsp;&nbsp;▶ Part IV.</font> 영화(애니메이션 포함)
 		</p>
 		
 		
 		<table style="width:100%;border:1px solid #ddd;">
 			<tr>
-				<th style="width:50%;background-color:#ddd;">Question</th>
-				<th style="background-color:#ddd;" colspan="3">Answer</th>
+				<th style="width:50%;background-color:#ddd;">문항</th>
+				<th style="background-color:#ddd;" colspan="3">답변</th>
 			</tr>
 			
 			<!-- cq1-1 -->
 			<tr>
-				<td class="qTd">C_Q1. ในส่วนของภาพยนตร์ที่คุณมีทั้งหมด คุณจัดเก็บ,ครอบครองและชมภาพยนตร์เกาหลีทั้งหมดอัตราส่วนเท่าใด ?</td>
+				<td class="qTd">C_Q1. 귀하께서 입수·시청하는 모든 영화 중에서 한국 영화가 차지하는 비율은 어느 정도입니까?</td>
 				<td class="aTd" colspan="3"><input type="text" name="cQ11"/> %</td>
 			</tr>
 			
 			<!-- cq1-2 -->
 			<tr>
-				<td class="qTd" rowspan="5">C_Q2. ภาพยนตร์เกาหลีประเภทไหนที่คุณมักจะชม?</td>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ12" value="1"/> ผจญภัย</td>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ12" value="2"/> เอนิเมชั่น </td>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ12" value="3"/> ตื่นเต้นเร้าใจ</td>
+				<td class="qTd" rowspan="5">C_Q2. 귀하께서 이용하시는 한국 영화는 주로 어떤 장르입니까?</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ12" value="1"/> 어드벤처</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ12" value="2"/> 애니메이션</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ12" value="3"/> 스릴러</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ12" value="4"/> สงคราม</td>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ12" value="5"/> SF ไซไฟ</td>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ12" value="6"/> ตลก</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ12" value="4"/> 전쟁</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ12" value="5"/> SF</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ12" value="6"/> 코미디</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ12" value="7"/> ทำนอง / โรแมนติก</td>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ12" value="8"/> สยองขวัญ (สยองขวัญ)</td>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ12" value="9"/> แอ็คชั่น</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ12" value="7"/> 멜로/로맨스</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ12" value="8"/> 공포(호러)</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ12" value="9"/> 액션</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ12" value="10"/> ประวัติศาสตร์</td>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ12" value="11"/> อาชญากรรม</td>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ12" value="12"/> ดนตรี</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ12" value="10"/> 사극</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ12" value="11"/> 범죄</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ12" value="12"/> 뮤지컬</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ12" value="13"/> แฟนตาซี</td>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ12" value="14"/> ลึกลับ</td>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ12" value="15"/> อื่น ๆ</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ12" value="13"/> 판타지</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ12" value="14"/> 미스터리</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ12" value="15"/> 기타</td>
 			</tr>
 		</table>
 		<table style="width:100%;border:1px solid #ddd;">
 			<!-- cq1-3 -->
 			<tr>
-				<td class="qTd" colspan="5">C_Q3. โปรดระบุจำนวนภาพยนตร์ฟรีภาพยนตร์และภาพยนตร์ที่จัดเก็บในช่วงสามเดือนที่ผ่านมาทั้งฟรีและชำระเงิน</td>
+				<td class="qTd" colspan="5">C_Q3. 최근3개월 동안 한국 영화를 무료 입수 및 시청 건수와 유료 입수 및 시청 건수를 적어주시기 바랍니다.</td>
 			</tr>
 			<tr>
 				<td rowspan="3" colspan="3"></td>
-				<th class="aTd" style="border:1px solid #ddd;background-color:#ddd;" colspan="2">ฟรี</th>
-				<th class="aTd" style="border:1px solid #ddd;background-color:#ddd;" colspan="2">ชำระเงิน </th>
+				<th class="aTd" style="border:1px solid #ddd;background-color:#ddd;" colspan="2">무료</th>
+				<th class="aTd" style="border:1px solid #ddd;background-color:#ddd;" colspan="2">유료</th>
 			</tr>
 			<tr>
 				<th class="aTd" style="border-left:1px solid #ddd;background-color:#ddd;">1</th>
@@ -846,584 +846,584 @@
 				<th class="aTd" style="background-color:#ddd;">4</th>
 			</tr>
 			<tr>
-				<th class="aTd" style="border-left:1px solid #ddd;background-color:#ddd;">จัดเก็บ</th>
-				<th class="aTd" style="background-color:#ddd;">ชม</th>
-				<th class="aTd" style="background-color:#ddd;">จัดเก็บ</th>
-				<th class="aTd" style="background-color:#ddd;">ชม</th>
+				<th class="aTd" style="border-left:1px solid #ddd;background-color:#ddd;">입수</th>
+				<th class="aTd" style="background-color:#ddd;">시청</th>
+				<th class="aTd" style="background-color:#ddd;">입수</th>
+				<th class="aTd" style="background-color:#ddd;">시청</th>
 			</tr>
 			<tr>
-				<td class="qTd" rowspan="7" style="width:10%;text-align:center;border-top:1px solid #ddd;">ออนไลน์<br/>หมุนเวียน</td>
+				<td class="qTd" rowspan="7" style="width:10%;text-align:center;border-top:1px solid #ddd;">온라인<br/>유통</td>
 				<td class="aTd" style="width:5%;border-top:1px solid #ddd;">a-1</td>
-				<td class="qTd" style="width:45%;border-top:1px solid #ddd;">การกระจายเนื้อหาโดยผู้ประกอบการ / ผู้ประกอบการที่เฉพาะเจาะจง</td>
-				<td class="aTd" style="width:10%;"><input type="text" name="cQ13A11" style="width:70%;"/> จำนวน</td>
-				<td class="aTd" style="width:10%;"><input type="text" name="cQ13A12" style="width:70%;"/> จำนวน</td>
-				<td class="aTd" style="width:10%;"><input type="text" name="cQ13A13" style="width:70%;"/> จำนวน</td>
-				<td class="aTd" style="width:10%;"><input type="text" name="cQ13A14" style="width:70%;"/> จำนวน</td>
+				<td class="qTd" style="width:45%;border-top:1px solid #ddd;">특정 사업자·운영자에 의한 콘텐츠 배포</td>
+				<td class="aTd" style="width:10%;"><input type="text" name="cQ13A11" style="width:70%;"/> 건</td>
+				<td class="aTd" style="width:10%;"><input type="text" name="cQ13A12" style="width:70%;"/> 건</td>
+				<td class="aTd" style="width:10%;"><input type="text" name="cQ13A13" style="width:70%;"/> 건</td>
+				<td class="aTd" style="width:10%;"><input type="text" name="cQ13A14" style="width:70%;"/> 건</td>
 			</tr>
 			<tr>
 				<td class="aTd">a-2</td>
-				<td class="qTd">เผยแพร่ผ่านเว็บไซต์แบ่งปันวิดีโอ (YouTube และอื่น ๆ )</td>
-				<td class="aTd"><input type="text" name="cQ13A21" style="width:70%;"/> จำนวน</td>
-				<td class="aTd"><input type="text" name="cQ13A22" style="width:70%;"/> จำนวน</td>
-				<td class="aTd"><input type="text" name="cQ13A23" style="width:70%;"/> จำนวน</td>
-				<td class="aTd"><input type="text" name="cQ13A24" style="width:70%;"/> จำนวน</td>
+				<td class="qTd">동영상 공유 사이트를 통해 유통 (Youtube 등)</td>
+				<td class="aTd"><input type="text" name="cQ13A21" style="width:70%;"/> 건</td>
+				<td class="aTd"><input type="text" name="cQ13A22" style="width:70%;"/> 건</td>
+				<td class="aTd"><input type="text" name="cQ13A23" style="width:70%;"/> 건</td>
+				<td class="aTd"><input type="text" name="cQ13A24" style="width:70%;"/> 건</td>
 			</tr>
 			<tr>
 				<td class="aTd">a-3</td>
-				<td class="qTd">จัดจำหน่ายผ่านเว็บไซต์ลิงค์ / เว็บไซต์ที่มีคนมากมาย</td>
-				<td class="aTd"><input type="text" name="cQ13A31" style="width:70%;"/> จำนวน</td>
-				<td class="aTd"><input type="text" name="cQ13A32" style="width:70%;"/> จำนวน</td>
-				<td class="aTd"><input type="text" name="cQ13A33" style="width:70%;"/> จำนวน</td>
-				<td class="aTd"><input type="text" name="cQ13A34" style="width:70%;"/> จำนวน</td>
+				<td class="qTd">링크 사이트 / 리치 사이트를 통해 유통</td>
+				<td class="aTd"><input type="text" name="cQ13A31" style="width:70%;"/> 건</td>
+				<td class="aTd"><input type="text" name="cQ13A32" style="width:70%;"/> 건</td>
+				<td class="aTd"><input type="text" name="cQ13A33" style="width:70%;"/> 건</td>
+				<td class="aTd"><input type="text" name="cQ13A34" style="width:70%;"/> 건</td>
 			</tr>
 			<tr>
 				<td class="aTd">a-4</td>
-				<td class="qTd">เผยแพร่โดย P2P site / ซอฟต์แวร์ P2P</td>
-				<td class="aTd"><input type="text" name="cQ13A41" style="width:70%;"/> จำนวน</td>
-				<td class="aTd"><input type="text" name="cQ13A42" style="width:70%;"/> จำนวน</td>
-				<td class="aTd"><input type="text" name="cQ13A43" style="width:70%;"/> จำนวน</td>
-				<td class="aTd"><input type="text" name="cQ13A44" style="width:70%;"/> จำนวน</td>
+				<td class="qTd">P2P 사이트 / P2P 소트프웨어에 의한 유통</td>
+				<td class="aTd"><input type="text" name="cQ13A41" style="width:70%;"/> 건</td>
+				<td class="aTd"><input type="text" name="cQ13A42" style="width:70%;"/> 건</td>
+				<td class="aTd"><input type="text" name="cQ13A43" style="width:70%;"/> 건</td>
+				<td class="aTd"><input type="text" name="cQ13A44" style="width:70%;"/> 건</td>
 			</tr>
 			<tr>
 				<td class="aTd">a-5</td>
-				<td class="qTd">จัดจำหน่ายตามบริการจัดเก็บข้อมูล (รวมถึงไซต์แชร์ไฟล์)</td>
-				<td class="aTd"><input type="text" name="cQ13A51" style="width:70%;"/> จำนวน</td>
-				<td class="aTd"><input type="text" name="cQ13A52" style="width:70%;"/> จำนวน</td>
-				<td class="aTd"><input type="text" name="cQ13A53" style="width:70%;"/> จำนวน</td>
-				<td class="aTd"><input type="text" name="cQ13A54" style="width:70%;"/> จำนวน</td>
+				<td class="qTd">스토리지 서비스에 의한 유통(파일공유 사이트 포함)</td>
+				<td class="aTd"><input type="text" name="cQ13A51" style="width:70%;"/> 건</td>
+				<td class="aTd"><input type="text" name="cQ13A52" style="width:70%;"/> 건</td>
+				<td class="aTd"><input type="text" name="cQ13A53" style="width:70%;"/> 건</td>
+				<td class="aTd"><input type="text" name="cQ13A54" style="width:70%;"/> 건</td>
 			</tr>
 			<tr>
 				<td class="aTd">a-6</td>
-				<td class="qTd">การกระจายระหว่างคนรู้จักผ่านทางอีเมลหรือโปรแกรมส่งข้อความด่วน</td>
-				<td class="aTd"><input type="text" name="cQ13A61" style="width:70%;"/> จำนวน</td>
-				<td class="aTd"><input type="text" name="cQ13A62" style="width:70%;"/> จำนวน</td>
-				<td class="aTd"><input type="text" name="cQ13A63" style="width:70%;"/> จำนวน</td>
-				<td class="aTd"><input type="text" name="cQ13A64" style="width:70%;"/> จำนวน</td>
+				<td class="qTd">이메일이나 메신저 등을 통한 지인 간의 유통</td>
+				<td class="aTd"><input type="text" name="cQ13A61" style="width:70%;"/> 건</td>
+				<td class="aTd"><input type="text" name="cQ13A62" style="width:70%;"/> 건</td>
+				<td class="aTd"><input type="text" name="cQ13A63" style="width:70%;"/> 건</td>
+				<td class="aTd"><input type="text" name="cQ13A64" style="width:70%;"/> 건</td>
 			</tr>
 			<tr>
 				<td class="aTd">a-7</td>
-				<td class="qTd">จัดจำหน่ายโดยแอพ</td>
-				<td class="aTd"><input type="text" name="cQ13A71" style="width:70%;"/> จำนวน</td>
-				<td class="aTd"><input type="text" name="cQ13A72" style="width:70%;"/> จำนวน</td>
-				<td class="aTd"><input type="text" name="cQ13A73" style="width:70%;"/> จำนวน</td>
-				<td class="aTd"><input type="text" name="cQ13A74" style="width:70%;"/> จำนวน</td>
+				<td class="qTd">앱에 의한 유통</td>
+				<td class="aTd"><input type="text" name="cQ13A71" style="width:70%;"/> 건</td>
+				<td class="aTd"><input type="text" name="cQ13A72" style="width:70%;"/> 건</td>
+				<td class="aTd"><input type="text" name="cQ13A73" style="width:70%;"/> 건</td>
+				<td class="aTd"><input type="text" name="cQ13A74" style="width:70%;"/> 건</td>
 			</tr>
 			
 			<tr>
-				<td class="qTd" rowspan="8" style="width:10%;text-align:center;border-top:1px solid #ddd;">แพ็คเกจ<br/>หมุนเวียน</td>
+				<td class="qTd" rowspan="8" style="width:10%;text-align:center;border-top:1px solid #ddd;">패키지<br/>유통</td>
 				<td class="aTd" style="width:5%;border-top:1px solid #ddd;">b-1</td>
-				<td class="qTd" style="width:45%;border-top:1px solid #ddd;">ขายแพคเกจที่ร้านค้าจริง</td>
+				<td class="qTd" style="width:45%;border-top:1px solid #ddd;">실제 매장에서의 패키지 판매</td>
 				<td class="aTd" style="width:10%;background-color:#ddd;"></td>
 				<td class="aTd" style="width:10%;background-color:#ddd;"></td>
-				<td class="aTd" style="width:10%;"><input type="text" name="cQ13B13" style="width:70%;"/> จำนวน</td>
+				<td class="aTd" style="width:10%;"><input type="text" name="cQ13B13" style="width:70%;"/> 건</td>
 				<td class="aTd" style="width:10%;background-color:#ddd;"></td>
 			</tr>
 			<tr>
 				<td class="aTd">b-2</td>
-				<td class="qTd">การขายบรรจุภัณฑ์ทางไปรษณีย์โดยนิตยสารและทีวี</td>
+				<td class="qTd">잡지나 TV 등에 의한 패키지의 통신 판매</td>
 				<td class="aTd" style="background-color:#ddd;"></td>
 				<td class="aTd" style="background-color:#ddd;"></td>
-				<td class="aTd"><input type="text" name="cQ13B23" style="width:70%;"/> จำนวน</td>
+				<td class="aTd"><input type="text" name="cQ13B23" style="width:70%;"/> 건</td>
 				<td class="aTd" style="background-color:#ddd;"></td>
 			</tr>
 			<tr>
 				<td class="aTd">b-3</td>
-				<td class="qTd">ขายแพ็คเกจผ่านอินเทอร์เน็ต</td>
+				<td class="qTd">인터넷을 통한 패키지 판매</td>
 				<td class="aTd" style="background-color:#ddd;"></td>
 				<td class="aTd" style="background-color:#ddd;"></td>
-				<td class="aTd"><input type="text" name="cQ13B33" style="width:70%;"/> จำนวน</td>
+				<td class="aTd"><input type="text" name="cQ13B33" style="width:70%;"/> 건</td>
 				<td class="aTd" style="background-color:#ddd;"></td>
 			</tr>
 			<tr>
 				<td class="aTd">b-4</td>
-				<td class="qTd">จัดจำหน่ายแพคเกจตามการประมูล ฯลฯ</td>
+				<td class="qTd">경매 등에 의한 패키지 유통</td>
 				<td class="aTd" style="background-color:#ddd;"></td>
 				<td class="aTd" style="background-color:#ddd;"></td>
-				<td class="aTd"><input type="text" name="cQ13B43" style="width:70%;"/> จำนวน</td>
+				<td class="aTd"><input type="text" name="cQ13B43" style="width:70%;"/> 건</td>
 				<td class="aTd" style="background-color:#ddd;"></td>
 			</tr>
 			<tr>
 				<td class="aTd">b-5</td>
-				<td class="qTd">ขายฮาร์ดไดร์ฟภายนอกที่มีเนื้อหาหรือบริการที่คัดลอกเนื้อหาเช่นฮาร์ดไดรฟ์หรือหน่วยความจำ USB</td>
-				<td class="aTd"><input type="text" name="cQ13B51" style="width:70%;"/> จำนวน</td>
+				<td class="qTd">하드 드라이브나  USB메모리 등의 콘텐츠 복사 서비스 또는 콘텐츠가 들어있는 외장하드 드라이브 판매</td>
+				<td class="aTd"><input type="text" name="cQ13B51" style="width:70%;"/> 건</td>
 				<td class="aTd" style="background-color:#ddd;"></td>
-				<td class="aTd"><input type="text" name="cQ13B53" style="width:70%;"/> จำนวน</td>
+				<td class="aTd"><input type="text" name="cQ13B53" style="width:70%;"/> 건</td>
 				<td class="aTd" style="background-color:#ddd;"></td>
 			</tr>
 			<tr>
 				<td class="aTd">b-6</td>
-				<td class="qTd">ขายแพคเกจ ณ สถานที่จัดงาน</td>
+				<td class="qTd">이벤트 행사장에서의 패키지 판매</td>
 				<td class="aTd" style="background-color:#ddd;"></td>
 				<td class="aTd" style="background-color:#ddd;"></td>
-				<td class="aTd"><input type="text" name="cQ13B63" style="width:70%;"/> จำนวน</td>
+				<td class="aTd"><input type="text" name="cQ13B63" style="width:70%;"/> 건</td>
 				<td class="aTd" style="background-color:#ddd;"></td>
 			</tr>
 			<tr>
 				<td class="aTd">b-7</td>
-				<td class="qTd">แพ็คเกจเช่า</td>
+				<td class="qTd">패키지 렌탈</td>
 				<td class="aTd" style="background-color:#ddd;"></td>
 				<td class="aTd" style="background-color:#ddd;"></td>
-				<td class="aTd"><input type="text" name="cQ13B73" style="width:70%;"/> จำนวน</td>
+				<td class="aTd"><input type="text" name="cQ13B73" style="width:70%;"/> 건</td>
 				<td class="aTd" style="background-color:#ddd;"></td>
 			</tr>
 			<tr>
 				<td class="aTd">b-8</td>
-				<td class="qTd">การกระจายบรรจุภัณฑ์ในหมู่คนรู้จัก</td>
-				<td class="aTd"><input type="text" name="cQ13B81" style="width:70%;"/> จำนวน</td>
+				<td class="qTd">지인 사이의 패키지 유통</td>
+				<td class="aTd"><input type="text" name="cQ13B81" style="width:70%;"/> 건</td>
 				<td class="aTd" style="background-color:#ddd;"></td>
-				<td class="aTd"><input type="text" name="cQ13B83" style="width:70%;"/> จำนวน</td>
+				<td class="aTd"><input type="text" name="cQ13B83" style="width:70%;"/> 건</td>
 				<td class="aTd" style="background-color:#ddd;"></td>
 			</tr>
 			
 			<tr>
-				<td class="qTd" rowspan="5" style="width:10%;text-align:center;border-top:1px solid #ddd;">TV·<br/>ภาพยนตร์</td>
+				<td class="qTd" rowspan="5" style="width:10%;text-align:center;border-top:1px solid #ddd;">TV·<br/>영화</td>
 				<td class="aTd" style="width:5%;border-top:1px solid #ddd;">c-1</td>
-				<td class="qTd" style="width:45%;border-top:1px solid #ddd;">ดูการแพร่ภาพทางโทรทัศน์ภาคพื้นดิน</td>
+				<td class="qTd" style="width:45%;border-top:1px solid #ddd;">지상파 TV방송 시청</td>
 				<td class="aTd" style="width:10%;background-color:#ddd;"></td>
-				<td class="aTd" style="width:10%;"><input type="text" name="cQ13C12" style="width:70%;"/> จำนวน</td>
+				<td class="aTd" style="width:10%;"><input type="text" name="cQ13C12" style="width:70%;"/> 건</td>
 				<td class="aTd" style="width:10%;background-color:#ddd;"></td>
-				<td class="aTd" style="width:10%;"><input type="text" name="cQ13C14" style="width:70%;"/> จำนวน</td>
+				<td class="aTd" style="width:10%;"><input type="text" name="cQ13C14" style="width:70%;"/> 건</td>
 			</tr>
 			<tr>
 				<td class="aTd">c-2</td>
-				<td class="qTd">ดูทีวีดาวเทียม</td>
+				<td class="qTd">위성 TV 방송 시청</td>
 				<td class="aTd" style="background-color:#ddd;"></td>
-				<td class="aTd"><input type="text" name="cQ13C22" style="width:70%;"/> จำนวน</td>
+				<td class="aTd"><input type="text" name="cQ13C22" style="width:70%;"/> 건</td>
 				<td class="aTd" style="background-color:#ddd;"></td>
-				<td class="aTd"><input type="text" name="cQ13C24" style="width:70%;"/> จำนวน</td>
+				<td class="aTd"><input type="text" name="cQ13C24" style="width:70%;"/> 건</td>
 			</tr>
 			<tr>
 				<td class="aTd">c-3</td>
-				<td class="qTd">เคเบิลทีวี</td>
+				<td class="qTd">케이블 TV 시청</td>
 				<td class="aTd" style="background-color:#ddd;"></td>
-				<td class="aTd"><input type="text" name="cQ13C32" style="width:70%;"/> จำนวน</td>
+				<td class="aTd"><input type="text" name="cQ13C32" style="width:70%;"/> 건</td>
 				<td class="aTd" style="background-color:#ddd;"></td>
-				<td class="aTd"><input type="text" name="cQ13C34" style="width:70%;"/> จำนวน</td>
+				<td class="aTd"><input type="text" name="cQ13C34" style="width:70%;"/> 건</td>
 			</tr>
 			<tr>
 				<td class="aTd">c-4</td>
-				<td class="qTd">ดูในโรงภาพยนตร์</td>
+				<td class="qTd">영화관에서 감상</td>
 				<td class="aTd" style="background-color:#ddd;"></td>
 				<td class="aTd" style="background-color:#ddd;"></td>
 				<td class="aTd" style="background-color:#ddd;"></td>
-				<td class="aTd"><input type="text" name="cQ13C44" style="width:70%;"/> จำนวน</td>
+				<td class="aTd"><input type="text" name="cQ13C44" style="width:70%;"/> 건</td>
 			</tr>
 			<tr>
 				<td class="aTd">c-5</td>
-				<td class="qTd">การใช้เครื่องคาราโอเกะ</td>
+				<td class="qTd">노래방 기계 이용</td>
 				<td class="aTd" style="background-color:#ddd;"></td>
-				<td class="aTd"><input type="text" name="cQ13C52" style="width:70%;"/> จำนวน</td>
+				<td class="aTd"><input type="text" name="cQ13C52" style="width:70%;"/> 건</td>
 				<td class="aTd" style="background-color:#ddd;"></td>
-				<td class="aTd"><input type="text" name="cQ13C54" style="width:70%;"/> จำนวน</td>
+				<td class="aTd"><input type="text" name="cQ13C54" style="width:70%;"/> 건</td>
 			</tr>
 		</table>
 		
 		<table style="width:100%;border:1px solid #ddd;">
 			<tr>
-				<th style="width:50%;background-color:#ddd;">Question</th>
-				<th style="background-color:#ddd;" colspan="3">Answer</th>
+				<th style="width:50%;background-color:#ddd;">문항</th>
+				<th style="background-color:#ddd;" colspan="3">답변</th>
 			</tr>
 			
 			<!-- cq1-4 -->
 			<tr>
-				<td class="qTd">C_Q4. คุณจ่ายเท่าไหร่เพื่อรับและชมภาพยนตร์เกาหลีในช่วง3เดือนที่ผ่านมา? </td>
+				<td class="qTd">C_Q4. 최근 3개월 동안 한국 영화를 유료로 입수·시청하기 위해 지불한 비용은 어느 정도입니까?</td>
 				<td class="aTd" colspan="2"><input type="text" name="cQ14"/> </td>
 			</tr>
 			
 			<!-- cq1-5 -->
 			<tr>
-				<td class="qTd" rowspan="8">C_Q5. เพื่อรับภาพยนตร์เกาหลีฟรีในข้อ <font style="color:blue">C_Q3 </font>คุณถึงใช้ช่องทางบ่อยที่สุด?</td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ15" value="1"/> เข้าถึงและใช้งานง่าย</td>
+				<td class="qTd" rowspan="8">C_Q5. 귀하께서 무료 한국 영화를 입수하기 위해 <font style="color:blue">C_Q3 문항</font>에 응답하신 경로를 가장 자주 사용하시는 이유는 무엇입니까?</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ15" value="1"/> 접근 및 사용이 용이해서</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ15" value="2"/> คุ้นเคยกับสถานที่ที่ฉันใช้อย่างต่อเนื่อง</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ15" value="2"/> 계속 사용하던 곳으로 익숙해서</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ15" value="3"/> ปลอดภัยจากไวรัส</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ15" value="3"/> 바이러스 감염으로부터 안전해서</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ15" value="4"/> อเต็มไปด้วยผลงานต่าง ๆ มากกว่าช่องทางอื่น</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ15" value="4"/> 다른 경로에 비해 자료가 풍부해서</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ15" value="5"/> ไม่คิดว่าสามารถบล็อกหรือปิดกั้นช่องทางได้</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ15" value="5"/> 경로차단 또는 폐쇄가 안 될 것 같아서</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ15" value="6"/> ฉันไม่รู้จักช่องทางอื่น</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ15" value="6"/> 다른경로를 몰라서</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ15" value="7"/> ไม่สะดวก มีแต่โฆษณา</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ15" value="7"/> 불편하지만 광고만 보면 되므로</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ15" value="8"/> อื่น ๆ(<input type="text" name="cQ15Etc"/>)</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ15" value="8"/> 기타(<input type="text" name="cQ15Etc"/>)</td>
 			</tr>
 			
 			<!-- cq1-6 -->
 			<tr>
-				<td class="qTd" rowspan="8">C_Q6. คุณรู้จักภาพยนตร์เกาหลีฟรีได้อย่างไร?</td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ16" value="1"/> เว็บไซต์ของเจ้าของผลงาน</td>
+				<td class="qTd" rowspan="8">C_Q6. 귀하께서는 어떤 경로를 통해 무료 한국 영화에 대한 정보를 알게 되셨나요?</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ16" value="1"/> 콘텐츠 홀더의 웹사이트</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ16" value="2"/> เว็บไซต์ข่าว</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ16" value="2"/> 뉴스 사이트</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ16" value="3"/> เว็บไซต์ที่จัดเก็บผลงาน</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ16" value="3"/> 콘텐츠를 입수하고 있는 사이트</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ16" value="4"/> ทีวี / วิทยุ</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ16" value="4"/> TV·라디오</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ16" value="5"/> คำพูด (รีวิว) </td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ16" value="5"/> 입소문(리뷰)</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ16" value="6"/> คาเฟ่,บล็อก , สังคมออนไลน์</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ16" value="6"/> 카페, 블로그, SNS</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ16" value="7"/> ผ่านคนรู้จักเช่นเพื่อนและเพื่อนร่วมงาน</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ16" value="7"/> 친구나 동료 등 지인을 통해</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ16" value="8"/> อื่น ๆ(<input type="text" name="cQ16Etc"/>)</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ16" value="8"/> 기타(<input type="text" name="cQ16Etc"/>)</td>
 			</tr>
 			
 			<!-- cq1-7 -->
 			<tr>
-				<td class="qTd" rowspan="5">C_Q7. จัดเก็บ(คัดลอกหรือดาวน์โหลด)หรือดูภาพยนตร์เกาหลีฟรี อุปกรณ์เชื่อมต่อใดที่คุณใช้ กรุณาเลือกอุปกรณ์ที่เกี่ยวข้องทั้งหมด</td>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ17" value="1"/> คอมพิวเตอร์(ตนเองหรือครอบครัวเป็นเจ้าของ) </td>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ17" value="2"/> คอมพิวเตอร์ (ร้านอินเทอร์เน็ต)</td>
+				<td class="qTd" rowspan="5">C_Q7. 무료 한국 영화를 입수(복사 또는 다운로드) 또는 시청하는 경우, 사용하는 단말기는 무엇입니까? 해당되는 모든 장비를 선택해주세요</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ17" value="1"/> PC (자신 또는 가족 소유)</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ17" value="2"/> PC (인터넷 카페)</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ17" value="3"/> โทรศัพท์มือถือ</td>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ17" value="4"/> สมาร์ทโฟน</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ17" value="3"/> 휴대전화</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ17" value="4"/> 스마트폰</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ17" value="5"/> แท็บเล็ต</td>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ17" value="6"/> เครื่องเล่น MP4</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ17" value="5"/> 테블릿</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ17" value="6"/> MP4 플레이어</td>
 			</tr>
 			<tr>
 				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ17" value="7"/> PSP / PS VITA</td>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ17" value="8"/> อื่น ๆ<br/>(<input type="text" name="cQ17Etc" style="width:85%;"/>)</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ17" value="8"/> 기타<br/>(<input type="text" name="cQ17Etc" style="width:85%;"/>)</td>
 			</tr>
 			<tr>
-				<td class="aTd" colspan="2" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ17" value="9"/> ซื้อจากอินเทอร์เน็ต (การสตรีมหรือการซื้อแพ็คเกจเท่านั้น)</td>
+				<td class="aTd" colspan="2" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ17" value="9"/> 인터넷에서 구매 (스트리밍 또는 패키지 구매에 한함)</td>
 			</tr>
 			
 			<!-- cq1-8 -->
 			<tr>
-				<td class="qTd" rowspan="10">C_Q8. ทำไมคุณถึงรับหรือจัดเก็บผลงานภาพยนตร์เกาหลีฟรี กรุณาเลือกทั้งหมด</td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ18" value="1"/> ราคาถูกหรือฟรี</td>
+				<td class="qTd" rowspan="10">C_Q8. 귀하께서 무료 한국 영화를 이용하시는 이유는 무엇입니까? 모두 선택해주세요</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ18" value="1"/> 저렴하거나 무료이기 때문에</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ18" value="2"/> ฉันไม่คิดว่ามันคุ้มค่าที่จะที่จ่ายเงิน</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ18" value="2"/> 유료 콘텐츠를 결제해서 이용할 만 한 가치가 있다고 생각하지 않아서</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ18" value="3"/> วิธีเดียวที่จะดูผลงานที่ต้องการ คือการใช้ผลงานฟรี</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ18" value="3"/> 원하는 콘텐츠를 이용할 수 있는 방법이 무료 콘텐츠 이용밖에 없어서</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ18" value="4"/> สะดวกกว่าผลงานที่ต้องชำระเงิน</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ18" value="4"/> 유료 콘텐츠보다 이용하기 편해서</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ18" value="5"/> ฉันคิดว่าการดูผลงานฟรีไม่ได้เป็นเรื่องร้ายแรง</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ18" value="5"/> 무료 콘텐츠 이용이 심각한 일이 아니라고 생각해서</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ18" value="6"/> เพราะหลายคนใช้</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ18" value="6"/> 많은 사람들이 하기 때문에</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ18" value="7"/> เพราะสามารถสตรีมมิ่งหรือดาวน์โหลดผลงานต่อรายการ</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ18" value="7"/> ITEM당 콘텐츠를 스트리밍 하거나 다운로드 할 수 있기 때문에</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ18" value="8"/> สามารถใช้งานได้เร็วกว่าผลงานที่ชำระเงิน</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ18" value="8"/> 유료 콘텐츠보다 더 빨리 이용할 수 있어서</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ18" value="9"/> เพราะฉันใช้ได้</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ18" value="9"/> 계속 사용해 왔기 때문에</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ18" value="10"/> อื่น ๆ(<input type="text" name="cQ18Etc"/>)</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ18" value="10"/> 기타(<input type="text" name="cQ18Etc"/>)</td>
 			</tr>
 			
 			<!-- cq1-9 -->
 			<tr>
-				<td class="qTd" rowspan="3">C_Q9. คุณรู้หรือไม่ว่าคุณกำลังซื้อภาพยนตร์เกาหลีของแท้หรือผิดกฎหมาย?</td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ19" value="1"/> ไม่รู้สึก</td>
+				<td class="qTd" rowspan="3">C_Q9. 한국 영화를 입수·시청하는 경우 정품 또는 불법 복제판이라고 의식합니까?</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ19" value="1"/> 의식하지 않음</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ19" value="2"/> รู้บ้าง</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ19" value="2"/> 다소 의식한다</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ19" value="3"/> รู้</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ19" value="3"/> 의식한다</td>
 			</tr>
 			
 			<!-- cq1-9-1 -->
 			<tr>
-				<td class="qTd" rowspan="4">ในคำถามข้างต้น  <font style="color:blue">C_Q9 หากคุณตอบว่า②รู้บ้าง③รู้โปรดตอบคำถามต่อไปนี้ </font><br/>C_Q9_1. หากคุณตอบว่าคุณเป็นภาพยนตร์เกาหลีแท้หรือผิดกฎหมายเมื่อคุณซื้อหรือรับชมบนอินเทอร์เน็ตหรือแพ็คเกจ โปรดตอบคำถามต่อไปนี้ ไม่ว่าจะเป็นของแท้หรือของละเมิดลิขสิทธิ์มันมีผลต่อความพร้อมใช้งานและการรับชมของท่านหรือไม่?</td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ191" value="1"/> การจัดเก็บหรือการรับชมมาไม่มีอิทธิพลใด ๆ</td>
+				<td class="qTd" rowspan="4">위의 질문 <font style="color:blue">C_Q9 에서 ② 다소 의식한다, ③ 의식한다 고 응답</font>한 분은 다음 질문에 응답해주세요. <br/>C_Q9_1. 정품 또는 불법 복제판 여부가 입수·시청에 영향을 줍니까?</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ191" value="1"/> 입수·시청에는 영향이 없다</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ191" value="2"/> หากคุณมีผลิตภัณฑ์ของแท้คุณจะได้รับชมผลิตภัณฑ์ของแท้หากคุณได้รับของละเมิดลิขสิทธิ์ก็รับชม</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ191" value="2"/> 정품이 있으면 정품을 입수·시청하겠지만, 불법 복제판 밖에 없는 경우에는 불법 복제판을 입수·시청한다</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ191" value="3"/> มีเฉพาะผลิตภัณฑ์ของแท้เท่านั้น</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ191" value="3"/> 정품만 입수·시청 한다</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ191" value="4"/> เนื่องจากสินค้าของแท้มีราคาแพงจึงรับชมผลิตภัณฑ์ที่ละเมิดลิขสิทธิ์เท่านั้น</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ191" value="4"/> 정품은 비싸기 때문에 불법 복제판만 입수한다</td>
 			</tr>
 			
 			<!-- cq1-10 -->
 			<tr>
-				<td class="qTd" colspan="3" style="border-top:3px solid #ddd;">C_Q10. หากเจ้าของสิทธิ์ชาวเกาหลีสามารถอนุญาติให้จัดเก็บและรับชมภาพยนตร์เกาหลีบนอินเทอร์เน็ตได้อย่างถูกกฎหมายได้นั้นต้องใช้เงื่อนไขอะไร โปรดเลือกทั้งหมดที่ตรงกับเงื่อนไขเหล่านั้น</td>
+				<td class="qTd" colspan="3" style="border-top:3px solid #ddd;">C_Q10. 한국의 권리자가 한국 영화를 합법적으로 인터넷에서 입수·시청할 수 있게 한다면, 어떤 조건에 의한 배포를 희망합니까? 그 조건에 해당되는 것을 모두 선택하세요.</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ110" value="1"/> เสียงพากย์เป็นภาษาของประเทศเป้าหมายหรือไม่</td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ110" value="2"/> เสียงพากย์เป็นภาษาอังกฤษหรือไม่</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ110" value="1"/> 음성이 조사대상국 언어로 더빙되어 있는지</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ110" value="2"/> 음성이 영어로 더빙되어 있는지</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ110" value="3"/> เสียงจะยังคงอยู่ในภาษาของผู้ผลิตผลงานเหมือนเดิม</td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ110" value="4"/> มีคำบรรยายตามภาษาของประเทศเป้าหมาย</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ110" value="3"/> 음성이 원래 콘텐츠 제작국의 언어로 남아 있는지</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ110" value="4"/> 조사대상국 자막이 있는지</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ110" value="5"/> มีคำบรรยายภาษาอังกฤษ</td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ110" value="6"/> สามารถรับชมผลงานในเวลาเดียวกันกับการออกอากาศของประเทศผู้ผลิตและการฉายที่โรงภาพยนตร์</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ110" value="5"/> 영어 자막이 있는지</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ110" value="6"/> 콘텐츠 제작국 방송이나 극장 개봉과 거의 같은 시기에 입수·시청 할 수 있는지</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ110" value="7"/> การรับรู้คุณภาพระดับ HD</td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ110" value="8"/> ดาวน์โหลดได้</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ110" value="7"/> HD 품질인지</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ110" value="8"/> 다운로드 가능한지</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ110" value="9"/> กำหนดราคาตามเวลา (ความจุ) ของผลงาน</td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ110" value="10"/> ผลงานภาษาเกาหลีมีการเผยแพร่ในเว็บไซต์เดียวกัน</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ110" value="9"/> 콘텐츠의 시간(용량)에 따라 가격이 설정되는지</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ110" value="10"/> 한국의 콘텐츠가 같은 사이트에서 많이 정리되어 배포되는지</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ110" value="11"/> คุณสามารถค้นหาผลงานที่คุณต้องการรับชมได้อย่างง่ายดาย</td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ110" value="12"/> ไม่มีเงื่อนไขพิเศษ</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ110" value="11"/> 입수·시청하고 싶은 콘텐츠를 쉽게 찾을 수 있는지</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ110" value="12"/> 특별히 조건 없음</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ110" value="13"/> ฉันไม่ต้องการของแท้</td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ110" value="14"/> อื่น ๆ(<input type="text" name="cQ110Etc"/>)</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ110" value="13"/> 특별히 정품을 원하지 않음</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ110" value="14"/> 기타(<input type="text" name="cQ110Etc"/>)</td>
 			</tr>
 			
 			<!-- cq1-11 -->
 			<tr>
-				<td class="qTd">C_Q11. หากคุณปฏิบัติตามเงื่อนไขที่เลือกไว้ในคำถาม  <font style="color:#blue">C_Q10]</font> ข้างต้นและคุณอนุญาตให้เจ้าของเกาหลีได้รับและดูภาพยนตร์เกาหลีบนอินเทอร์เน็ตอย่างถูก กฎหมายคุณต้องการจ่ายต่อเนื้อหาเท่าใด</td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;">(<input type="text" name="cQ111" placeholder="หน่วยการเงินของประเทศที่ทำการสำรวจ คือ"/>)</td>
+				<td class="qTd">C_Q11. 위의 질문 <font style="color:#blue">C_Q10]</font> 에서 선택한 조건을 충족하고, 한국의 권리자가 한국 영화를 합법적으로 인터넷에서 입수·시청할 수 있게 한 경우 콘텐츠 1건 당 어느 정도 가격이라면 지불할 의사가 있습니까?</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;">(<input type="text" name="cQ111" placeholder="조사대상국 화폐단위"/>)</td>
 			</tr>
 			
 			<!-- cq1-12 -->
 			<tr>
-				<td class="qTd">C_Q12. คุณเคยแบ่งปันภาพยนตร์เกาหลีฟรีให้กับคนอื่นที่ไม่ใช่ตัวคุณเองหรือให้คุณแชร์ช่องทางของคุณต่อ (โปรดตอบ 'มี' ถ้าคุณมีหนึ่งในนั้น)</td>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ112" value="1"/> มี</td>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ112" value="2"/> ไม่มี</td>
+				<td class="qTd">C_Q12. 귀하께서는 자신 이외의 다른 사람에게 자신의 무료 한국 영화를 공유하거나, 또는 경로를 재공유 하신 경험이 있습니까?(둘 중 하나라도 경험이 있다면 '있다' 로 답해주세요)</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ112" value="1"/> 있다</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ112" value="2"/> 없다</td>
 			</tr>
 			
 			<!-- cq1-12-1 -->
 			<tr>
 				<td colspan="3" class="qTd" style="border-top:3px solid #ddd;">
-					หากคุณตอบ①ในคำถามข้างต้น ว่า มี แล้วโปรดตอบคำถามต่อไปนี้ <br/>
-					C_Q12_1. คุณแชร์ภาพยนตร์เกาหลีฟรีได้อย่างไร กรุณาเลือกทั้งหมด
+					위의 질문 <font style="color:blue">C_Q12 에서 ① 있다 고 응답</font>한 분은 다음 질문에 응답해주세요. <br/>
+					C_Q12_1. 귀하께서는 무료 한국 영화를 어떤 경로를 통해 공유하셨습니까? 모두 선택해주세요.
 				</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ1121" value="1"/> USB, CD, DVD ออฟไลน์</td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ1121" value="2"/> อัปโหลดไปยังคาเฟ่บล็อก ฯลฯ</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ1121" value="1"/> USB, CD, DVD 등 오프라인</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ1121" value="2"/> 카페, 블로그 등에 업로드</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ1121" value="3"/> สังคมออนไลน์(Facebook, Twitter, Instagram ฯลฯ)</td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ1121" value="4"/> Torrent</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ1121" value="3"/> SNS(Facebook, Twitter, Instagram 등)</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ1121" value="4"/> 토렌트</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ1121" value="5"/> P2P หรือ  web hard sharing </td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ1121" value="6"/> การแชร์ส่วนตัวเช่น (อีเมล KakaoTalk ฯลฯ )</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ1121" value="5"/> P2P 또는 웹하드</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ1121" value="6"/> 개인적인 공유(이메일, 카카오톡 등)</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ1121" value="7"/> Cloud</td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ1121" value="8"/> อื่น ๆ(<input type="text" name="cQ1121Etc"/>)</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ1121" value="7"/> 클라우드</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ1121" value="8"/> 기타(<input type="text" name="cQ1121Etc"/>)</td>
 			</tr>
 			
 			<!-- cq1-12-2 -->
 			<tr>
 				<td colspan="3" class="qTd" style="border-top:3px solid #ddd;">
-					หากคุณตอบ①ในคำถามข้างต้น ว่า มี แล้วโปรดตอบคำถามต่อไปนี้ <br/>
-					C_Q12_2. โปรดเลือกสาเหตุทั้งหมดที่คุณแชร์ภาพยนตร์เกาหลีฟรี
+					위의 질문 <font style="color:blue">C_Q12</font> 에서 ① 있다 고 응답한 분은 다음 질문에 응답해주세요. <br/>
+					C_Q12_2. 귀하께서 무료 한국 영화를 공유하신 이유를 모두 선택해 주세요.
 				</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ1122" value="1"/> สมาชิกในครอบครัวและเพื่อน ๆ ไม่ทราบวิธีการเข้าถึงผลงานฟรี</td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ1122" value="2"/> เพราะหลายคนทำ</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ1122" value="1"/> 가족 및 친구 등 지인이 무료 콘텐츠에 접근 방법을 몰라서</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ1122" value="2"/> 많은사람들이 하기 때문에</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ1122" value="3"/> หารายได้</td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ1122" value="4"/> แชร์แบบไม่เจาะจงผู้รับ </td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ1122" value="3"/> 금전적인 수익을 얻기 위해서</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ1122" value="4"/> 불특정 다수에게 공유하기 위해서</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ1122" value="5"/> ใช้ผลงานฟรีมากขึ้น</td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ1122" value="6"/> ได้รับคำขอ</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ1122" value="5"/> 더 많은 무료 콘텐츠를 이용하기 위해서</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ1122" value="6"/> 요청이 있어서</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ1122" value="7"/> ไม่มีเหตุผลพิเศษ</td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ1122" value="8"/> อื่น ๆ(<input type="text" name="cQ1122Etc"/>)</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ1122" value="7"/> 특별한 이유는 없음</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ1122" value="8"/> 기타(<input type="text" name="cQ1122Etc"/>)</td>
 			</tr>
 			
 			<!-- cq1-13 -->
 			<tr>
-				<td colspan="3" class="qTd" style="border-top:3px solid #ddd;">C_Q13. คุณจะทำอย่างไรถ้าช่องทางสู่ภาพยนตร์เกาหลีฟรีถูกบล็อกหรือปิด?</td>
+				<td colspan="3" class="qTd" style="border-top:3px solid #ddd;">C_Q13. 귀하께서 무료 한국 영화를 이용하시는 경로가 차단 또는 폐쇄될 경우 어떻게 하시겠습니까?</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ113" value="1"/> เลิกใช้ผลงานเอง</td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ113" value="2"/> ใช้ผลงานที่ต้องชำระเงิน</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ113" value="1"/> 콘텐츠 이용 자체를 포기한다</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ113" value="2"/> 유료 콘텐츠를 이용한다</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ113" value="3"/> ค้นหาช่องทางอื่น ๆ ที่ให้บริการฟรี</td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ113" value="4"/> ค้นหาวิธีการข้ามช่องทางที่มีอยู่</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ113" value="3"/> 무료로 이용할 수 있는 다른 경로를 찾는다</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ113" value="4"/> 기존 경로를 우회할수 있는 방법을 찾는다</td>
 			</tr>
 			<tr>
-				<td colspan="3"class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ113" value="5"/> อื่น ๆ (<input type="text" name="cQ113Etc" style="width:50%;"/>)</td>
+				<td colspan="3"class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ113" value="5"/> 기타(<input type="text" name="cQ113Etc" style="width:50%;"/>)</td>
 			</tr>
 			
 			<!-- cq1-14 -->
 			<tr>
-				<td colspan="3" class="qTd" style="border-top:3px solid #ddd;">C_Q14. คุณเพิ่มหรือลดการรับชมภาพยนตร์เกาหลีฟรีในปีนี้ (2019) เมื่อเทียบกับปีที่แล้ว (2018)?</td>
+				<td colspan="3" class="qTd" style="border-top:3px solid #ddd;">C_Q14. 귀하께서는 올해(2019년)의 무료 한국 영화 이용이 전년도(2018년)와 비교하여 증가하셨습니까 또는 감소하였습니까?</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ114" value="1"/> (<input type="text" name="cQ1141"/> %) เพิ่ม</td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ114" value="2"/> (<input type="text" name="cQ1142"/> %) ลดลง</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ114" value="1"/> (<input type="text" name="cQ1141"/> %) 증가</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ114" value="2"/> (<input type="text" name="cQ1142"/> %) 감소</td>
 			</tr>
 			<tr>
-				<td colspan="3"class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ114" value="3"/> ไม่มีการเปลี่ยนแปลง </td>
+				<td colspan="3"class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ114" value="3"/> 변화없다</td>
 			</tr>
 			
 			<!-- cq1-15 -->
 			<tbody id="cQ115Tbody" class="qTbody" style="display:none;">
 				<tr>
-					<td colspan="3" class="qTd" style="border-top:3px solid #ddd;">C_Q15. โปรดเลือกสาเหตุหลักทั้งหมดที่ทำให้คุณเพิ่มการรับชมภาพยนตร์เกาหลีฟรีเมื่อเทียบกับปีที่แล้ว</td>
+					<td colspan="3" class="qTd" style="border-top:3px solid #ddd;">C_Q15. 귀하께서 전년과 비교하여 무료 한국 영화 이용이 증가한 주된 이유는 무엇인지 모두 선택해 주세요</td>
 				</tr>
 				<tr>
-					<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ115" value="1"/> ราคาผลงานที่ต้องชำระสูงมาก</td>
-					<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ115" value="2"/> ราคาผลงานฟรีต่ำกว่าปกติ</td>
+					<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ115" value="1"/> 유료 콘텐츠의 가격이 너무 올라서</td>
+					<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ115" value="2"/> 무료 콘텐츠 가격이 예년보다 더 낮아져서</td>
 				</tr>
 				<tr>
-					<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ115" value="3"/> ปริมาณผลงานฟรีที่มีให้สูงกว่าปกติ</td>
-					<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ115" value="4"/> มีหลายวิธีในการใช้ผลงานฟรี</td>
+					<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ115" value="3"/> 이용 가능한 무료 콘텐츠의 양이 예년보다 더 많아져서</td>
+					<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ115" value="4"/> 무료 콘텐츠를 이용할 수 있는 경로가 많아져서</td>
 				</tr>
 				<tr>
-					<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ115" value="5"/> เมื่อปริมาณการใช้ผลงานโดยรวมเพิ่มขึ้น</td>
-					<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ115" value="6"/> ผลงานฟรีใช้งานง่าย</td>
+					<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ115" value="5"/> 전체적인 콘텐츠 소비가 증가해서</td>
+					<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ115" value="6"/> 무료 콘텐츠 이용이 편리해서</td>
 				</tr>
 				<tr>
-					<td colspan="3" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ115" value="7"/> อื่น ๆ(<input type="text" name="cQ115Etc"/>)</td>				
+					<td colspan="3" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ115" value="7"/> 기타(<input type="text" name="cQ115Etc"/>)</td>				
 				</tr>
 			</tbody>
 			
 			<!-- cq1-16 -->
 			<tbody id="cQ116Tbody" class="qTbody" style="display:none;">
 				<tr>
-					<td colspan="3" class="qTd" style="border-top:3px solid #ddd;">C_Q16. อะไรคือสาเหตุหลักที่ทำให้คุณลดการรับชมภาพยนตร์เกาหลีฟรีเมื่อเทียบกับปีที่แล้ว?</td>
+					<td colspan="3" class="qTd" style="border-top:3px solid #ddd;">C_Q16. 귀하께서 전년과 비교하여 무료 한국 영화 이용이 감소한 주된 이유는 무엇인지 모두 선택해 주세요</td>
 				</tr>
 				<tr>
-					<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ116" value="1"/> ผลงานหรือช่องทางฟรีสามารถใช้ได้เนื่องจากการบังคับใช้</td>
-					<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ116" value="2"/> ราคาของผลงานที่ต้องชำระมีความสมเหตุสมผล</td>
+					<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ116" value="1"/> 단속으로 인한 이용 가능한 무료 콘텐츠나 경로가 줄어서</td>
+					<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ116" value="2"/> 유료 콘텐츠의 가격이 적정해서</td>
 				</tr>
 				<tr>
-					<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ116" value="3"/> ต้องการซื้อผลงานแบบชำระเงินโดยดูแคมเปญการประชาสัมพันธ์และบทความข่าว ฯลฯ</td>
-					<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ116" value="4"/> มีปัญหาการละเมิดลิขสิทธิ์,การโดนแฮ็ก,การติดไวรัส ฯลฯ</td>
+					<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ116" value="3"/> 저작권을 지켜야 한다는 홍보 캠페인, 뉴스기사 등을 보고 유료 콘텐츠 구매의사가 늘어서</td>
+					<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ116" value="4"/> 저작권 침해로 인한 소송, 해킹, 바이러스 감염 등의 문제가 생길까봐</td>
 				</tr>
 				<tr>
-					<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ116" value="5"/> ลดการรับชมผลงานเอง</td>
-					<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ116" value="6"/> เพิ่มจำนวนของผลงานที่ชำระเงินโดยการตัดสินใจที่รอบคอบ</td>
+					<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ116" value="5"/> 콘텐츠 이용 자체가 감소</td>
+					<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ116" value="6"/> 양심적인 결정에 따라 유료 콘텐츠의 이용횟수를 늘려서</td>
 				</tr>
 				<tr>
-					<td colspan="3" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ116" value="7"/> อื่น ๆ(<input type="text" name="cQ116Etc"/>)</td>				
+					<td colspan="3" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ116" value="7"/> 기타(<input type="text" name="cQ116Etc"/>)</td>				
 				</tr>
 			</tbody>
 			
 			<!-- cq1-17 -->
 			<tbody id="cQ117Tbody" class="qTbody" style="display:none;">
 				<tr>
-					<td colspan="3" class="qTd" style="border-top:3px solid #ddd;">C_Q17. สถานการณ์อะไรที่คุณต้องการหยุดรับชมภาพยนตร์เกาหลีฟรี?</td>
+					<td colspan="3" class="qTd" style="border-top:3px solid #ddd;">C_Q17. 귀하께서는 어떤 상황이 되면 무료 한국 영화 이용을 중단하시겠습니까?</td>
 				</tr>
 				<tr>
-					<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ117" value="1"/> ลดราคาของผลงานที่และบริการที่ต้องชำระเงิน</td>
-					<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ117" value="2"/> ลดผลงานที่โดยรวมฟรี</td>
+					<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ117" value="1"/> 유료 콘텐츠 및 서비스의 가격 인하</td>
+					<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ117" value="2"/> 전체적인 무료 콘텐츠의 감소</td>
 				</tr>
 				<tr>
-					<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ117" value="3"/> ลงโทษและลงโทษผู้ใช้ผลงานที่ฟรี</td>
-					<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ117" value="4"/> ปรับปรุงการรับรู้ผ่านการศึกษาและการประชาสัมพันธ์เกี่ยวกับการคุ้มครองลิขสิทธิ์</td>
+					<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ117" value="3"/> 무료 콘텐츠 이용자 단속 및 처벌</td>
+					<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ117" value="4"/> 저작권 보호에 대한 교육 및 홍보를 통한 인식 개선</td>
 				</tr>
 				<tr>
-					<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ117" value="5"/> ความแตกต่างที่ชัดเจนระหว่างผลงานที่ต้องชำระเงินและผลงานที่ฟรี</td>
-					<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ117" value="6"/> เสียหายส่วนบุคคลอันเนื่องมาจากการติดไวรัส,การโดนแฮ็ค,ใช้บัตรเครดิตและอื่น ๆ</td>
+					<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ117" value="5"/> 유료 콘텐츠와 무료 콘텐츠의 명확한 구분</td>
+					<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ117" value="6"/> 바이러스 감염, 신용카드 해킹 등으로 인한 개인적인 피해</td>
 				</tr>
 				<tr>
-					<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ117" value="7"/> การบังคับใช้และการลงโทษผู้ให้บริการผลงานที่ฟรี</td>
-					<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ117" value="8"/> รักษาความปลอดภัยจำนวนผลงานที่ต้องชำระ</td>
+					<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ117" value="7"/> 무료 콘텐츠 공급자 단속 및 처벌</td>
+					<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ117" value="8"/> 이용 가능한 유료 콘텐츠의 양 확보</td>
 				</tr>
 				<tr>
-					<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ117" value="9"/> เพิ่มความสะดวกในการใช้ผลงานที่ต้องชำระเงิน (การเข้าถึงวิธีการชำระเงินการทำให้การเข้าสู่ระบบง่ายขึ้น ฯลฯ )</td>
-					<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ117" value="10"/> อื่น ๆ(<input type="text" name="cQ117Etc"/>)</td>				
+					<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ117" value="9"/> 유료 콘텐츠의 이용 편리성 제고(접근성, 결제 방식, 로그인 간편화 등)</td>
+					<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ117" value="10"/> 기타(<input type="text" name="cQ117Etc"/>)</td>				
 				</tr>
 			</tbody>
 			
 			<!-- cq1-18 -->
 			<tr>
-				<td colspan="3" class="qTd" style="border-top:3px solid #ddd;">C_Q18. คุณกำลังทำอะไรเมื่อเห็นคนรอบตัวคุณใช้หรือซื้อภาพยนตร์เกาหลีฟรี?</td>
+				<td colspan="3" class="qTd" style="border-top:3px solid #ddd;">C_Q18. 귀하께서는 무료 한국 영화를 이용 또는 구입하는 주위 사람들을 볼 때 어떤 행동을 하고 계십니까?</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ118" value="1"/> แบ่งปันข้อมูลที่เกี่ยวข้องกับผลงานที่ฟรี</td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ118" value="2"/> ป้องกันการใช้ผลงานที่ฟรี</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ118" value="1"/> 무료 콘텐츠와 관련된 정보를 공유한다</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ118" value="2"/> 무료 콘텐츠 이용을 저지한다</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ118" value="3"/> ส่งเสริมการใช้ผลงานที่มีค่าใช้จ่าย</td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ118" value="4"/> อย่าดำเนินการใด ๆ เป็นพิเศษ</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ118" value="3"/> 유료 콘텐츠 이용을 권유한다</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ118" value="4"/> 특별한 행동을 하지는 않는다</td>
 			</tr>
 			<tr>
-				<td colspan="3" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ118" value="5"/> อื่น ๆ(<input type="text" name="cQ118Etc"/>)</td>				
+				<td colspan="3" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ118" value="5"/> 기타(<input type="text" name="cQ118Etc"/>)</td>				
 			</tr>
 			
 		</table>
 		<br/><br/>
 		<div style="text-align:center;">
-			<button type="button" onclick="next('4');" style="border-radius:4px;width:50%;background-color:#F2CB61;height:40px;font-weight:bold;font-size:18px;">NEXT</button>
+			<button type="button" onclick="next('4');" style="border-radius:4px;width:50%;background-color:#F2CB61;height:40px;font-weight:bold;font-size:18px;">다음</button>
 		</div>
 	</div>
 	
 	<div style="width:100%;display:none;" id="section5">
 		<br/>
 		<p style="width:100%;height:30px;font-size:18px;color:#000000;font-weight:bold;">
-			<font style="border-top:4px solid #003399;">&nbsp;&nbsp;▶  ส่วนที่  4.</font> การออกอากาศ (ละครโทรทัศน์, วาไรตี้, สารคดี ฯลฯ )
+			<font style="border-top:4px solid #003399;">&nbsp;&nbsp;▶ Part IV.</font> 방송(TV 드라마, 버라이어티, 다큐멘터리 등)
 		</p>
 		<br/>
 		
 		<table style="width:100%;border:1px solid #ddd;">
 			<tr>
-				<th style="width:50%;background-color:#ddd;">Question</th>
-				<th style="background-color:#ddd;" colspan="3">Answer</th>
+				<th style="width:50%;background-color:#ddd;">문항</th>
+				<th style="background-color:#ddd;" colspan="3">답변</th>
 			</tr>
 			
 			<!-- cq2-1 -->
 			<tr>
-				<td class="qTd">C_Q1. ] รายการทีวีทั้งหมดที่คนมี คุณจัดเก็บและ รับชม รายการของเกาหลีกี่เปอร์เซ็นต์?</td>
+				<td class="qTd">C_Q1. 귀하께서 입수·시청하는 모든 방송 중에서 한국 방송이 차지하는 비율은 어느 정도입니까?</td>
 				<td class="aTd" colspan="3"><input type="text" name="cQ21"/> %</td>
 			</tr>
 			
 			<!-- cq2-2 -->
 			<tr>
-				<td class="qTd" rowspan="2">C_Q2. รายการออกอากาศของเกาหลีประเภทใดที่รับชมเป็นหลัก?</td>
-				<td class="aTd" style="text-align:left;padding-left:2%;width:16%;"><input type="radio" name="cQ22" value="1"/> ละคร</td>
-				<td class="aTd" style="text-align:left;padding-left:2%;width:16%;"><input type="radio" name="cQ22" value="2"/> ความบันเทิง</td>
-				<td class="aTd" style="text-align:left;padding-left:2%;width:16%;"><input type="radio" name="cQ22" value="3"/> เอนิเมชั่น</td>
+				<td class="qTd" rowspan="2">C_Q2. 귀하께서 이용하시는 한국 방송은 주로 어떤 장르입니까?</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;width:16%;"><input type="radio" name="cQ22" value="1"/> 드라마</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;width:16%;"><input type="radio" name="cQ22" value="2"/> 예능</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;width:16%;"><input type="radio" name="cQ22" value="3"/> 애니메이션</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ22" value="4"/> วัฒนธรรม / สารคดี</td>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ22" value="5"/> เพลง</td>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ22" value="6"/> อื่น ๆ<br/>(<input type="text" name="cQ22Etc" style="width:70%;"/>)</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ22" value="4"/> 교양/다큐멘터리</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ22" value="5"/> 음악</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ22" value="6"/> 기타<br/>(<input type="text" name="cQ22Etc" style="width:70%;"/>)</td>
 			</tr>
 			
 		</table>
 		<table style="width:100%;border:1px solid #ddd;">
 			<!-- cq2-3 -->
 			<tr>
-				<td class="qTd" colspan="7">C_Q3. รายการที่ออกอากาศในช่วง 3 เดือนที่ผ่านมาของเกาหลี(ละคร,โทรทัศน์,วาไรตี้,สารคดี ฯลฯ ) ที่ท่านได้จัดเก็บฟรีและจำนวนครั้งที่รับชมฟรี รวมทั้งได้จำนวนครั้งที่รับชมจัดเก็บโดยการชำระเงิน</td>
+				<td class="qTd" colspan="7">C_Q3. 최근3개월 동안 한국 방송(TV 드라마, 버라이어티, 다큐멘터리 등)를 무료 입수 및 시청 건수와 유료 입수 및 시청 건수를 적어주시기 바랍니다.</td>
 			</tr>
 			<tr>
 				<td rowspan="3" colspan="3"></td>
-				<th class="aTd" style="border:1px solid #ddd;background-color:#ddd;" colspan="2">ฟรี</th>
-				<th class="aTd" style="border:1px solid #ddd;background-color:#ddd;" colspan="2">ชำระเงิน</th>
+				<th class="aTd" style="border:1px solid #ddd;background-color:#ddd;" colspan="2">무료</th>
+				<th class="aTd" style="border:1px solid #ddd;background-color:#ddd;" colspan="2">유료</th>
 			</tr>
 			<tr>
 				<th class="aTd" style="border-left:1px solid #ddd;background-color:#ddd;">1</th>
@@ -1432,264 +1432,264 @@
 				<th class="aTd" style="background-color:#ddd;">4</th>
 			</tr>
 			<tr>
-				<th class="aTd" style="border-left:1px solid #ddd;background-color:#ddd;">จัดเก็บ</th>
-				<th class="aTd" style="background-color:#ddd;">ชม</th>
-				<th class="aTd" style="background-color:#ddd;">จัดเก็บ</th>
-				<th class="aTd" style="background-color:#ddd;">ชม</th>
+				<th class="aTd" style="border-left:1px solid #ddd;background-color:#ddd;">입수</th>
+				<th class="aTd" style="background-color:#ddd;">시청</th>
+				<th class="aTd" style="background-color:#ddd;">입수</th>
+				<th class="aTd" style="background-color:#ddd;">시청</th>
 			</tr>
 			<tr>
-				<td class="qTd" rowspan="7" style="width:10%;text-align:center;border-top:1px solid #ddd;">ออนไลน์<br/>หมุนเวียน</td>
+				<td class="qTd" rowspan="7" style="width:10%;text-align:center;border-top:1px solid #ddd;">온라인<br/>유통</td>
 				<td class="aTd" style="width:5%;border-top:1px solid #ddd;">a-1</td>
-				<td class="qTd" style="width:45%;border-top:1px solid #ddd;">การกระจายเนื้อหาโดยผู้ประกอบการ / ผู้ประกอบการที่เฉพาะเจาะจง</td>
-				<td class="aTd" style="width:10%;"><input type="text" name="cQ23A11" style="width:70%;"/> จำนวน</td>
-				<td class="aTd" style="width:10%;"><input type="text" name="cQ23A12" style="width:70%;"/> จำนวน</td>
-				<td class="aTd" style="width:10%;"><input type="text" name="cQ23A13" style="width:70%;"/> จำนวน</td>
-				<td class="aTd" style="width:10%;"><input type="text" name="cQ23A14" style="width:70%;"/> จำนวน</td>
+				<td class="qTd" style="width:45%;border-top:1px solid #ddd;">특정 사업자·운영자에 의한 콘텐츠 배포</td>
+				<td class="aTd" style="width:10%;"><input type="text" name="cQ23A11" style="width:70%;"/> 건</td>
+				<td class="aTd" style="width:10%;"><input type="text" name="cQ23A12" style="width:70%;"/> 건</td>
+				<td class="aTd" style="width:10%;"><input type="text" name="cQ23A13" style="width:70%;"/> 건</td>
+				<td class="aTd" style="width:10%;"><input type="text" name="cQ23A14" style="width:70%;"/> 건</td>
 			</tr>
 			<tr>
 				<td class="aTd">a-2</td>
-				<td class="qTd">เผยแพร่ผ่านเว็บไซต์แชร์วิดีโอ (YouTube และอื่น ๆ )</td>
-				<td class="aTd"><input type="text" name="cQ23A21" style="width:70%;"/> จำนวน</td>
-				<td class="aTd"><input type="text" name="cQ23A22" style="width:70%;"/> จำนวน</td>
-				<td class="aTd"><input type="text" name="cQ23A23" style="width:70%;"/> จำนวน</td>
-				<td class="aTd"><input type="text" name="cQ23A24" style="width:70%;"/> จำนวน</td>
+				<td class="qTd">동영상 공유 사이트를 통해 유통 (Youtube 등)</td>
+				<td class="aTd"><input type="text" name="cQ23A21" style="width:70%;"/> 건</td>
+				<td class="aTd"><input type="text" name="cQ23A22" style="width:70%;"/> 건</td>
+				<td class="aTd"><input type="text" name="cQ23A23" style="width:70%;"/> 건</td>
+				<td class="aTd"><input type="text" name="cQ23A24" style="width:70%;"/> 건</td>
 			</tr>
 			<tr>
 				<td class="aTd">a-3</td>
-				<td class="qTd">จัดจำหน่ายผ่านเว็บไซต์ลิงค์ / เว็บไซต์ที่มีคนมากมาย</td>
-				<td class="aTd"><input type="text" name="cQ23A31" style="width:70%;"/> จำนวน</td>
-				<td class="aTd"><input type="text" name="cQ23A32" style="width:70%;"/> จำนวน</td>
-				<td class="aTd"><input type="text" name="cQ23A33" style="width:70%;"/> จำนวน</td>
-				<td class="aTd"><input type="text" name="cQ23A34" style="width:70%;"/> จำนวน</td>
+				<td class="qTd">링크 사이트 / 리치 사이트를 통해 유통</td>
+				<td class="aTd"><input type="text" name="cQ23A31" style="width:70%;"/> 건</td>
+				<td class="aTd"><input type="text" name="cQ23A32" style="width:70%;"/> 건</td>
+				<td class="aTd"><input type="text" name="cQ23A33" style="width:70%;"/> 건</td>
+				<td class="aTd"><input type="text" name="cQ23A34" style="width:70%;"/> 건</td>
 			</tr>
 			<tr>
 				<td class="aTd">a-4</td>
-				<td class="qTd">เผยแพร่โดย P2P site / ซอฟต์แวร์ P2P</td>
-				<td class="aTd"><input type="text" name="cQ23A41" style="width:70%;"/> จำนวน</td>
-				<td class="aTd"><input type="text" name="cQ23A42" style="width:70%;"/> จำนวน</td>
-				<td class="aTd"><input type="text" name="cQ23A43" style="width:70%;"/> จำนวน</td>
-				<td class="aTd"><input type="text" name="cQ23A44" style="width:70%;"/> จำนวน</td>
+				<td class="qTd">P2P 사이트 / P2P 소트프웨어에 의한 유통</td>
+				<td class="aTd"><input type="text" name="cQ23A41" style="width:70%;"/> 건</td>
+				<td class="aTd"><input type="text" name="cQ23A42" style="width:70%;"/> 건</td>
+				<td class="aTd"><input type="text" name="cQ23A43" style="width:70%;"/> 건</td>
+				<td class="aTd"><input type="text" name="cQ23A44" style="width:70%;"/> 건</td>
 			</tr>
 			<tr>
 				<td class="aTd">a-5</td>
-				<td class="qTd">จัดจำหน่ายตามบริการจัดเก็บข้อมูล (รวมถึงไซต์แชร์ไฟล์)</td>
-				<td class="aTd"><input type="text" name="cQ23A51" style="width:70%;"/> จำนวน</td>
-				<td class="aTd"><input type="text" name="cQ23A52" style="width:70%;"/> จำนวน</td>
-				<td class="aTd"><input type="text" name="cQ23A53" style="width:70%;"/> จำนวน</td>
-				<td class="aTd"><input type="text" name="cQ23A54" style="width:70%;"/> จำนวน</td>
+				<td class="qTd">스토리지 서비스에 의한 유통(파일공유 사이트 포함)</td>
+				<td class="aTd"><input type="text" name="cQ23A51" style="width:70%;"/> 건</td>
+				<td class="aTd"><input type="text" name="cQ23A52" style="width:70%;"/> 건</td>
+				<td class="aTd"><input type="text" name="cQ23A53" style="width:70%;"/> 건</td>
+				<td class="aTd"><input type="text" name="cQ23A54" style="width:70%;"/> 건</td>
 			</tr>
 			<tr>
 				<td class="aTd">a-6</td>
-				<td class="qTd">การกระจายระหว่างคนรู้จักผ่านทางอีเมลหรือโปรแกรมส่งข้อความด่วน</td>
-				<td class="aTd"><input type="text" name="cQ23A61" style="width:70%;"/> จำนวน</td>
-				<td class="aTd"><input type="text" name="cQ23A62" style="width:70%;"/> จำนวน</td>
-				<td class="aTd"><input type="text" name="cQ23A63" style="width:70%;"/> จำนวน</td>
-				<td class="aTd"><input type="text" name="cQ23A64" style="width:70%;"/> จำนวน</td>
+				<td class="qTd">이메일이나 메신저 등을 통한 지인 간의 유통</td>
+				<td class="aTd"><input type="text" name="cQ23A61" style="width:70%;"/> 건</td>
+				<td class="aTd"><input type="text" name="cQ23A62" style="width:70%;"/> 건</td>
+				<td class="aTd"><input type="text" name="cQ23A63" style="width:70%;"/> 건</td>
+				<td class="aTd"><input type="text" name="cQ23A64" style="width:70%;"/> 건</td>
 			</tr>
 			<tr>
 				<td class="aTd">a-7</td>
-				<td class="qTd">จัดจำหน่ายโดยแอพ</td>
-				<td class="aTd"><input type="text" name="cQ23A71" style="width:70%;"/> จำนวน</td>
-				<td class="aTd"><input type="text" name="cQ23A72" style="width:70%;"/> จำนวน</td>
-				<td class="aTd"><input type="text" name="cQ23A73" style="width:70%;"/> จำนวน</td>
-				<td class="aTd"><input type="text" name="cQ23A74" style="width:70%;"/> จำนวน</td>
+				<td class="qTd">앱에 의한 유통</td>
+				<td class="aTd"><input type="text" name="cQ23A71" style="width:70%;"/> 건</td>
+				<td class="aTd"><input type="text" name="cQ23A72" style="width:70%;"/> 건</td>
+				<td class="aTd"><input type="text" name="cQ23A73" style="width:70%;"/> 건</td>
+				<td class="aTd"><input type="text" name="cQ23A74" style="width:70%;"/> 건</td>
 			</tr>
 			
 			<tr>
-				<td class="qTd" rowspan="8" style="width:10%;text-align:center;border-top:1px solid #ddd;">แพ็คเกจห<br/>มุนเวียน</td>
+				<td class="qTd" rowspan="8" style="width:10%;text-align:center;border-top:1px solid #ddd;">패키지<br/>유통</td>
 				<td class="aTd" style="width:5%;border-top:1px solid #ddd;">b-1</td>
-				<td class="qTd" style="width:45%;border-top:1px solid #ddd;">ขายแพ็คเกจที่ร้านค้าจริง</td>
+				<td class="qTd" style="width:45%;border-top:1px solid #ddd;">실제 매장에서의 패키지 판매</td>
 				<td class="aTd" style="width:10%;background-color:#ddd;"></td>
 				<td class="aTd" style="width:10%;background-color:#ddd;"></td>
-				<td class="aTd" style="width:10%;"><input type="text" name="cQ23B13" style="width:70%;"/> จำนวน</td>
+				<td class="aTd" style="width:10%;"><input type="text" name="cQ23B13" style="width:70%;"/> 건</td>
 				<td class="aTd" style="width:10%;background-color:#ddd;"></td>
 			</tr>
 			<tr>
 				<td class="aTd">b-2</td>
-				<td class="qTd">การขายบรรจุภัณฑ์ทางไปรษณีย์โดยนิตยสารและทีวี</td>
+				<td class="qTd">잡지나 TV 등에 의한 패키지의 통신 판매</td>
 				<td class="aTd" style="background-color:#ddd;"></td>
 				<td class="aTd" style="background-color:#ddd;"></td>
-				<td class="aTd"><input type="text" name="cQ23B23" style="width:70%;"/> จำนวน</td>
+				<td class="aTd"><input type="text" name="cQ23B23" style="width:70%;"/> 건</td>
 				<td class="aTd" style="background-color:#ddd;"></td>
 			</tr>
 			<tr>
 				<td class="aTd">b-3</td>
-				<td class="qTd">ขายแพ็คเกจผ่านอินเทอร์เน็ต</td>
+				<td class="qTd">인터넷을 통한 패키지 판매</td>
 				<td class="aTd" style="background-color:#ddd;"></td>
 				<td class="aTd" style="background-color:#ddd;"></td>
-				<td class="aTd"><input type="text" name="cQ23B33" style="width:70%;"/> จำนวน</td>
+				<td class="aTd"><input type="text" name="cQ23B33" style="width:70%;"/> 건</td>
 				<td class="aTd" style="background-color:#ddd;"></td>
 			</tr>
 			<tr>
 				<td class="aTd">b-4</td>
-				<td class="qTd">จัดจำหน่ายแพ็คเกจตามการประมูล ฯลฯ</td>
+				<td class="qTd">경매 등에 의한 패키지 유통</td>
 				<td class="aTd" style="background-color:#ddd;"></td>
 				<td class="aTd" style="background-color:#ddd;"></td>
-				<td class="aTd"><input type="text" name="cQ23B43" style="width:70%;"/> จำนวน</td>
+				<td class="aTd"><input type="text" name="cQ23B43" style="width:70%;"/> 건</td>
 				<td class="aTd" style="background-color:#ddd;"></td>
 			</tr>
 			<tr>
 				<td class="aTd">b-5</td>
-				<td class="qTd">ขายฮาร์ดไดร์ฟภายนอกที่มีเนื้อหาหรือบริการที่คัดลอกเนื้อหาเช่นฮาร์ดไดรฟ์หรือหน่วยความจำ USB</td>
-				<td class="aTd"><input type="text" name="cQ23B51" style="width:70%;"/> จำนวน</td>
+				<td class="qTd">하드 드라이브나  USB메모리 등의 콘텐츠 복사 서비스 또는 콘텐츠가 들어있는 외장하드 드라이브 판매</td>
+				<td class="aTd"><input type="text" name="cQ23B51" style="width:70%;"/> 건</td>
 				<td class="aTd" style="background-color:#ddd;"></td>
-				<td class="aTd"><input type="text" name="cQ23B53" style="width:70%;"/> จำนวน</td>
+				<td class="aTd"><input type="text" name="cQ23B53" style="width:70%;"/> 건</td>
 				<td class="aTd" style="background-color:#ddd;"></td>
 			</tr>
 			<tr>
 				<td class="aTd">b-6</td>
-				<td class="qTd">ขายแพ็คเกจ ณ สถานที่จัดงาน</td>
+				<td class="qTd">이벤트 행사장에서의 패키지 판매</td>
 				<td class="aTd" style="background-color:#ddd;"></td>
 				<td class="aTd" style="background-color:#ddd;"></td>
-				<td class="aTd"><input type="text" name="cQ23B63" style="width:70%;"/> จำนวน</td>
+				<td class="aTd"><input type="text" name="cQ23B63" style="width:70%;"/> 건</td>
 				<td class="aTd" style="background-color:#ddd;"></td>
 			</tr>
 			<tr>
 				<td class="aTd">b-7</td>
-				<td class="qTd">แพ็คเกจเช่า</td>
+				<td class="qTd">패키지 렌탈</td>
 				<td class="aTd" style="background-color:#ddd;"></td>
 				<td class="aTd" style="background-color:#ddd;"></td>
-				<td class="aTd"><input type="text" name="cQ23B73" style="width:70%;"/> จำนวน</td>
+				<td class="aTd"><input type="text" name="cQ23B73" style="width:70%;"/> 건</td>
 				<td class="aTd" style="background-color:#ddd;"></td>
 			</tr>
 			<tr>
 				<td class="aTd">b-8</td>
-				<td class="qTd">การกระจายบรรจุภัณฑ์ในหมู่คนรู้จัก</td>
-				<td class="aTd"><input type="text" name="cQ23B81" style="width:70%;"/> จำนวน</td>
+				<td class="qTd">지인 사이의 패키지 유통</td>
+				<td class="aTd"><input type="text" name="cQ23B81" style="width:70%;"/> 건</td>
 				<td class="aTd" style="background-color:#ddd;"></td>
-				<td class="aTd"><input type="text" name="cQ23B83" style="width:70%;"/> จำนวน</td>
+				<td class="aTd"><input type="text" name="cQ23B83" style="width:70%;"/> 건</td>
 				<td class="aTd" style="background-color:#ddd;"></td>
 			</tr>
 			
 			<tr>
-				<td class="qTd" rowspan="5" style="width:10%;text-align:center;border-top:1px solid #ddd;">TV<br/>ภาพยนตร์</td>
+				<td class="qTd" rowspan="5" style="width:10%;text-align:center;border-top:1px solid #ddd;">TV·<br/>영화</td>
 				<td class="aTd" style="width:5%;border-top:1px solid #ddd;">c-1</td>
-				<td class="qTd" style="width:45%;border-top:1px solid #ddd;">ดูการแพร่ภาพทางโทรทัศน์ภาคพื้นดิน</td>
+				<td class="qTd" style="width:45%;border-top:1px solid #ddd;">지상파 TV방송 시청</td>
 				<td class="aTd" style="width:10%;background-color:#ddd;"></td>
-				<td class="aTd" style="width:10%;"><input type="text" name="cQ23C12" style="width:70%;"/> จำนวน</td>
+				<td class="aTd" style="width:10%;"><input type="text" name="cQ23C12" style="width:70%;"/> 건</td>
 				<td class="aTd" style="width:10%;background-color:#ddd;"></td>
-				<td class="aTd" style="width:10%;"><input type="text" name="cQ23C14" style="width:70%;"/> จำนวน</td>
+				<td class="aTd" style="width:10%;"><input type="text" name="cQ23C14" style="width:70%;"/> 건</td>
 			</tr>
 			<tr>
 				<td class="aTd">c-2</td>
-				<td class="qTd">ดูทีวีดาวเทียม</td>
+				<td class="qTd">위성 TV 방송 시청</td>
 				<td class="aTd" style="background-color:#ddd;"></td>
-				<td class="aTd"><input type="text" name="cQ23C22" style="width:70%;"/> จำนวน</td>
+				<td class="aTd"><input type="text" name="cQ23C22" style="width:70%;"/> 건</td>
 				<td class="aTd" style="background-color:#ddd;"></td>
-				<td class="aTd"><input type="text" name="cQ23C24" style="width:70%;"/> จำนวน</td>
+				<td class="aTd"><input type="text" name="cQ23C24" style="width:70%;"/> 건</td>
 			</tr>
 			<tr>
 				<td class="aTd">c-3</td>
-				<td class="qTd">เคเบิลทีวี</td>
+				<td class="qTd">케이블 TV 시청</td>
 				<td class="aTd" style="background-color:#ddd;"></td>
-				<td class="aTd"><input type="text" name="cQ23C32" style="width:70%;"/> จำนวน</td>
+				<td class="aTd"><input type="text" name="cQ23C32" style="width:70%;"/> 건</td>
 				<td class="aTd" style="background-color:#ddd;"></td>
-				<td class="aTd"><input type="text" name="cQ23C34" style="width:70%;"/> จำนวน</td>
+				<td class="aTd"><input type="text" name="cQ23C34" style="width:70%;"/> 건</td>
 			</tr>
 			<tr>
 				<td class="aTd">c-4</td>
-				<td class="qTd">ดูในโรงภาพยนตร์</td>
+				<td class="qTd">영화관에서 감상</td>
 				<td class="aTd" style="background-color:#ddd;"></td>
 				<td class="aTd" style="background-color:#ddd;"></td>
 				<td class="aTd" style="background-color:#ddd;"></td>
-				<td class="aTd"><input type="text" name="cQ23C44" style="width:70%;"/> จำนวน</td>
+				<td class="aTd"><input type="text" name="cQ23C44" style="width:70%;"/> 건</td>
 			</tr>
 			<tr>
 				<td class="aTd">c-5</td>
-				<td class="qTd">การใช้เครื่องคาราโอเกะ</td>
+				<td class="qTd">노래방 기계 이용</td>
 				<td class="aTd" style="background-color:#ddd;"></td>
-				<td class="aTd"><input type="text" name="cQ23C52" style="width:70%;"/> จำนวน</td>
+				<td class="aTd"><input type="text" name="cQ23C52" style="width:70%;"/> 건</td>
 				<td class="aTd" style="background-color:#ddd;"></td>
-				<td class="aTd"><input type="text" name="cQ23C54" style="width:70%;"/> จำนวน</td>
+				<td class="aTd"><input type="text" name="cQ23C54" style="width:70%;"/> 건</td>
 			</tr>
 		</table>
 		
 		<table style="width:100%;border:1px solid #ddd;">
 			<tr>
-				<th style="width:50%;background-color:#ddd;">Question</th>
-				<th style="background-color:#ddd;" colspan="3">Answer</th>
+				<th style="width:50%;background-color:#ddd;">문항</th>
+				<th style="background-color:#ddd;" colspan="3">답변</th>
 			</tr>
 			
 			<!-- cq2-4 -->
 			<tr>
-				<td class="qTd">C_Q4. คุณจ่ายเท่าไหร่เพื่อรับชมรายการออกอากาศของเกาหลีในช่วงสามเดือนที่ผ่านมา? </td>
+				<td class="qTd">C_Q4. 최근 3개월 동안 한국 방송을 유료로 입수·시청하기 위해 지불한 비용은 어느 정도입니까?</td>
 				<td class="aTd" colspan="2">( <input type="text" name="cQ24"/> )</td>
 			</tr>
 			
 			<!-- cq2-5 -->
 			<tr>
-				<td class="qTd" rowspan="8">C_Q5. ทำไมคุณถึงใช้ช่องทางในข้อ  <font style="color:blue">C_Q3</font>บ่อยที่สุดเพื่อจัดเก็บรายการออกอากาศเกาหลีฟรี?</td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ25" value="1"/> เข้าถึงและใช้งานง่าย</td>
+				<td class="qTd" rowspan="8">C_Q5. 귀하께서 무료 한국 방송을 입수하기 위해 <font style="color:blue">C_Q3 문항</font>에 응답하신 경로를 가장 자주 사용하시는 이유는 무엇입니까?</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ25" value="1"/> 접근 및 사용이 용이해서</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ25" value="2"/> ฉันคุ้นเคยกับสถานที่ที่ฉันใช้อย่างต่อเนื่อง</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ25" value="2"/> 계속 사용하던 곳으로 익숙해서</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ25" value="3"/> ปลอดภัยจากการติดไวรัส</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ25" value="3"/> 바이러스 감염으로부터 안전해서</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ25" value="4"/> มีผลงานมากกว่าช่องทางอื่น ๆ</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ25" value="4"/> 다른 경로에 비해 자료가 풍부해서</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ25" value="5"/> ไม่คิดว่าสามารถบล็อกหรือปิดกั้นช่องทางได้</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ25" value="5"/> 경로차단 또는 폐쇄가 안 될 것 같아서</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ25" value="6"/> ฉันไม่รู้จักช่องทางอื่น</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ25" value="6"/> 다른경로를 몰라서</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ25" value="7"/> ไม่สะดวกและมีแต่โฆษณา</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ25" value="7"/> 불편하지만 광고만 보면 되므로</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ25" value="8"/> อื่นๆ(<input type="text" name="cQ25Etc"/>)</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ25" value="8"/> 기타(<input type="text" name="cQ25Etc"/>)</td>
 			</tr>
 			
 			<!-- cq2-6 -->
 			<tr>
-				<td class="qTd" rowspan="8">C_Q6. คุณทราบได้อย่างไรเกี่ยวกับรายการออกอากาศของเกาหลีฟรี?</td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ26" value="1"/> เว็บไซต์ของเจ้าของผลงาน </td>
+				<td class="qTd" rowspan="8">C_Q6. 귀하께서는 어떤 경로를 통해 무료 한국 방송에 대한 정보를 알게 되셨나요?</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ26" value="1"/> 콘텐츠 홀더의 웹사이트</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ26" value="2"/> เว็บไซต์ข่าว</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ26" value="2"/> 뉴스 사이트</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ26" value="3"/> เว็บไซต์ที่รับผลงาน</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ26" value="3"/> 콘텐츠를 입수하고 있는 사이트</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ26" value="4"/> ทีวี / วิทยุ</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ26" value="4"/> TV·라디오</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ26" value="5"/> คำพูดจากปาก (รีวิว) </td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ26" value="5"/> 입소문(리뷰)</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ26" value="6"/> คาเฟ่บล็อก, สังคมบนออนไลน์</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ26" value="6"/> 카페, 블로그, SNS</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ26" value="7"/> ผ่านคนรู้จักเช่นเพื่อนและเพื่อนร่วมงาน</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ26" value="7"/> 친구나 동료 등 지인을 통해</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ26" value="8"/> อื่น ๆ(<input type="text" name="cQ26Etc"/>)</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ26" value="8"/> 기타(<input type="text" name="cQ26Etc"/>)</td>
 			</tr>
 			
 			<!-- cq2-7 -->
 			<tr>
-				<td class="qTd" rowspan="5">C_Q7. เมื่อคุณจัดเก็บ (คัดลอกหรือดาวน์โหลด) หรือดูการแพร่ภาพเกาหลีฟรีคุณใช้อุปกรณ์ใด? กรุณาเลือกอุปกรณ์ที่เกี่ยวข้องทั้งหมด</td>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ27" value="1"/> คอมพิวเตอร์ (ตนเองหรือครอบครัวเป็นเจ้าของ)</td>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ27" value="2"/> คอมพิวเตอร์(ร้านอินเทอร์เน็ต)</td>
+				<td class="qTd" rowspan="5">C_Q7. 무료 한국 방송을 입수(복사 또는 다운로드) 또는 시청하는 경우, 사용하는 단말기는 무엇입니까? 해당되는 모든 장비를 선택해주세요</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ27" value="1"/> PC (자신 또는 가족 소유)</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ27" value="2"/> PC (인터넷 카페)</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ27" value="3"/> โทรศัพท์มือถือ</td>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ27" value="4"/> สมาร์ทโฟน</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ27" value="3"/> 휴대전화</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ27" value="4"/> 스마트폰</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ27" value="5"/> แท็บเล็ต</td>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ27" value="6"/> เครื่องเล่น MP4</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ27" value="5"/> 테블릿</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ27" value="6"/> MP4 플레이어</td>
 			</tr>
 			<tr>
 				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ27" value="7"/> PSP / PS VITA</td>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ27" value="8"/> อื่น ๆ<br/>(<input type="text" name="cQ27Etc" style="width:85%;"/>)</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ27" value="8"/> 기타<br/>(<input type="text" name="cQ27Etc" style="width:85%;"/>)</td>
 			</tr>
 			<tr>
-				<td class="aTd" colspan="2" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ27" value="9"/> ซื้อจากอินเทอร์เน็ต (การสตรีมมิ่งหรือการซื้อแพ็คเกจเท่านั้น)</td>
+				<td class="aTd" colspan="2" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ27" value="9"/> 인터넷에서 구매 (스트리밍 또는 패키지 구매에 한함)</td>
 			</tr>
 			
 			<!-- cq2-8 -->
@@ -1727,284 +1727,284 @@
 			
 			<!-- cq2-9 -->
 			<tr>
-				<td class="qTd" rowspan="3">C_Q9. คุณทราบหรือไม่ว่าคุณกำลังซื้อสำเนาการออกอากาศเกาหลีที่แท้จริงหรือผิดกฎหมาย?</td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ29" value="1"/> ไม่รู้สึก</td>
+				<td class="qTd" rowspan="3">C_Q9. 한국 방송을 입수·시청하는 경우 정품 또는 불법 복제판이라고 의식합니까?</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ29" value="1"/> 의식하지 않음</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ29" value="2"/> รับรู้บ้าง</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ29" value="2"/> 다소 의식한다</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ29" value="3"/> รับรู้</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ29" value="3"/> 의식한다</td>
 			</tr>
 			
 			<!-- cq2-9-1 -->
 			<tr>
 				<td class="qTd" rowspan="4">
-					ในคำถามข้างต้น  <font style="color:blue">C_Q9 หากคุณ ②รับรู้บ้าง ③รับรู้</font>โปรดตอบคำถามต่อไปนี้<br/>
-					C_Q9_1. หากคุณตอบว่าคุณซื้อสำเนาการออกอากาศของเกาหลีผ่านทางอินเทอร์เน็ตหรือแพ็คเกจโปรดตอบคำถามต่อไปนี้ ไม่ว่าจะเป็นของแท้หรือละเมิดลิขสิทธิ์มันมีผลต่อความพร้อมใช้งานและการดูหรือไม่?
+					위의 질문 <font style="color:blue">C_Q9 에서 ② 다소 의식한다, ③ 의식한다고 응답한 분</font>은 다음 질문에 응답해주세요<br/>
+					C_Q9_1. 정품 또는 불법 복제판 여부가 입수·시청에 영향을 줍니까?
 				</td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ291" value="1"/> ไม่มีอิทธิพลต่อการดู, การจัดเก็บ</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ291" value="1"/> 입수·시청에는 영향이 없다</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ291" value="2"/> หากคุณมีผลิตภัณฑ์ของแท้คุณจะจัดเก็บผลิตภัณฑ์ของแท้แต่ หากมีแต่ของลอกเลียนแบบคุณจัดเก็บสำเนาละเมิดลิขสิทธิ์และรับชม</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ291" value="2"/> 정품이 있으면 정품을 입수·시청하겠지만, 불법 복제판 밖에 없는 경우에는 불법 복제판을 입수·시청한다</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ291" value="3"/> มีเฉพาะผลิตภัณฑ์ของแท้เท่านั้น</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ291" value="3"/> 정품만 입수·시청 한다</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ291" value="4"/> เนื่องจากสินค้าของแท้มีราคาแพงจึงมี แต่สำเนาที่ละเมิดลิขสิทธิ์เท่านั้น</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ291" value="4"/> 정품은 비싸기 때문에 불법 복제판만 입수한다</td>
 			</tr>
 			
 			<!-- cq2-10 -->
 			<tr>
-				<td class="qTd" colspan="3" style="border-top:3px solid #ddd;">C_Q10. หากผู้ถือสิทธิ์ชาวเกาหลีสามารถอนุญาติให้จัดเก็บและรับชมรายการออกกาศของเกาหลีบนอินเทอร์เน็ตได้อย่างถูกกฎหมายได้นั้นต้องใช้เงื่อนไขอะไร โปรดเลือกทั้งหมดที่ตรงกับเงื่อนไขเหล่านั้น</td>
+				<td class="qTd" colspan="3" style="border-top:3px solid #ddd;">C_Q10. 한국의 권리자가 한국 방송을 합법적으로 인터넷에서 입수·시청할 수 있게 한다면, 어떤 조건에 의한 배포를 희망합니까? 그 조건에 해당되는 것을 모두 선택하세요.</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ210" value="1"/> เสียงพากย์เป็นภาษาของประเทศเป้าหมายหรือไม่</td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ210" value="2"/> เสียงพากย์เป็นภาษาอังกฤษหรือไม่</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ210" value="1"/> 음성이 조사대상국 언어로 더빙되어 있는지</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ210" value="2"/> 음성이 영어로 더빙되어 있는지</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ210" value="3"/> เสียงจะยังคงอยู่ในภาษาของผู้ผลิตผลงานเหมือนเดิม</td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ210" value="4"/> มีคำบรรยายตามภาษาของประเทศเป้าหมาย</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ210" value="3"/> 음성이 원래 콘텐츠 제작국의 언어로 남아 있는지</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ210" value="4"/> 조사대상국 자막이 있는지</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ210" value="5"/> มีคำบรรยายภาษาอังกฤษ</td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ210" value="6"/> สามารถรับชมผลงานในเวลาเดียวกันกับการออกอากาศของประเทศผู้ผลิตและการฉายที่โรงภาพยนตร์</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ210" value="5"/> 영어 자막이 있는지</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ210" value="6"/> 콘텐츠 제작국 방송이나 극장 개봉과 거의 같은 시기에 입수·시청 할 수 있는지</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ210" value="7"/> การรับรู้คุณภาพระดับ HD</td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ210" value="8"/> ดาวน์โหลดได้</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ210" value="7"/> HD 품질인지</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ210" value="8"/> 다운로드 가능한지</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ210" value="9"/> กำหนดราคาตามเวลา (ความจุ) ของผลงาน</td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ210" value="10"/> ผลงานภาษาเกาหลีมีการเผยแพร่ในเว็บไซต์เดียวกัน</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ210" value="9"/> 콘텐츠의 시간(용량)에 따라 가격이 설정되는지</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ210" value="10"/> 한국의 콘텐츠가 같은 사이트에서 많이 정리되어 배포되는지</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ210" value="11"/> คุณสามารถค้นหาผลงานที่คุณต้องการรับชมได้อย่างง่ายดาย</td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ210" value="12"/> ไม่มีเงื่อนไขพิเศษ</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ210" value="11"/> 입수·시청하고 싶은 콘텐츠를 쉽게 찾을 수 있는지</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ210" value="12"/> 특별히 조건 없음</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ210" value="13"/> ฉันไม่ต้องการของแท้</td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ210" value="14"/> อื่น ๆ (<input type="text" name="cQ210Etc"/>)</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ210" value="13"/> 특별히 정품을 원하지 않음</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ210" value="14"/> 기타(<input type="text" name="cQ110Etc"/>)</td>
 			</tr>
 			
 			<!-- cq2-11 -->
 			<tr>
-				<td class="qTd">C_Q11. หากคุณปฏิบัติตามเงื่อนไขที่เลือกไว้ในคำถาม  <font style="color:#blue">C_Q10]</font> ข้างต้นและเจ้าของเกาหลีอนุญาตให้ได้จัดเก็บและรับชมภาพยนตร์เกาหลีบนอินเทอร์เน็ตอย่างถูก กฎหมายคุณต้องการจ่ายต่อเนื้อหาเท่าใด</td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;">(<input type="text" name="cQ211" placeholder="หน่วยการเงินของประเทศที่ทำการสำรวจ คือ"/>)</td>
+				<td class="qTd">C_Q11. 위의 질문 <font style="color:#blue">C_Q10]</font> 에서 선택한 조건을 충족하고, 한국의 권리자가 한국 방송을 합법적으로 인터넷에서 입수·시청할 수 있게 한 경우 콘텐츠 1건 당 어느 정도 가격이라면 지불할 의사가 있습니까?</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;">(<input type="text" name="cQ211" placeholder="조사대상국 화폐단위"/>)</td>
 			</tr>
 			
 			<!-- cq2-12 -->
 			<tr>
-				<td class="qTd">C_Q12. คุณเคยแชร์รายการออกอากาศเกาหลีฟรีของคุณหรือแชร์ช่องทางของคุณกับผู้อื่นที่ไม่ใช่ตัวคุณเองหรือไม่ (ถ้าคุณมีประสบการณ์กับสิ่งเหล่านี้โปรดตอบ 'มี')</td>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ212" value="1"/> มี</td>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ212" value="2"/> ไม่มี</td>
+				<td class="qTd">C_Q12. 귀하께서는 자신 이외의 다른 사람에게 자신의 무료 한국 방송을 공유하거나, 또는 경로를 재공유 하신 경험이 있습니까?(둘 중 하나라도 경험이 있다면 '있다' 로 답해주세요)</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ212" value="1"/> 있다</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ212" value="2"/> 없다</td>
 			</tr>
 			
 			<!-- cq2-12-1 -->
 			<tr>
 				<td colspan="3" class="qTd" style="border-top:3px solid #ddd;">
-					<font style="color:blue">หากคุณตอบ①ในคำถามข้างต้น ว่า ①มี CQ2-12 โปรดตอบคำถามต่อไปนี้</font><br/>
-					C_Q12_1. คุณแชร์รายการออกอากาศเกาหลีฟรีอย่างไร กรุณาเลือกทั้งหมด?
+					위의 질문 <font style="color:blue">C_Q12 에서 ①있다 고 응답한 분</font>은 다음 질문에 응답해주세요<br/>
+					C_Q12_1. 귀하께서는 무료 한국 방송을 어떤 경로를 통해 공유하셨습니까? 모두 선택해주세요.
 				</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ2121" value="1"/> USB, CD, DVD ออฟไลน์</td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ2121" value="2"/> อัปโหลดไปยัง,บล็อก ฯลฯ</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ2121" value="1"/> USB, CD, DVD 등 오프라인</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ2121" value="2"/> 카페, 블로그 등에 업로드</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ2121" value="3"/> สังคมออนไอน์ (Facebook, Twitter, Instagram, ฯลฯ ) </td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ2121" value="4"/> Torrent</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ2121" value="3"/> SNS(Facebook, Twitter, Instagram 등)</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ2121" value="4"/> 토렌트</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ2121" value="5"/> P2P หรือ web hard sharing </td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ2121" value="6"/> การแชร์ส่วนตัว (อีเมล KakaoTalk ฯลฯ )</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ2121" value="5"/> P2P 또는 웹하드</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ2121" value="6"/> 개인적인 공유(이메일, 카카오톡 등)</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ2121" value="7"/> Cloud</td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ2121" value="8"/> อื่น ๆ(<input type="text" name="cQ2121Etc"/>)</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ2121" value="7"/> 클라우드</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ2121" value="8"/> 기타(<input type="text" name="cQ2121Etc"/>)</td>
 			</tr>
 			
 			<!-- cq2-12-2 -->
 			<tr>
 				<td colspan="3" class="qTd" style="border-top:3px solid #ddd;">
-					<font style="color:blue">หากคุณตอบ①ในคำถามข้างต้น ว่า ①มี CQ2-12 โปรดตอบคำถามต่อไปนี้</font><br/>
-					C_Q12_2. โปรดเลือกสาเหตุทั้งหมดที่คุณแชร์รายการออกอากาศเกาหลีฟรี
+					위의 질문 <font style="color:blue">C_Q12 에서 ①있다 고 응답한 분</font>은 다음 질문에 응답해주세요<br/>
+					C_Q12_2. 귀하께서 무료 한국 방송을 공유하신 이유를 모두 선택해 주세요.
 				</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ2122" value="1"/> สมาชิกในครอบครัวและเพื่อน ๆ ไม่ทราบวิธีการเข้าถึงผลงานฟรี</td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ2122" value="2"/> เพราะหลายคนทำ</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ2122" value="1"/> 가족 및 친구 등 지인이 무료 콘텐츠에 접근 방법을 몰라서</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ2122" value="2"/> 많은사람들이 하기 때문에</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ2122" value="3"/> หารายได้</td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ2122" value="4"/> แชร์แบบไม่เจาะจงผู้รับ </td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ2122" value="3"/> 금전적인 수익을 얻기 위해서</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ2122" value="4"/> 불특정 다수에게 공유하기 위해서</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ2122" value="5"/> ใช้ผลงานฟรีมากขึ้น</td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ2122" value="6"/> ฉันได้รับคำขอ</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ2122" value="5"/> 더 많은 무료 콘텐츠를 이용하기 위해서</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ2122" value="6"/> 요청이 있어서</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ2122" value="7"/> ไม่มีเหตุผลพิเศษ</td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ2122" value="8"/> อื่น ๆ(<input type="text" name="cQ2122Etc"/>)</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ2122" value="7"/> 특별한 이유는 없음</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ2122" value="8"/> 기타(<input type="text" name="cQ2122Etc"/>)</td>
 			</tr>
 			
 			<!-- cq2-13 -->
 			<tr>
-				<td colspan="3" class="qTd" style="border-top:3px solid #ddd;">C_Q13. คุณจะทำอย่างไรถ้าช่องทางสู่รายการออกอากาศฟรีของเกาหลีถูกปิดกั้นหรือปิด?</td>
+				<td colspan="3" class="qTd" style="border-top:3px solid #ddd;">C_Q13. 귀하께서 무료 한국 방송을 이용하시는 경로가 차단 또는 폐쇄될 경우 어떻게 하시겠습니까?</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ213" value="1"/> เลิกรับชมผลงานเอง</td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ213" value="2"/> ชมผลงานที่ต้องชำระเงิน</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ213" value="1"/> 콘텐츠 이용 자체를 포기한다</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ213" value="2"/> 유료 콘텐츠를 이용한다</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ213" value="3"/> ค้นหาช่องทางอื่น ๆ ที่ให้บริการฟรี</td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ213" value="4"/> ค้นหาวิธีการข้ามช่องทางที่มีอยู่</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ213" value="3"/> 무료로 이용할 수 있는 다른 경로를 찾는다</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ213" value="4"/> 기존 경로를 우회할수 있는 방법을 찾는다</td>
 			</tr>
 			<tr>
-				<td colspan="3"class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ213" value="5"/> อื่น ๆ(<input type="text" name="cQ213Etc" style="width:50%;"/>)</td>
+				<td colspan="3"class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ213" value="5"/> 기타(<input type="text" name="cQ213Etc" style="width:50%;"/>)</td>
 			</tr>
 			
 			<!-- cq2-14 -->
 			<tr>
-				<td colspan="3" class="qTd" style="border-top:3px solid #ddd;">C_Q14. คุณเพิ่มหรือลดการรับชมรายการออกอากาศเกาหลีฟรีปีนี้ (2019) เมื่อเทียบกับปีที่แล้ว (2018)</td>
+				<td colspan="3" class="qTd" style="border-top:3px solid #ddd;">C_Q14. 귀하께서는 올해(2019년)의 무료 한국 방송 이용이 전년도(2018년)와 비교하여 증가하셨습니까 또는 감소하였습니까?</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ214" value="1"/> (<input type="text" name="cQ2141"/> %) เพิ่ม</td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ214" value="2"/> (<input type="text" name="cQ2142"/> %) ลดลง</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ214" value="1"/> (<input type="text" name="cQ2141"/> %) 증가</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ214" value="2"/> (<input type="text" name="cQ2142"/> %) 감소</td>
 			</tr>
 			<tr>
-				<td colspan="3"class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ214" value="3"/> ไม่มีการเปลี่ยนแปลง </td>
+				<td colspan="3"class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ214" value="3"/> 변화없다</td>
 			</tr>
 			
 			<!-- cq2-15 -->
 			<tbody id="cQ215Tbody" class="qTbody" style="display:none;">
 				<tr>
-					<td colspan="3" class="qTd" style="border-top:3px solid #ddd;">C_Q15. โปรดเลือกเหตุผลหลักทั้งหมดสำหรับการใช้งานรายการออกอากาศเกาหลีฟรีของคุณเพิ่มขึ้นเมื่อเทียบกับปีที่แล้ว</td>
+					<td colspan="3" class="qTd" style="border-top:3px solid #ddd;">C_Q15. 귀하께서 전년과 비교하여 무료 한국 방송 이용이 증가한 주된 이유는 무엇인지 모두 선택해 주세요</td>
 				</tr>
 				<tr>
-					<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ215" value="1"/> ราคาผลงานที่ต้องชำระสูงมาก</td>
-					<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ215" value="2"/> ราคาผลงานฟรีต่ำกว่าปกติ</td>
+					<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ215" value="1"/> 유료 콘텐츠의 가격이 너무 올라서</td>
+					<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ215" value="2"/> 무료 콘텐츠 가격이 예년보다 더 낮아져서</td>
 				</tr>
 				<tr>
-					<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ215" value="3"/> ปริมาณผลงานฟรีที่มีให้สูงกว่าปกติ</td>
-					<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ215" value="4"/> มีหลายวิธีในการใช้ผลงานฟรี</td>
+					<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ215" value="3"/> 이용 가능한 무료 콘텐츠의 양이 예년보다 더 많아져서</td>
+					<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ215" value="4"/> 무료 콘텐츠를 이용할 수 있는 경로가 많아져서</td>
 				</tr>
 				<tr>
-					<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ215" value="5"/> เมื่อปริมาณการใช้ผลงานโดยรวมเพิ่มขึ้น</td>
-					<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ215" value="6"/> ผลงานฟรีใช้งานง่าย</td>
+					<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ215" value="5"/> 전체적인 콘텐츠 소비가 증가해서</td>
+					<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ215" value="6"/> 무료 콘텐츠 이용이 편리해서</td>
 				</tr>
 				<tr>
-					<td colspan="3" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ215" value="7"/> อื่น ๆ(<input type="text" name="cQ215Etc"/>)</td>				
+					<td colspan="3" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ215" value="7"/> 기타(<input type="text" name="cQ215Etc"/>)</td>				
 				</tr>
 			</tbody>
 			
 			<!-- cq2-16 -->
 			<tbody id="cQ216Tbody" class="qTbody" style="display:none;">
 				<tr>
-					<td colspan="3" class="qTd" style="border-top:3px solid #ddd;">C_Q16. อะไรคือสาเหตุหลักที่ทำให้คุณลดการจัดเก็บและรับชมรายการออกอากาศฟรีของเกาหลีเมื่อเทียบกับปีที่แล้ว</td>
+					<td colspan="3" class="qTd" style="border-top:3px solid #ddd;">C_Q16. 귀하께서 전년과 비교하여 무료 한국 방송 이용이 감소한 주된 이유는 무엇인지 모두 선택해 주세요</td>
 				</tr>
 				<tr>
-					<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ216" value="1"/> ผลงานหรือช่องทางฟรีสามารถใช้ได้เนื่องจากการบังคับใช้</td>
-					<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ216" value="2"/> ราคาของผลงานที่ต้องชำระมีความสมเหตุสมผล</td>
+					<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ216" value="1"/> 단속으로 인한 이용 가능한 무료 콘텐츠나 경로가 줄어서</td>
+					<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ216" value="2"/> 유료 콘텐츠의 가격이 적정해서</td>
 				</tr>
 				<tr>
-					<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ216" value="3"/> ฉันต้องการซื้อผลงานแบบชำระเงินโดยดูแคมเปญการประชาสัมพันธ์บทความข่าว ฯลฯ</td>
-					<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ216" value="4"/> หากมีปัญหาการละเมิดลิขสิทธิ์,การโดนแฮ็ก,การติดไวรัส ฯลฯ</td>
+					<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ216" value="3"/> 저작권을 지켜야 한다는 홍보 캠페인, 뉴스기사 등을 보고 유료 콘텐츠 구매의사가 늘어서</td>
+					<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ216" value="4"/> 저작권 침해로 인한 소송, 해킹, 바이러스 감염 등의 문제가 생길까봐</td>
 				</tr>
 				<tr>
-					<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ216" value="5"/> ลดการใช้ผลงานเอง</td>
-					<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ216" value="6"/> เพิ่มจำนวนของผลงานที่ชำระเงินโดยการตัดสินใจที่รอบคอบ</td>
+					<td class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ216" value="5"/> 콘텐츠 이용 자체가 감소</td>
+					<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ216" value="6"/> 양심적인 결정에 따라 유료 콘텐츠의 이용횟수를 늘려서</td>
 				</tr>
 				<tr>
-					<td colspan="3" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ216" value="7"/> อื่น ๆ(<input type="text" name="cQ216Etc"/>)</td>				
+					<td colspan="3" class="aTd" style="text-align:left;padding-left:2%;"><input type="checkbox" name="cQ216" value="7"/> 기타(<input type="text" name="cQ216Etc"/>)</td>				
 				</tr>
 			</tbody>
 			
 			<!-- cq2-17 -->
 			<tbody id="cQ217Tbody" class="qTbody" style="display:none;">
 				<tr>
-					<td colspan="3" class="qTd" style="border-top:3px solid #ddd;">C_Q17. คุณต้องการหยุดรับชมรายการออกอากาศเกาหลีฟรีในสถานการณ์ใด?</td>
+					<td colspan="3" class="qTd" style="border-top:3px solid #ddd;">C_Q17. 귀하께서는 어떤 상황이 되면 무료 한국 방송 이용을 중단하시겠습니까?</td>
 				</tr>
 				<tr>
-					<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ217" value="1"/> ลดราคาของผลงานและบริการที่ต้องชำระเงิน</td>
-					<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ217" value="2"/> ลดผลงานโดยรวมฟรี</td>
+					<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ217" value="1"/> 유료 콘텐츠 및 서비스의 가격 인하</td>
+					<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ217" value="2"/> 전체적인 무료 콘텐츠의 감소</td>
 				</tr>
 				<tr>
-					<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ217" value="3"/> ลงโทษและลงโทษผู้ใช้ผลงานฟรี</td>
-					<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ217" value="4"/> ปรับปรุงการรับรู้ผ่านการศึกษาและการประชาสัมพันธ์เกี่ยวกับการคุ้มครองลิขสิทธิ์</td>
+					<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ217" value="3"/> 무료 콘텐츠 이용자 단속 및 처벌</td>
+					<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ217" value="4"/> 저작권 보호에 대한 교육 및 홍보를 통한 인식 개선</td>
 				</tr>
 				<tr>
-					<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ217" value="5"/> ความแตกต่างที่ชัดเจนระหว่างผลงานที่ต้องชำระเงินและผลงานฟรี</td>
-					<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ217" value="6"/> ความเสียหายส่วนบุคคลอันเนื่องมาจากการติดไวรัส,การโดนแฮ็ค,ใช้บัตรเครดิตและอื่น ๆ</td>
+					<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ217" value="5"/> 유료 콘텐츠와 무료 콘텐츠의 명확한 구분</td>
+					<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ217" value="6"/> 바이러스 감염, 신용카드 해킹 등으로 인한 개인적인 피해</td>
 				</tr>
 				<tr>
-					<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ217" value="7"/> การบังคับใช้และการลงโทษผู้ให้บริการผลงานฟรี</td>
-					<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ217" value="8"/> รักษาความปลอดภัยจำนวนผลงานที่ต้องชำระเงิน</td>
+					<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ217" value="7"/> 무료 콘텐츠 공급자 단속 및 처벌</td>
+					<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ217" value="8"/> 이용 가능한 유료 콘텐츠의 양 확보</td>
 				</tr>
 				<tr>
-					<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ217" value="9"/> เพิ่มความสะดวกในการรับผลงานที่ต้องชำระเงิน (การเข้าถึงวิธีการชำระเงินการทำให้การเข้าสู่ระบบง่ายขึ้น ฯลฯ )</td>
-					<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ217" value="10"/> อื่น ๆ(<input type="text" name="cQ217Etc"/>)</td>				
+					<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ217" value="9"/> 유료 콘텐츠의 이용 편리성 제고(접근성, 결제 방식, 로그인 간편화 등)</td>
+					<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ217" value="10"/> 기타(<input type="text" name="cQ217Etc"/>)</td>				
 				</tr>
 			</tbody>
 			
 			<!-- cq2-18 -->
 			<tr>
-				<td colspan="3" class="qTd" style="border-top:3px solid #ddd;">C_Q18. คุณจะทำอย่างไรเมื่อเห็นผู้คนรอบตัวคุณ ชมหรือซื้อรายการออกอากาศเกาหลีฟรี?</td>
+				<td colspan="3" class="qTd" style="border-top:3px solid #ddd;">C_Q18. 귀하께서는 무료 한국 방송을 이용 또는 구입하는 주위 사람들을 볼 때 어떤 행동을 하고 계십니까?</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ218" value="1"/> แชร์ข้อมูลที่เกี่ยวข้องกับผลงานฟรี</td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ218" value="2"/> ป้องกันการใช้ผลงานฟรี</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ218" value="1"/> 무료 콘텐츠와 관련된 정보를 공유한다</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ218" value="2"/> 무료 콘텐츠 이용을 저지한다</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ218" value="3"/> ส่งเสริมการใช้ผลงานที่มีค่าใช้จ่าย</td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ218" value="4"/> อย่าดำเนินการใด ๆ เป็นพิเศษ</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ218" value="3"/> 유료 콘텐츠 이용을 권유한다</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ218" value="4"/> 특별한 행동을 하지는 않는다</td>
 			</tr>
 			<tr>
-				<td colspan="3" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ218" value="5"/> อื่น ๆ (<input type="text" name="cQ218Etc"/>)</td>				
+				<td colspan="3" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ218" value="5"/> 기타(<input type="text" name="cQ218Etc"/>)</td>				
 			</tr>
 			
 		</table>
 		<br/><br/>
 		<div style="text-align:center;">
-			<button type="button" onclick="next('5');" style="border-radius:4px;width:50%;background-color:#F2CB61;height:40px;font-weight:bold;font-size:18px;">NEXT</button>
+			<button type="button" onclick="next('5');" style="border-radius:4px;width:50%;background-color:#F2CB61;height:40px;font-weight:bold;font-size:18px;">다음</button>
 		</div>
 	</div>
 	
 	<div style="width:100%;display:none;" id="section6">
 		<br/>
 		<p style="width:100%;height:30px;font-size:18px;color:#000000;font-weight:bold;">
-			<font style="border-top:4px solid #003399;">&nbsp;&nbsp;▶ Part IV.</font> เพลง (รวมถึงทำนองของโทรศัพท์มือถือ)
+			<font style="border-top:4px solid #003399;">&nbsp;&nbsp;▶ Part IV.</font> 음악(휴대폰 멜로디 등)
 		</p>
 		<br/>
 		
 		<table style="width:100%;border:1px solid #ddd;">
 			<tr>
-				<th style="width:50%;background-color:#ddd;">Question</th>
-				<th style="background-color:#ddd;" colspan="3">Answer</th>
+				<th style="width:50%;background-color:#ddd;">문항</th>
+				<th style="background-color:#ddd;" colspan="3">답변</th>
 			</tr>
 			
 			<!-- cq3-1 -->
 			<tr>
-				<td class="qTd">C_Q1. เพลงที่คุณทั้งหมดมีมีเพลงเกาหลีในนั้นคิดเป็นอัตราส่วนเท่าใด?</td>
+				<td class="qTd">C_Q1. 귀하께서 입수·시청하는 모든 음악 중에서 한국 음악이 차지하는 비율은 어느 정도입니까?</td>
 				<td class="aTd" colspan="3"><input type="text" name="cQ31"/> %</td>
 			</tr>
 			
 			<!-- cq3-2 -->
 			<tr>
-				<td class="qTd" rowspan="3">C_Q2. ประเภทไหนที่คุณมักจะใช้กับเพลงเกาหลี?</td>
-				<td class="aTd" style="text-align:left;padding-left:2%;width:16%;"><input type="radio" name="cQ32" value="1"/> เพลงช้า </td>
-				<td class="aTd" style="text-align:left;padding-left:2%;width:16%;"><input type="radio" name="cQ32" value="2"/> เต้น</td>
-				<td class="aTd" style="text-align:left;padding-left:2%;width:16%;"><input type="radio" name="cQ32" value="3"/> แร็พ / ฮิปฮอป</td>
+				<td class="qTd" rowspan="3">C_Q2. 귀하께서 이용하시는 한국 음악은 주로 어떤 장르입니까?</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;width:16%;"><input type="radio" name="cQ32" value="1"/> 발라드</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;width:16%;"><input type="radio" name="cQ32" value="2"/> 댄스</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;width:16%;"><input type="radio" name="cQ32" value="3"/> 랩/힙합</td>
 			</tr>
 			<tr>
 				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ32" value="4"/> R&B/Soul</td>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ32" value="5"/> เพลงอินดี้</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ32" value="5"/> 인디음악</td>
 				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ32" value="6"/> 트로트</td>
 			</tr>
 			<tr>
-				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ32" value="7"/> เพลงหนักๆ / ร็อค </td>
-				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ32" value="8"/> อื่น ๆ(<input type="text" name="cQ32Etc"/>)</td>
+				<td class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ32" value="7"/> 록/메탈</td>
+				<td colspan="2" class="aTd" style="text-align:left;padding-left:2%;"><input type="radio" name="cQ32" value="8"/> 기타(<input type="text" name="cQ32Etc"/>)</td>
 			</tr>
 			
 		</table>
