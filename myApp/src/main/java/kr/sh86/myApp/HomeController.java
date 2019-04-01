@@ -56,9 +56,14 @@ public class HomeController {
 			/*surveyService.setSampleRdd2Serv();*/
 			/*surveyService.setSampleRddServ("정읍시");*/
 			/*surveyService.sendSmsSinboLastServ();*/
+<<<<<<< HEAD
 			/*surveyService.suhyupSuvServ();*/
 			model.addAttribute("list", surveyService.readSinboResInfoServ());
+=======
+			/*model.addAttribute("list", surveyService.readSinboResInfoServ());*/
+>>>>>>> branch 'master' of https://github.com/rang1536/myApp.git
 			/*return "ars/resList";*/
+<<<<<<< HEAD
 			return "sinbo/sbList";
 			/*model.addAttribute("poNum", poNum);
 			
@@ -67,6 +72,10 @@ public class HomeController {
 			int count = surveyService.readBioResCount();
 			model.addAttribute("count", count);
 			return "bio/state";
+=======
+			/*return "sinbo/sbList";*/
+			return "privercy/a";
+>>>>>>> branch 'master' of https://github.com/rang1536/myApp.git
 		}
 		
 		/*Users user = surveyService.readUserServ(userNo);
@@ -78,7 +87,7 @@ public class HomeController {
 		model.addAttribute("check", map.get("check"));
 		model.addAttribute("lastQuNum", user.getResComplete());*/
 		/*return "/glocal/a";*/
-		return "/bio/a";
+		return "privercy/a";
 	}
 	
 	@RequestMapping(value = "/siRej", method = RequestMethod.GET)
