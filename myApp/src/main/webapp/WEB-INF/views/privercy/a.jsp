@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>해외 저작권 실태 조사 설문</title>
+<title>แบบสอบถามสำรวจสถานะของการสำรวจลิขสิทธิ์ในต่างประเทศ</title>
 <script src="resources/js/jquery.js"></script>
 <style>
 	.container {margin-right: auto;margin-left: auto;padding-bottom: 300px;width:60%;height:auto;}

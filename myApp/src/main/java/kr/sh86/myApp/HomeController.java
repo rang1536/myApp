@@ -32,61 +32,7 @@ public class HomeController {
 	private BcService bcService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Model model,
-			@RequestParam(value="userNo", defaultValue="0")int userNo,
-			@RequestParam(value="poNum", defaultValue="0")int poNum) {
-		if(userNo == 0) {
-			/*surveyService.removeBestpollServ();*/ 
-			/*surveyService.setTargerArs3();*/ 
-			/*surveyService.reCheck();*/
-			/*surveyService.lastInsert();*/
-			/*surveyService.checkSexAgeServ();*/
-			/*surveyService.lastResult2Serv();*/
-			/*surveyService.lastResult2Serv();*/
-			/*surveyService.removeRepeatServ();*/
-			/*surveyService.removeOverlap();*/
-			/*surveyService.addHome35();*/
-			/*surveyService.addHome35FromJbuniv();*/
-			/*surveyService.lastResult2Serv();*/
-			/*surveyService.changLotationTwoToOne2();*/
-			/*surveyService.setSampleRddServ();*/
-			/*surveyService.overlapHome35Serv();*/
-			/*surveyService.addLocalNumServ();*/
-			/*surveyService.addLocalNumServ("고창군");*/
-			/*surveyService.setSampleRdd2Serv();*/
-			/*surveyService.setSampleRddServ("정읍시");*/
-			/*surveyService.sendSmsSinboLastServ();*/
-<<<<<<< HEAD
-			/*surveyService.suhyupSuvServ();*/
-			model.addAttribute("list", surveyService.readSinboResInfoServ());
-=======
-			/*model.addAttribute("list", surveyService.readSinboResInfoServ());*/
->>>>>>> branch 'master' of https://github.com/rang1536/myApp.git
-			/*return "ars/resList";*/
-<<<<<<< HEAD
-			return "sinbo/sbList";
-			/*model.addAttribute("poNum", poNum);
-			
-			return "sicheck/sur";*/
-		}else if(userNo == 100) {
-			int count = surveyService.readBioResCount();
-			model.addAttribute("count", count);
-			return "bio/state";
-=======
-			/*return "sinbo/sbList";*/
-			return "privercy/a";
->>>>>>> branch 'master' of https://github.com/rang1536/myApp.git
-		}
-		
-		/*Users user = surveyService.readUserServ(userNo);
-		Map<String, Object> map= surveyService.createResServ(user);*/
-		
-		/*surveyService.sendMmsServ();*/
-		/*model.addAttribute("user", user);
-		model.addAttribute("res", map.get("response"));
-		model.addAttribute("check", map.get("check"));
-		model.addAttribute("lastQuNum", user.getResComplete());*/
-		/*return "/glocal/a";*/
+	public String home(Model model) {
 		return "privercy/a";
 	}
 	
