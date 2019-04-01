@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import kr.sh86.myApp.survey.domain.Pomg;
 import kr.sh86.myApp.survey.domain.ResData;
 import kr.sh86.myApp.survey.domain.Response;
+import kr.sh86.myApp.survey.domain.SicheckUser;
 import kr.sh86.myApp.survey.service.SurveyService;
 
 @RestController
@@ -22,6 +24,41 @@ public class SurveyRestController {
 	
 	@Autowired
 	private SurveyService surveyService;
+	
+	@RequestMapping(value="/addSurUser", method = {RequestMethod.POST, RequestMethod.GET})
+	public Map<String, Object> addSurUserCtrl(SicheckUser user){
+		//System.out.println("check~!!");
+		Map<String, Object> map = surveyService.addSurUserServ(user);
+		//System.out.println("check~2!!");
+		return map;
+	}
+	
+	@RequestMapping(value="/upDateQ", method = {RequestMethod.POST, RequestMethod.GET})
+	public Map<String, Object> upDateQCtrl(@RequestParam(value="no")int no,
+			@RequestParam(value="order")String order,
+			@RequestParam(value="ans")String ans){
+		System.out.println("check(no, order, ans) : "+no+", "+order+", "+ans);
+		Map<String, Object> map = surveyService.updateAnsByOrderServ(no, order, ans);
+		return map;
+	}
+	
+	@RequestMapping(value="/getSicheckList", method = {RequestMethod.POST, RequestMethod.GET})
+	public Map<String, Object> getSicheckListCtrl(){
+		Map<String, Object> map = surveyService.sicheckResListServ();
+		return map;
+	}
+	
+	@RequestMapping(value="/sicheckSendMms", method = {RequestMethod.POST, RequestMethod.GET})
+	public Map<String, Object> sicheckSendMmsCtrl(){
+		Map<String, Object> map = surveyService.sicheckMmsServ();
+		return map;
+	}
+	
+	@RequestMapping(value="/sicheckRej", method = {RequestMethod.POST, RequestMethod.GET})
+	public Map<String, Object> sicheckRejCtrl(Pomg pOmg){
+		Map<String, Object> map = surveyService.addSicheckRejServ(pOmg);
+		return map;
+	}
 	
 	@RequestMapping(value="/insertRes", method = RequestMethod.POST)
 	public Map<String, String> insertResCtrl(Response response,

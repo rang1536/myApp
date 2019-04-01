@@ -532,7 +532,7 @@
 	select * 
 	from XROSHOT.SDK_VMS_REPORT_DETAIL 
 	where length(replied_file) >=72 
-	and send_date >= '20180118120000'
+	and send_date >= '20180118120000'                                           <!-- 여긴가??????? -->
 </select>
 
 <select id="selectArsResultKis" parameterType="String" resultType="int">
@@ -914,7 +914,7 @@
 	WHERE t_telno = #{tTelno}
 </update>
 
-<!-- **신용보증재단 만족도조사  시작-->
+<!-- **신용보증재단 만족도조사  시작**********************************************************************************************-->
 
 <!-- 1. 조사대상자수 -->
 <select id="selSinboTotalCnt" parameterType="Map" resultType="int">
@@ -1011,7 +1011,7 @@
 	WHERE SB_ORDERCOUNT &gt; 0
 	AND SB_ORDERCOUNT &lt; 4 
 	AND SB_RESCHECK = '미응답'
-	AND SB_TAKEDATE &gt;= '2018-06-04'
+	AND SB_TAKEDATE &gt;= '2018-12-03'                                     <!-- 2018-09-03 -->
 	AND SB_TAKEDATE &lt; TO_CHAR(SYSDATE,'YYYY-MM-DD') 
 	AND SB_REJECT = 0
 </select>
@@ -1023,7 +1023,7 @@
 	WHERE SB_ORDERCOUNT &gt; 0
 	AND SB_RESCHECK = '미응답'
 	AND SB_ARSRESULT LIKE '부재'||'%'
-	AND SB_TAKEDATE &gt;= '2018-05-03'
+	AND SB_TAKEDATE &gt;= '2018-12-03'                                   <!-- 2018-09-03 -->
 	AND SB_TAKEDATE &lt;= TO_CHAR(SYSDATE,'YYYY-MM-DD') 
 	AND SB_REJECT = 0
 </select>
@@ -1035,7 +1035,7 @@
 	WHERE SB_ORDERCOUNT &gt; 0
 	AND SB_RESCHECK = '미응답'
 	AND SB_ARSRESULT LIKE '추후응답'||'%'
-	AND SB_TAKEDATE &gt;= '2018-05-03'
+	AND SB_TAKEDATE &gt;= '2018-12-03'                                             <!-- 2018-09-03 -->
 	AND SB_TAKEDATE &lt;= TO_CHAR(SYSDATE,'YYYY-MM-DD') 
 	AND SB_REJECT = 0
 </select>
@@ -1058,5 +1058,95 @@
 		<if test="sbRrn != null and sbRrn != ''">,#{sbRrn}</if>
 		,#{sbAdd},#{sbBranch},#{sbJosaja},#{sbHp},#{sbUpStream},TO_CHAR(SYSDATE, 'YYYY-MM-DD'),#{sbOrderCount},#{sbReject}
 	)
+</insert>
+
+<!-- 2019신규시책 ******************************************************************************************************************-->
+<insert id="addSurUser" parameterType="kr.sh86.myApp.survey.domain.SicheckUser">
+	<selectKey keyProperty="no" resultType="int" order="BEFORE">
+		select SICHECK_SEQ.nextval FROM DUAL
+	</selectKey>
+	INSERT INTO SURVEY0725.SURVEY2019(
+		no, gender, age, local, job, regdate, po_num)
+	VALUES(
+		#{no}, #{gender}, #{age}, #{local}, #{job}, to_char(sysdate, 'yy-mm-dd hh:mm'), #{poNum})
+</insert>
+
+<update id="updateAnsByOrder" parameterType="kr.sh86.myApp.survey.domain.SicheckUser">
+	UPDATE SURVEY0725.SURVEY2019
+	SET regdate = to_char(sysdate, 'yy-mm-dd hh:mm')
+		<if test="q1 != null and q1 != ''">,q1 = #{q1}</if>
+		<if test="q2 != null and q2 != ''">,q2 = #{q2}</if>
+		<if test="q3 != null and q3 != ''">,q3 = #{q3}</if>
+		<if test="q4 != null and q4 != ''">,q4 = #{q4}</if>
+		<if test="q5 != null and q5 != ''">,q5 = #{q5}</if>
+		<if test="q6 != null and q6 != ''">,q6 = #{q6}</if>
+		<if test="q7 != null and q7 != ''">,q7 = #{q7}</if>
+		<if test="q8 != null and q8 != ''">,q8 = #{q8}</if>
+		<if test="q9 != null and q9 != ''">,q9 = #{q9}</if>
+		<if test="q10 != null and q10 != ''">,q10 = #{q10}</if>
+	WHERE no = #{no}
+</update>
+
+<!-- 현황조회:지역별 -->
+<select id="selSicheck" parameterType="Map" resultType="int">
+	SELECT COUNT(*)
+	FROM SURVEY0725.SURVEY2019
+	WHERE LOCAL = #{local}
+	<if test="gender != null and gender != ''">AND GENDER = #{gender}</if>
+</select>
+
+<!-- 응답내용 조회 -->
+<select id="selSicheckResList" resultType="kr.sh86.myApp.survey.domain.SicheckUser">
+	SELECT *
+	FROM SURVEY0725.SURVEY2019
+</select>
+
+<!-- 문자발송 대상자 조회 -->
+<select id="selSicheckMmsTarget" resultType="kr.sh86.myApp.survey.domain.Pomg">
+	SELECT PO_NUM, PO_TEL2
+	FROM ADMIN.PERSONAL_OMG
+	WHERE PO_TEL2 IS NOT NULL
+	AND PO_NUM NOT IN(SELECT PO_NUM 
+					  FROM SURVEY0725.SURVEY2019 
+					  WHERE PO_NUM IS NOT NULL)
+	AND PO_NUM NOT IN(SELECT PO_NUM 
+					  FROM SURVEY0725.SICHECKREJ)
+</select>
+
+<!-- 2019신규시책 - 수신거부 추가 -->
+<insert id="addSicheckRej" parameterType="kr.sh86.myApp.survey.domain.Pomg">
+	INSERT INTO SURVEY0725.SICHECKREJ(PO_NUM)
+	VALUES(#{poNum})
+</insert>
+
+
+<!--===========================================================================================================================  -->
+
+<!-- 수협재발송자 조회 - 부재중, 통화중 -->
+<select id="getReTagetSuhyup" resultType="kr.sh86.myApp.survey.domain.Xroshot">
+	SELECT dest_name, phone_number
+	FROM XROSHOT.SDK_VMS_REPORT_DETAIL
+	WHERE send_date > '20190126150000' AND result = 4
+    OR send_date > '20190126150000' AND result = 5
+</select>
+
+<insert id="goReTargetSuhyup" parameterType="String">
+	INSERT INTO XROSHOT.SDK_VMS_SEND (
+		MSG_ID, USER_ID, MSG_SUBTYPE, SCHEDULE_TYPE, MENT_TYPE
+		, VOICE_TYPE, SUBJECT, NOW_DATE, SEND_DATE, CALLBACK
+		, REPLY_TYPE
+		, REPLY_COUNT
+		, CDR_ID
+		, ATTACH_FILE
+		, DEST_INFO)
+	VALUES (
+		XROSHOT.SDK_VMS_SEQ.nextval, 'mystat04', 32, 0, 0
+		, 0, '테스트11', to_char(sysdate,'yyyymmddhh24mmss'), to_char(sysdate,'yyyymmddhh24mmss'), '0637142174'
+		, 0
+		, 0
+		, ''
+		, '여론조사샘플.mstg'
+		, #{target})
+
 </insert>
 </mapper>

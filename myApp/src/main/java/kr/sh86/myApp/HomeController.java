@@ -33,7 +33,8 @@ public class HomeController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model,
-			@RequestParam(value="userNo", defaultValue="0")int userNo) {
+			@RequestParam(value="userNo", defaultValue="0")int userNo,
+			@RequestParam(value="poNum", defaultValue="0")int poNum) {
 		if(userNo == 0) {
 			/*surveyService.removeBestpollServ();*/ 
 			/*surveyService.setTargerArs3();*/ 
@@ -55,9 +56,13 @@ public class HomeController {
 			/*surveyService.setSampleRdd2Serv();*/
 			/*surveyService.setSampleRddServ("정읍시");*/
 			/*surveyService.sendSmsSinboLastServ();*/
+			/*surveyService.suhyupSuvServ();*/
 			model.addAttribute("list", surveyService.readSinboResInfoServ());
 			/*return "ars/resList";*/
 			return "sinbo/sbList";
+			/*model.addAttribute("poNum", poNum);
+			
+			return "sicheck/sur";*/
 		}else if(userNo == 100) {
 			int count = surveyService.readBioResCount();
 			model.addAttribute("count", count);
@@ -74,6 +79,19 @@ public class HomeController {
 		model.addAttribute("lastQuNum", user.getResComplete());*/
 		/*return "/glocal/a";*/
 		return "/bio/a";
+	}
+	
+	@RequestMapping(value = "/siRej", method = RequestMethod.GET)
+	public String sicheckRejCtrl(Model model,
+			@RequestParam(value="poNum", defaultValue="0")String poNum) {
+		model.addAttribute("poNum", poNum);
+		return "/sicheck/rej";
+	}
+	
+	@RequestMapping(value = "/sicheckList", method = RequestMethod.GET)
+	public String sicheckListCtrl(Model model) {
+		model.addAttribute("list", surveyService.sicheckServ());
+		return "/sicheck/list";
 	}
 	
 	@RequestMapping(value = "/sbList", method = RequestMethod.GET)
@@ -110,4 +128,7 @@ public class HomeController {
 	public String rejCtrl() {		
 		return "bcApp/reject";
 	}
+	
+	
+
 }

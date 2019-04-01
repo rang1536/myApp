@@ -18,12 +18,15 @@ import kr.sh86.myApp.survey.domain.Dialing;
 import kr.sh86.myApp.survey.domain.ExceptionTel;
 import kr.sh86.myApp.survey.domain.Home35;
 import kr.sh86.myApp.survey.domain.Mms;
+import kr.sh86.myApp.survey.domain.Pomg;
 import kr.sh86.myApp.survey.domain.ResData;
 import kr.sh86.myApp.survey.domain.Response;
 import kr.sh86.myApp.survey.domain.Result;
 import kr.sh86.myApp.survey.domain.Sample;
 import kr.sh86.myApp.survey.domain.Sampling;
 import kr.sh86.myApp.survey.domain.SbResult;
+import kr.sh86.myApp.survey.domain.SicheckList;
+import kr.sh86.myApp.survey.domain.SicheckUser;
 import kr.sh86.myApp.survey.domain.Sinbo;
 import kr.sh86.myApp.survey.domain.User;
 import kr.sh86.myApp.survey.domain.Users;
@@ -439,7 +442,7 @@ public class SurveyService {
 		return resList;
 	}
 		
-	//현황표
+	//현황표*******************************************************************************************
 	public Map<String, Object> readResStatusServ(){
 		//마지막 문자보낸 시간 조회
 		List<String> lastTimeList = surveyDao.selectLastMmsTime();
@@ -2013,7 +2016,7 @@ public class SurveyService {
 		System.out.println("실패 : "+fail);
 	}*/
 	
-	//신보
+	//신보**********************************************************************************************
 	public List<SbResult> readSinboResInfoServ(){
 		String startDate = "";
 		String endDate = "";
@@ -2026,20 +2029,39 @@ public class SurveyService {
 		for(int i=0; i<loop; i++) {
 			Map<String, Object> params = new HashMap<String, Object>();
 			if(i==0){
-				startDate = "2018-04-01";
-				endDate = "2018-05-02";
-			}else if(i == 1){
+				startDate = "2019-03-01";
+				endDate = "2019-04-01";
+			}
+			/*else if(i == 1){
 				startDate = "2018-05-03";
 				endDate = "2018-06-02";
 			}else if(i == 2){
 				startDate = "2018-06-04";
 				endDate = "2018-07-02";
-			}			
+			}else if(i == 3){
+				startDate = "2018-07-03";
+				endDate = "2018-08-01";
+			}else if(i == 4){
+				startDate = "2018-08-02";
+				endDate = "2018-09-03";
+			}else if(i == 5){
+				startDate = "2018-09-11";
+				endDate = "2018-10-02";
+			}else if(i == 6){
+				startDate = "2018-10-10";
+				endDate = "2018-11-02";
+			}else if(i == 7){
+				startDate = "2018-11-20";
+				endDate = "2018-12-04";
+			}else if(i == 8) {
+				startDate = "2018-12-03";
+				endDate = "2019-01-01";
+			}*/
 			params.put("startDate", startDate);
 			params.put("endDate", endDate);
 			
 			SbResult sbResult = new SbResult();
-			sbResult.setTotalCnt(surveyDao.selSinboTotalCnt(params)); //전제 조사 대상자수
+			sbResult.setTotalCnt(surveyDao.selSinboTotalCnt(params)); //전체 조사 대상자수
 			sbResult.setResCnt(surveyDao.selSinboResCnt(params)); //응답자수
 			sbResult.setBujeCnt(surveyDao.selSinboBujeCnt(params)); //부재
 			sbResult.setAfterCnt(surveyDao.selSinboAfterCnt(params)); //추후응답
@@ -2060,6 +2082,7 @@ public class SurveyService {
 		params.put("endDate", endDate);
 		
 		List<ResData> list = surveyDao.selSinboResList(params); //기간내 응답현황 목록조회
+		
 		
 		if(type.equals("after")) {
 			UtilDate utilDate = new UtilDate();
@@ -2368,4 +2391,232 @@ public class SurveyService {
 		map.put("succ", succ);
 		return map;
 	}
+	
+	
+	/*2019신규시책 설문조사*/
+	
+	//응답자 등록
+	public Map<String, Object> addSurUserServ(SicheckUser user){
+		Map<String, Object> map = new HashMap<String, Object>();
+		int result = surveyDao.addSurUser(user);
+		
+		if(result == 1) {
+			System.out.println("성공");
+			map.put("result", "succ");
+			map.put("no", user.getNo());
+		}else {
+			System.out.println("실패");
+			map.put("result", "fail");
+		}
+		
+		return map;
+	}
+	
+	//응답내용 중간저장
+	public Map<String, Object> updateAnsByOrderServ(int no, String order, String ans){
+		Map<String, Object> map = new HashMap<String, Object>();
+		SicheckUser user = new SicheckUser();
+		user.setNo(no);
+		
+		if(Integer.parseInt(order) == 1) {
+			user.setQ1(ans);
+		}else if(Integer.parseInt(order) == 2) {
+			user.setQ2(ans);
+		}else if(Integer.parseInt(order) == 3) {
+			user.setQ3(ans);
+		}else if(Integer.parseInt(order) == 4) {
+			user.setQ4(ans);
+		}else if(Integer.parseInt(order) == 5) {
+			user.setQ5(ans);
+		}else if(Integer.parseInt(order) == 6) {
+			user.setQ6(ans);
+		}else if(Integer.parseInt(order) == 7) {
+			user.setQ7(ans);
+		}else if(Integer.parseInt(order) == 8) {
+			user.setQ8(ans);
+		}else if(Integer.parseInt(order) == 9) {
+			user.setQ9(ans);
+		}else if(Integer.parseInt(order) == 10) {
+			user.setQ10(ans);
+		} 
+		
+		int result = surveyDao.updateAnsByOrder(user);
+		if(result == 1) {
+			System.out.println("성공");
+			map.put("result", "succ");
+		}else {
+			System.out.println("실패");
+			map.put("result", "fail");
+		}
+		return map;
+	}
+	
+	public String setLocal(int localNo) {
+		String local = "";
+		if(localNo == 1) local = "전주덕진";
+		if(localNo == 2) local = "전주완산";
+		if(localNo == 3) local = "군산";
+		if(localNo == 4) local = "익산";
+		if(localNo == 5) local = "정읍";
+		if(localNo == 6) local = "남원";
+		if(localNo == 7) local = "김제";
+		if(localNo == 8) local = "완주";
+		if(localNo == 9) local = "진안";
+		if(localNo == 10) local = "무주";
+		if(localNo == 11) local = "장수";
+		if(localNo == 12) local = "임실";
+		if(localNo == 13) local = "순창";
+		if(localNo == 14) local = "고창";
+		if(localNo == 15) local = "부안";
+		return local;
+	}
+	
+	public int setTargetCnt(int localNo) {
+		int targetCnt = 0;
+		if(localNo == 1) targetCnt = 129;
+		if(localNo == 2) targetCnt = 109;
+		if(localNo == 3) targetCnt = 101;
+		if(localNo == 4) targetCnt = 111;
+		if(localNo == 5) targetCnt = 50;
+		if(localNo == 6) targetCnt = 50;
+		if(localNo == 7) targetCnt = 50;
+		if(localNo == 8) targetCnt = 50;
+		if(localNo == 9) targetCnt = 50;
+		if(localNo == 10) targetCnt = 50;
+		if(localNo == 11) targetCnt = 50;
+		if(localNo == 12) targetCnt = 50;
+		if(localNo == 13) targetCnt = 50;
+		if(localNo == 14) targetCnt = 50;
+		if(localNo == 15) targetCnt = 50;
+		return targetCnt;
+	}
+	
+	//신구시책 현황표 조회
+	public List<SicheckList> sicheckServ(){
+		List<SicheckList> list = new ArrayList<SicheckList>();
+		
+		for(int i=0; i<15; i++) {
+			Map<String, Object> params = new HashMap<String, Object>();
+			params.put("local", i+1);
+			
+			SicheckList sicheck = new SicheckList();
+			sicheck.setLocal(setLocal(i+1));
+			sicheck.setTotalCnt(surveyDao.selSicheck(params));
+			
+			params.put("gender", "남성");
+			sicheck.setManCnt(surveyDao.selSicheck(params));
+			
+			params.put("gender", "여성");
+			sicheck.setWomanCnt(surveyDao.selSicheck(params));
+			
+			sicheck.setTargetCnt(setTargetCnt(i+1));
+			
+			list.add(sicheck);
+		}
+		
+		return list;
+	}
+	
+	//신규시책 응답내용조회
+	public Map<String, Object> sicheckResListServ(){
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		List<SicheckUser> list = surveyDao.selSicheckResList();
+		map.put("list", list);
+		
+		return map;
+	}
+	
+	//신규시책 문자발송
+	public Map<String, Object> sicheckMmsServ(){
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		List<Pomg> userList = surveyDao.selSicheckMmsTarget(); //발송대상자 조회
+		
+		final int scheduleType = 0;
+		final String subject = "2019 전북 신규시책 발굴을 위한 설문조사";
+		final String callback = "0632880488"; //발송번호는 등록된 번호만 가능. 추후 대표님 폰등은 필요하면 따로 등록.
+		String msg = "2019 신규시책 발굴을 위한 설문조사입니다. \n 아래 링크를 눌러 조사에 응답해 주시면 향후 도정에 반영하여 더 나은 전라북도를 만드는데 도움이 될 것입니다 \n 편하신 시간에 응답해 주시기 바랍니다.";
+		msg += "\n 응답하기 : http://sh86.kr/myApp/?poNum=";
+		String destInfo = null;
+		int destCount = 0; // 수신자목록 개수 최대:100
+		int result = 0;
+		String mmsMsg = null;
+		
+		Mms mms = new Mms();
+		
+		String mmsResult = "";
+		
+		for(int i=0; i<userList.size(); i++) {
+			mmsMsg = null;
+			destInfo = "미확인" + "^" + userList.get(i).getPoTel2().replaceAll("-", "");
+			mmsMsg = msg + userList.get(i).getPoNum();
+			mmsMsg += "\n\n 수신거부 : http://sh86.kr/myApp/siRej";
+			destCount = 1;
+			mms = setMms(scheduleType, subject, callback, destInfo, destCount, mmsMsg);
+			result = surveyDao.sendMmsToSelected(mms);	
+		}
+		map.put("result", "succ");
+		return map;
+	}
+	
+	//수신거부
+	public Map<String, Object> addSicheckRejServ(Pomg pOmg){
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		int result = surveyDao.addSicheckRej(pOmg);
+		if(result == 1) {
+			//System.out.println("성공");
+			map.put("result", "succ");
+		}else {
+			//System.out.println("실패");
+			map.put("result", "fail");
+		}
+		return map;
+	}
+	
+	
+//===============================================================================================================================================
+	
+	//수협 미응답자 재발송
+	public void suhyupSuvServ(){
+		List<String> targetList = new ArrayList<String>();
+		List<Xroshot> list = surveyDao.getReTagetSuhyup();
+		
+		System.out.println("조회수 : "+list.size());
+		
+		String target = "";
+		
+		for(int i=0; i<list.size(); i++) {
+			System.out.println(i+" 번째 목록 더하기 중..");
+			if(i == 97 || i == 195 || i == 293 || i == 391 || i == 487 || i == 585 || i == 683 || i == 780 || i == 878 || i == 975 || i == 1073) {
+				target += list.get(i).getDestName()+"^";
+				target += list.get(i).getPhoneNumber();
+				targetList.add(target);
+				target = "";
+			}else if(i == list.size()) {
+				target += list.get(i).getDestName()+"^";
+				target += list.get(i).getPhoneNumber();
+				targetList.add(target);
+			}else {
+				target += list.get(i).getDestName()+"^";
+				target += list.get(i).getPhoneNumber()+"|";
+			}
+			
+			
+		}
+		
+		System.out.println("자료확인 =======================================");
+		for(int j=0; j<targetList.size(); j++) {
+			System.out.println(targetList.get(j));
+			int result = surveyDao.goReTargetSuhyup(targetList.get(j));
+			if(result == 1) System.out.println("발송성공");
+			else System.out.println("발송실패");
+		}
+		
+		//String target2 = "윤재호^01038390401";
+		//System.out.println("입력확인 : " +surveyDao.goReTargetSuhyup(target2));;
+		
+	}
+	
 }

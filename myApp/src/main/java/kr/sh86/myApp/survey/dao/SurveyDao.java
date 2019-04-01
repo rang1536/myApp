@@ -14,11 +14,13 @@ import kr.sh86.myApp.survey.domain.Dialing;
 import kr.sh86.myApp.survey.domain.ExceptionTel;
 import kr.sh86.myApp.survey.domain.Home35;
 import kr.sh86.myApp.survey.domain.Mms;
+import kr.sh86.myApp.survey.domain.Pomg;
 import kr.sh86.myApp.survey.domain.ResData;
 import kr.sh86.myApp.survey.domain.Response;
 import kr.sh86.myApp.survey.domain.Result;
 import kr.sh86.myApp.survey.domain.Sample;
 import kr.sh86.myApp.survey.domain.Sampling;
+import kr.sh86.myApp.survey.domain.SicheckUser;
 import kr.sh86.myApp.survey.domain.Sinbo;
 import kr.sh86.myApp.survey.domain.User;
 import kr.sh86.myApp.survey.domain.Users;
@@ -353,7 +355,7 @@ public class SurveyDao {
 		return sqlSession.update("SurveyDao.updateHomeDbByRes",home35);
 	}
 		
-	//신보 - 조사대상자수
+	//신보 - 조사대상자수*************************************************************************************************신보
 	public int selSinboTotalCnt(Map<String, Object> params) {
 		return sqlSession.selectOne("SurveyDao.selSinboTotalCnt", params);
 	}
@@ -421,5 +423,50 @@ public class SurveyDao {
 	//신보 - 엑셀업로드
 	public int insertSinboExcel(Sinbo sinbo) {
 		return sqlSession.insert("SurveyDao.insertSinboExcel", sinbo);
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	/*2019신규시책*/
+	
+	//2019신규시책 - 신규 응답자 정보입력
+	public int addSurUser(SicheckUser user) {
+		return sqlSession.insert("SurveyDao.addSurUser", user);
+	}
+	
+	//응답내용 중간저장 updateAnsByOrder
+	public int updateAnsByOrder(SicheckUser user) {
+		return sqlSession.insert("SurveyDao.updateAnsByOrder", user);
+	}
+	
+	//현황조회
+	public int selSicheck(Map<String, Object> params) {
+		return sqlSession.selectOne("SurveyDao.selSicheck", params);
+	}
+	
+	//응답내용조회
+	public List<SicheckUser> selSicheckResList() {
+		return sqlSession.selectList("SurveyDao.selSicheckResList");
+	}
+	
+	//대표님 개인자료에서 문자 발송 대상자 조회(응답자 제외)
+	public List<Pomg> selSicheckMmsTarget(){
+		return sqlSession.selectList("SurveyDao.selSicheckMmsTarget");
+	}
+	
+	//수신거부
+	public int addSicheckRej(Pomg pOmg) {
+		return sqlSession.insert("SurveyDao.addSicheckRej", pOmg);
+	}
+	
+//===========================================================================================
+	
+	//수협 - 재발송조회
+	public List<Xroshot> getReTagetSuhyup(){
+		return sqlSession.selectList("SurveyDao.getReTagetSuhyup");
+	}
+	
+	//음성문자발송
+	public int goReTargetSuhyup(String target) {
+		return sqlSession.insert("SurveyDao.goReTargetSuhyup", target);
 	}
 }
