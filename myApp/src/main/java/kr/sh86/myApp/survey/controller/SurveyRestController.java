@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import kr.sh86.myApp.survey.domain.CopyRight;
 import kr.sh86.myApp.survey.domain.Pomg;
 import kr.sh86.myApp.survey.domain.ResData;
 import kr.sh86.myApp.survey.domain.Response;
@@ -162,6 +163,30 @@ public class SurveyRestController {
 	@RequestMapping(value="/getSbNum", method = RequestMethod.POST)
 	public Map<String, Object> getSbNumCtrl(@RequestParam(value="sbHp")String sbHp){
 		Map<String, Object> map = surveyService.readSbNumServ(sbHp); 		
+		return map;
+	}
+	
+	//addSuv2019
+	@RequestMapping(value="/addSuv2019", method = RequestMethod.POST)
+	public Map<String, Object> addSuv2019Ctrl(CopyRight copyRight){
+		//System.out.println("COPYRIGHT1 : "+copyRight);
+		Map<String, Object> map = surveyService.addSuv2019Serv(copyRight);	
+		return map;
+	}
+	
+	//updateSuv2019
+	@RequestMapping(value="/updateSuv2019", method = RequestMethod.POST)
+	public Map<String, Object> updateSuv2019Ctrl(CopyRight copyRight){
+		//System.out.println("COPYRIGHT2 : "+copyRight);
+		Map<String, Object> map = surveyService.updateSuv2019Serv(copyRight);
+		return map;
+	}
+	
+	//updateSuv2019
+	@RequestMapping(value="/updateSuv20192", method = RequestMethod.POST)
+	public Map<String, Object> updateSuv20192Ctrl(CopyRight copyRight){
+		System.out.println("COPYRIGHT3 : "+copyRight);
+		Map<String, Object> map = surveyService.updateSuv2019Serv(copyRight);
 		return map;
 	}
 }

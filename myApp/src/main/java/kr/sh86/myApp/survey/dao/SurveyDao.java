@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import kr.sh86.myApp.survey.domain.Ars;
 import kr.sh86.myApp.survey.domain.BioResponse;
 import kr.sh86.myApp.survey.domain.BioUser;
+import kr.sh86.myApp.survey.domain.CopyRight;
 import kr.sh86.myApp.survey.domain.Dialing;
 import kr.sh86.myApp.survey.domain.ExceptionTel;
 import kr.sh86.myApp.survey.domain.Home35;
@@ -468,5 +469,21 @@ public class SurveyDao {
 	//음성문자발송
 	public int goReTargetSuhyup(String target) {
 		return sqlSession.insert("SurveyDao.goReTargetSuhyup", target);
+	}
+	
+// ==========================================================================================
+	//저작권 최초입력
+	public int addSuv2019(CopyRight copyRight) {
+		return sqlSession.insert("addSuv2019", copyRight);
+	}
+	
+	//updateSuv2019-1
+	public int updateSuv2019(CopyRight copyRight) {
+		return sqlSession.update("updateSuv2019", copyRight);
+	}
+	
+	//updateSuv2019-2
+	public int updateSuv20192(CopyRight copyRight) {
+		return sqlSession.update("updateSuv20192", copyRight);
 	}
 }

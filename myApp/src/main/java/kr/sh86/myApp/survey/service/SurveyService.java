@@ -14,6 +14,7 @@ import kr.sh86.myApp.survey.domain.Ars;
 import kr.sh86.myApp.survey.domain.ArsRes;
 import kr.sh86.myApp.survey.domain.BioResponse;
 import kr.sh86.myApp.survey.domain.BioUser;
+import kr.sh86.myApp.survey.domain.CopyRight;
 import kr.sh86.myApp.survey.domain.Dialing;
 import kr.sh86.myApp.survey.domain.ExceptionTel;
 import kr.sh86.myApp.survey.domain.Home35;
@@ -2617,6 +2618,35 @@ public class SurveyService {
 		//String target2 = "윤재호^01038390401";
 		//System.out.println("입력확인 : " +surveyDao.goReTargetSuhyup(target2));;
 		
+	}
+	
+	
+//==============================================================================================================
+	//저작권 최초입력
+	public Map<String, Object> addSuv2019Serv(CopyRight copyRight){
+		Map<String, Object> map = new HashMap<String, Object>();
+		int result = surveyDao.addSuv2019(copyRight);
+		
+		if(result == 1) {
+			map.put("result", "succ");
+			map.put("no", copyRight.getNo());
+		}else {
+			map.put("result", "fail");
+		}
+		return map;
+	}
+	
+	//updateSuv2019
+	public Map<String, Object> updateSuv2019Serv(CopyRight copyRight){
+		Map<String, Object> map = new HashMap<String, Object>();
+		int result = surveyDao.updateSuv2019(copyRight);
+		
+		if(result == 1) {
+			map.put("result", "succ");
+		}else {
+			map.put("result", "fail");
+		}
+		return map;
 	}
 	
 }

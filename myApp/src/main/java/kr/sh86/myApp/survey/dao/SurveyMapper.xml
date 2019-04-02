@@ -1149,4 +1149,35 @@
 		, #{target})
 
 </insert>
+
+<!-- =============================================================================================================================== -->
+<insert id="addSuv2019" parameterType="kr.sh86.myApp.survey.domain.CopyRight">
+	<selectKey resultType="int" keyProperty="no" order="BEFORE">
+		SELECT copy_seq.NEXTVAL FROM DUAL
+	</selectKey>
+	INSERT INTO SURVEY0725.COPYRIGHT(
+		no, dq1, dq2, dq3, dq4, dq4etc, dq5, dq6, dq7)
+	VALUES(
+		#{no}, #{dQ1}, #{dQ2}, #{dQ3}, #{dQ4}, #{dQ4Etc}, #{dQ5}, #{dQ6}, #{dQ7})
+</insert>
+
+<!-- 문항입력1 -->
+<update id="updateSuv2019" parameterType="kr.sh86.myApp.survey.domain.CopyRight">
+	UPDATE SURVEY0725.COPYRIGHT
+	SET rq1 = #{rQ1}, rq2 = #{rQ2}, rq3=#{rQ3}, rq3etc=#{rQ3Etc}, rq41 = #{rQ41}, rq42=#{rQ42}, rq5=#{rQ5}
+		,kq11=#{kQ11},kq11etc=#{kQ11Etc},kq12=#{kQ12},kq12etc=#{kQ12Etc},kq21=#{kQ21},kq21etc=#{kQ21Etc},kq22=#{kQ22},kq22etc=#{kQ22Etc}
+		,kq31=#{kQ31},kq31etc=#{kQ31Etc},kq32=#{kQ32},kq32etc=#{kQ32Etc},kq42=#{kQ42},kq42etc=#{kQ42Etc},kq51=#{kQ51},kq51etc=#{kQ51Etc}
+		,kq52=#{kQ52},kq52etc=#{kQ52Etc},kq61=#{kQ61},kq61etc=#{kQ61Etc},kq62=#{kQ62},kq62etc=#{kQ62Etc}
+	WHERE no = #{no}	
+</update>
+
+<!-- 문항입력2 -->
+<update id="updateSuv20192" parameterType="kr.sh86.myApp.survey.domain.CopyRight">
+	UPDATE SURVEY0725.COPYRIGHT
+	SET kq11=#{kQ11},kq11etc=#{kQ11Etc},kq12=#{kQ12},kq12etc=#{kQ12Etc},kq21=#{kQ21},kq21etc=#{kQ21Etc},kq22=#{kQ22},kq22etc=#{kQ22Etc}
+		,kq31=#{kQ31},kq31etc=#{kQ31Etc},kq32=#{kQ32},kq32etc=#{kQ32Etc},kq42=#{kQ42},kq42etc=#{kQ42Etc},kq51=#{kQ51},kq51etc=#{kQ51Etc}
+		,kq52=#{kQ52},kq52etc=#{kQ52Etc},kq61=#{kQ61},kq61etc=#{kQ61Etc},kq62=#{kQ62},kq62etc=#{kQ62Etc}
+	WHERE no = #{no}	
+</update>
+
 </mapper>
