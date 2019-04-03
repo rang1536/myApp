@@ -1180,4 +1180,131 @@
 	WHERE no = #{no}	
 </update>
 
+<!-- 문항입력3 -->
+<update id="updateSuv20193" parameterType="kr.sh86.myApp.survey.domain.CopyRight">
+	UPDATE SURVEY0725.COPYRIGHT
+	SET cq11=#{cQ11}, cq12=#{cQ12}
+		, cq13a11=#{cQ13A11}, cq13a12=#{cQ13A12}, cq13a13=#{cQ13A13}, cq13a14=#{cQ13A14}
+		, cq13a21=#{cQ13A21}, cq13a22=#{cQ13A22}, cq13a23=#{cQ13A23}, cq13a24=#{cQ13A24}
+		, cq13a31=#{cQ13A31}, cq13a32=#{cQ13A32}, cq13a33=#{cQ13A33}, cq13a34=#{cQ13A34}
+		, cq13a41=#{cQ13A41}, cq13a42=#{cQ13A42}, cq13a43=#{cQ13A43}, cq13a44=#{cQ13A44}
+		, cq13a51=#{cQ13A51}, cq13a52=#{cQ13A52}, cq13a53=#{cQ13A53}, cq13a54=#{cQ13A54}
+		, cq13a61=#{cQ13A61}, cq13a62=#{cQ13A62}, cq13a63=#{cQ13A63}, cq13a64=#{cQ13A64}
+		, cq13a71=#{cQ13A71}, cq13a72=#{cQ13A72}, cq13a73=#{cQ13A73}, cq13a74=#{cQ13A74}
+		, cq13b13=#{cQ13B13}, cq13b23=#{cQ13B23}, cq13b33=#{cQ13B33}, cq13b43=#{cQ13B43}
+		, cq13b51=#{cQ13B51}, cq13b53=#{cQ13B53}, cq13b63=#{cQ13B63}, cq13b73=#{cQ13B73}, cq13b81=#{cQ13B81}, cq13b83=#{cQ13B83}
+		, cq13c12=#{cQ13C12}, cq13c14=#{cQ13C14}, cq13c22=#{cQ13C22}, cq13c24=#{cQ13C24}
+		, cq13c32=#{cQ13C32}, cq13c34=#{cQ13C34}, cq13c44=#{cQ13C44}, cq13c52=#{cQ13C52}
+		, cq13c54=#{cQ13C54}, cq14=#{cQ14}, cq15=#{cQ15}, cq15etc=#{cQ15Etc}, cq16=#{cQ16}, cq16etc=#{cQ16Etc}
+		, cq17=#{cQ17}, cq17etc=#{cQ17Etc}, cq18=#{cQ18}, cq18etc=#{cQ18Etc}
+		, cq19=#{cQ19}, cq191=#{cQ191}, cq110=#{cQ110}, cq110etc=#{cQ110Etc}, cq111=#{cQ111}
+		, cq112=#{cQ112}, cq1121=#{cQ1121}, cq1121etc=#{cQ1121Etc}, cq1122=#{cQ1122}, cq1122etc=#{cQ1122Etc}
+		, cq113=#{cQ113}, cq113etc=#{cQ113Etc}, cq114=#{cQ114}, cq1141=#{cQ1141}, cq1142=#{cQ1142}, cq115=#{cQ115}
+		, cq115etc=#{cQ115Etc}, cq116=#{cQ116}, cq116etc=#{cQ116Etc}, cq117=#{cQ117}, cq117etc=#{cQ117Etc}, cq118=#{cQ118}, cq118etc=#{cQ118Etc}	
+	WHERE no = #{no}	
+</update>
+
+<!-- 문항입력4 -->
+<update id="updateSuv20194" parameterType="kr.sh86.myApp.survey.domain.CopyRight">
+	UPDATE SURVEY0725.COPYRIGHT
+	SET 
+		cq21=#{cQ21}, cq22=#{cQ22}, cq22etc=#{cQ22Etc}
+		, cq23a11=#{cQ23A11}, cq23a12=#{cQ23A12}, cq23a13=#{cQ23A13}, cq23a14=#{cQ23A14}
+		, cq23a21=#{cQ23A21}, cq23a22=#{cQ23A22}, cq23a23=#{cQ23A23}, cq23a24=#{cQ23A24}
+		, cq23a31=#{cQ23A31}, cq23a32=#{cQ23A32}, cq23a33=#{cQ23A33}, cq23a34=#{cQ23A34}
+		, cq23a41=#{cQ23A41}, cq23a42=#{cQ23A42}, cq23a43=#{cQ23A43}, cq23a44=#{cQ23A44}
+		, cq23a51=#{cQ23A51}, cq23a52=#{cQ23A52}, cq23a53=#{cQ23A53}, cq23a54=#{cQ23A54}
+		, cq23a61=#{cQ23A61}, cq23a62=#{cQ23A62}, cq23a63=#{cQ23A63}, cq23a64=#{cQ23A64}
+		, cq23a71=#{cQ23A71}, cq23a72=#{cQ23A72}, cq23a73=#{cQ23A73}, cq23a74=#{cQ23A74}
+		, cq23b13=#{cQ23B13}, cq23b23=#{cQ23B23}, cq23b33=#{cQ23B33}, cq23b43=#{cQ23B43}
+		, cq23b51=#{cQ23B51}, cq23b53=#{cQ23B53}, cq23b63=#{cQ23B63}, cq23b73=#{cQ23B73}
+		, cq23b81=#{cQ23B81}, cq23b83=#{cQ23B83}, cq23c12=#{cQ23C12}, cq23c14=#{cQ23C14}
+		, cq23c22=#{cQ23C22}, cq23c24=#{cQ23C24}, cq23c32=#{cQ23C32}, cq23c34=#{cQ23C34}
+		, cq23c44=#{cQ23C44}, cq23c52=#{cQ23C52}, cq23c54=#{cQ23C54}, cq24=#{cQ24}, cq25=#{cQ25}
+		, cq25etc=#{cQ25Etc}, cq26=#{cQ26}, cq26etc=#{cQ26Etc}, cq27=#{cQ27}, cq27etc=#{cQ27Etc}
+		, cq28=#{cQ28}, cq28etc=#{cQ28Etc}, cq29=#{cQ29}, cq291=#{cQ291}, cq210=#{cQ210}, cq210etc=#{cQ210Etc}
+		, cq211=#{cQ211}, cq212=#{cQ212}, cq2121=#{cQ2121}, cq2121etc=#{cQ2121Etc}, cq2122=#{cQ2122}
+		, cq2122etc=#{cQ2122Etc}, cq213=#{cQ213}, cq213etc=#{cQ213Etc}, cq214=#{cQ214}, cq215=#{cQ215}
+		, cq215etc=#{cQ215Etc}, cq216=#{cQ216}, cq216etc=#{cQ216Etc}, cq217=#{cQ217}, cq217etc=#{cQ217Etc}
+		, cq218=#{cQ218}, cq218etc=#{cQ218Etc}
+	WHERE no = #{no}	
+</update>
+
+<!-- 문항입력5 -->
+<update id="updateSuv20195" parameterType="kr.sh86.myApp.survey.domain.CopyRight">
+	UPDATE SURVEY0725.COPYRIGHT
+	SET 
+		cq31=#{cQ31}, cq32=#{cQ32}, cq32etc=#{cQ32Etc}
+		, cq33a11=#{cQ33A11}, cq33a12=#{cQ33A12}, cq33a13=#{cQ33A13}, cq33a14=#{cQ33A14}
+		, cq33a21=#{cQ33A21}, cq33a22=#{cQ33A22}, cq33a23=#{cQ33A23}, cq33a24=#{cQ33A24}
+		, cq33a31=#{cQ33A31}, cq33a32=#{cQ33A32}, cq33a33=#{cQ33A33}, cq33a34=#{cQ33A34}
+		, cq33a41=#{cQ33A41}, cq33a42=#{cQ33A42}, cq33a43=#{cQ33A43}, cq33a44=#{cQ33A44}
+		, cq33a51=#{cQ33A51}, cq33a52=#{cQ33A52}, cq33a53=#{cQ33A53}, cq33a54=#{cQ33A54}
+		, cq33a61=#{cQ33A61}, cq33a62=#{cQ33A62}, cq33a63=#{cQ33A63}, cq33a64=#{cQ33A64}
+		, cq33a71=#{cQ33A71}, cq33a72=#{cQ33A72}, cq33a73=#{cQ33A73}, cq33a74=#{cQ33A74}
+		, cq33b13=#{cQ33B13}, cq33b23=#{cQ33B23}, cq33b33=#{cQ33B33}, cq33b43=#{cQ33B43}
+		, cq33b51=#{cQ33B51}, cq33b53=#{cQ33B53}, cq33b63=#{cQ33B63}, cq33b73=#{cQ33B73}
+		, cq33b81=#{cQ33B81}, cq33b83=#{cQ33B83}, cq33c12=#{cQ33C12}, cq33c14=#{cQ33C14}
+		, cq33c22=#{cQ33C22}, cq33c24=#{cQ33C24}, cq33c32=#{cQ33C32}, cq33c34=#{cQ33C34}
+		, cq33c44=#{cQ33C44}, cq33c52=#{cQ33C52}, cq33c54=#{cQ33C54}, cq33c62=#{cQ33C62}
+		, cq33c64=#{cQ33C64}, cq33c72=#{cQ33C72}, cq33c74=#{cQ33C74}
+		, cq34=#{cQ34}, cq35=#{cQ35}, cq35etc=#{cQ35Etc}, cq36=#{cQ36}, cq36etc=#{cQ36Etc}, cq37=#{cQ37}, cq37etc=#{cQ37Etc}
+		, cq38=#{cQ38}, cq38etc=#{cQ38Etc}, cq39=#{cQ39}, cq391=#{cQ391}, cq310=#{cQ310}, cq310etc=#{cQ310Etc}, cq311=#{cQ311}
+		, cq3121=#{cQ3121}, cq3121etc=#{cQ3121Etc}, cq3122=#{cQ3122}, cq3122etc=#{cQ3122Etc}, cq313=#{cQ313}, cq313etc=#{cQ313Etc}
+		, cq314=#{cQ314}, cq315=#{cQ315}, cq315etc=#{cQ315Etc}, cq316=#{cQ316}, cq316etc=#{cQ316Etc}, cq317=#{cQ317}, cq317etc=#{cQ317Etc}
+		, cq318=#{cQ318}, cq318etc=#{cQ318Etc}
+	WHERE no = #{no}	
+</update>
+
+<!-- 문항입력6 -->
+<update id="updateSuv20196" parameterType="kr.sh86.myApp.survey.domain.CopyRight">
+	UPDATE SURVEY0725.COPYRIGHT
+	SET 
+		cq41=#{cQ41}, cq42=#{cQ42}, cq43=#{cQ43}, cq43etc=#{cQ43Etc}, cq44=#{cQ44}, cq451=#{cQ451}, cq452=#{cQ452}, cq452etc=#{cQ452Etc}
+		, cq46=#{cQ46}, cq46etc=#{cQ46Etc}, cq47=#{cQ47}, cq471=#{cQ471}, cq48=#{cQ48}, cq48etc=#{cQ48Etc}, cq49=#{cQ49}
+		, cq410a11=#{cQ410A11}, cq410a12=#{cQ410A12}, cq410a13=#{cQ410A13}, cq410a14=#{cQ410A14}
+		, cq410a21=#{cQ410A21}, cq410a22=#{cQ410A22}, cq410a23=#{cQ410A23}, cq410a24=#{cQ410A24}
+		, cq410a31=#{cQ410A31}, cq410a32=#{cQ410A32}, cq410a33=#{cQ410A33}, cq410a34=#{cQ410A34}
+		, cq410a41=#{cQ410A41}, cq410a42=#{cQ410A42}, cq410a43=#{cQ410A43}, cq410a44=#{cQ410A44}
+		, cq410a51=#{cQ410A51}, cq410a52=#{cQ410A52}, cq410a53=#{cQ410A53}, cq410a54=#{cQ410A54}
+		, cq410a61=#{cQ410A61}, cq410a62=#{cQ410A62}, cq410a63=#{cQ410A63}, cq410a64=#{cQ410A64}
+		, cq410a71=#{cQ410A71}, cq410a72=#{cQ410A72}, cq410a73=#{cQ410A73}, cq410a74=#{cQ410A74}
+		, cq410b12=#{cQ410B12}, cq410b13=#{cQ410B13}, cq410b14=#{cQ410B14}, cq410b22=#{cQ410B22}
+		, cq410b23=#{cQ410B23}, cq410b24=#{cQ410B24}, cq410b32=#{cQ410B32}, cq410b33=#{cQ410B33}
+		, cq410b34=#{cQ410B34}, cq410b42=#{cQ410B42}, cq410b43=#{cQ410B43}, cq410b44=#{cQ410B44}
+		, cq410b52=#{cQ410B52}, cq410b53=#{cQ410B53}, cq410b54=#{cQ410B54}, cq410b62=#{cQ410B62}
+		, cq410b63=#{cQ410B63}, cq410b64=#{cQ410B64}, cq410b71=#{cQ410B71}, cq410b72=#{cQ410B72}
+		, cq410b73=#{cQ410B73}, cq410b74=#{cQ410B74}, cq410b81=#{cQ410B81}, cq410b82=#{cQ410B82}
+		, cq410b83=#{cQ410B83}, cq410b84=#{cQ410B84}, cq411=#{cQ411}, cq412=#{cQ412}
+		, cq412etc=#{cQ412Etc}, cq413=#{cQ413}, cq4131=#{cQ4131}, cq414=#{cQ414}, cq414etc=#{cQ414Etc}
+		, cq415=#{cQ415}, cq416=#{cQ416}, cq4161=#{cQ4161}, cq4161etc=#{cQ4161Etc}, cq4162=#{cQ4162}
+		, cq4162etc=#{cQ4162Etc}, cq417=#{cQ417}, cq417etc=#{cQ417Etc}, cq418=#{cQ418}, cq419=#{cQ419}
+		, cq419etc=#{cQ419Etc}, cq420=#{cQ420}, cq420etc=#{cQ420Etc}, cq421=#{cQ421}, cq421etc=#{cQ421Etc}
+		, cq422=#{cQ422}, cq422etc=#{cQ422Etc}		
+	WHERE no = #{no}	
+</update>
+
+<!-- 문항입력6 -->
+<update id="updateSuv20197" parameterType="kr.sh86.myApp.survey.domain.CopyRight">
+	UPDATE SURVEY0725.COPYRIGHT
+	SET 
+		cq51=#{cQ51}, cq52=#{cQ52}
+		, cq53a11=#{cQ53A11}, cq53a12=#{cQ53A12}, cq53a13=#{cQ53A13}, cq53a14=#{cQ53A14}
+		, cq53a21=#{cQ53A21}, cq53a22=#{cQ53A22}, cq53a23=#{cQ53A23}, cq53a24=#{cQ53A24}
+		, cq53a31=#{cQ53A31}, cq53a32=#{cQ53A32}, cq53a33=#{cQ53A33}, cq53a34=#{cQ53A34}
+		, cq53a41=#{cQ53A41}, cq53a42=#{cQ53A42}, cq53a43=#{cQ53A43}, cq53a44=#{cQ53A44}
+		, cq53a51=#{cQ53A51}, cq53a52=#{cQ53A52}, cq53a53=#{cQ53A53}, cq53a54=#{cQ53A54}
+		, cq53a61=#{cQ53A61}, cq53a62=#{cQ53A62}, cq53a63=#{cQ53A63}, cq53a64=#{cQ53A64}
+		, cq53a71=#{cQ53A71}, cq53a72=#{cQ53A72}, cq53a73=#{cQ53A73}, cq53a74=#{cQ53A74}
+		, cq53b13=#{cQ53B13}, cq53b23=#{cQ53B23}, cq53b33=#{cQ53B33}, cq53b43=#{cQ53B43}
+		, cq53b63=#{cQ53B63}, cq53b73=#{cQ53B73}, cq53b81=#{cQ53B81}, cq53b83=#{cQ53B83}
+		, cq54=#{cQ54}, cq55=#{cQ55}, cq55etc=#{cQ55Etc}, cq56=#{cQ56}, cq56etc=#{cQ56Etc}
+		, cq57=#{cQ57}, cq57etc=#{cQ57Etc}, cq58=#{cQ58}, cq58etc=#{cQ58Etc}, cq59=#{cQ59}
+		, cq591=#{cQ591}, cq510=#{cQ510}, cq510etc=#{cQ510Etc}, cq511=#{cQ511}, cq512=#{cQ512}
+		, cq5121=#{cQ5121}, cq5121etc=#{cQ5121Etc}, cq5122=#{cQ5122}, cq5122etc=#{cQ5122Etc}
+		, cq513=#{cQ513}, cq513etc=#{cQ513Etc}, cq514=#{cQ514}, cq515=#{cQ515}, cq515etc=#{cQ515Etc}
+		, cq516=#{cQ516}, cq516etc=#{cQ516Etc}, cq517=#{cQ517}, cq517etc=#{cQ517Etc}, cq518=#{cQ518}, cq518etc=#{cQ518Etc}		
+	WHERE no = #{no}	
+</update>
+
 </mapper>
