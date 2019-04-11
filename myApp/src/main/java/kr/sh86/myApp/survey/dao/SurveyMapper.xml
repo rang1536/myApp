@@ -1011,7 +1011,7 @@
 	WHERE SB_ORDERCOUNT &gt; 0
 	AND SB_ORDERCOUNT &lt; 4 
 	AND SB_RESCHECK = '미응답'
-	AND SB_TAKEDATE &gt;= '2018-12-03'                                     <!-- 2018-09-03 -->
+	AND SB_TAKEDATE &gt;= '2019-04-03'                                     <!-- 2018-09-03 -->
 	AND SB_TAKEDATE &lt; TO_CHAR(SYSDATE,'YYYY-MM-DD') 
 	AND SB_REJECT = 0
 </select>
@@ -1156,9 +1156,9 @@
 		SELECT copy_seq.NEXTVAL FROM DUAL
 	</selectKey>
 	INSERT INTO SURVEY0725.COPYRIGHT(
-		no, dq1, dq2, dq3, dq4, dq4etc, dq5, dq6, dq7)
+		no, dq1, dq2, dq3, dq4, dq4etc, dq5, dq6, dq7, dQ8)
 	VALUES(
-		#{no}, #{dQ1}, #{dQ2}, #{dQ3}, #{dQ4}, #{dQ4Etc}, #{dQ5}, #{dQ6}, #{dQ7})
+		#{no}, #{dQ1}, #{dQ2}, #{dQ3}, #{dQ4}, #{dQ4Etc}, #{dQ5}, #{dQ6}, #{dQ7}, #{dQ8})
 </insert>
 
 <!-- 문항입력1 -->

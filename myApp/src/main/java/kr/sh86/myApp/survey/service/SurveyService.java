@@ -2024,7 +2024,9 @@ public class SurveyService {
 		UtilDate utilDate = new UtilDate();
 		String nowDate = utilDate.getNowDate(); //mm-dd
 		String nowMonth = nowDate.substring(0, 2);
-		int loop = Integer.parseInt(nowMonth)-3;
+		int loop = Integer.parseInt(nowMonth)-2;
+		System.out.println("nowMonth : "+Integer.parseInt(nowMonth));
+		System.out.println("loop : "+loop);
 		List<SbResult> list = new ArrayList<SbResult>();
 		
 		for(int i=0; i<loop; i++) {
@@ -2032,11 +2034,11 @@ public class SurveyService {
 			if(i==0){
 				startDate = "2019-03-01";
 				endDate = "2019-04-01";
+			}else if(i == 1){
+				startDate = "2019-04-02";
+				endDate = "2019-05-02";
 			}
-			/*else if(i == 1){
-				startDate = "2018-05-03";
-				endDate = "2018-06-02";
-			}else if(i == 2){
+			/*else if(i == 2){
 				startDate = "2018-06-04";
 				endDate = "2018-07-02";
 			}else if(i == 3){
@@ -2636,7 +2638,7 @@ public class SurveyService {
 		return map;
 	}
 	
-	//updateSuv2019
+	//updateSuv2019 
 	public Map<String, Object> updateSuv2019Serv(CopyRight copyRight){
 		Map<String, Object> map = new HashMap<String, Object>();
 		int result = surveyDao.updateSuv2019(copyRight);
@@ -2649,4 +2651,81 @@ public class SurveyService {
 		return map;
 	}
 	
+	//updateSuv2019 - 2
+	public Map<String, Object> updateSuv20192Serv(CopyRight copyRight){
+		Map<String, Object> map = new HashMap<String, Object>();
+		int result = surveyDao.updateSuv20192(copyRight);
+		
+		if(result == 1) {
+			map.put("result", "succ");
+		}else {
+			map.put("result", "fail");
+		}
+		return map;
+	}
+	
+	//updateSuv2019 - 3
+	public Map<String, Object> updateSuv20193Serv(CopyRight copyRight){
+		Map<String, Object> map = new HashMap<String, Object>();
+		int result = surveyDao.updateSuv20193(copyRight);
+		
+		if(result == 1) {
+			map.put("result", "succ");
+		}else {
+			map.put("result", "fail");
+		}
+		return map;
+	}
+	
+	//updateSuv2019 - 4
+	public Map<String, Object> updateSuv20194Serv(CopyRight copyRight){
+		Map<String, Object> map = new HashMap<String, Object>();
+		int result = surveyDao.updateSuv20194(copyRight);
+		
+		if(result == 1) {
+			map.put("result", "succ");
+		}else {
+			map.put("result", "fail");
+		}
+		return map;
+	}
+	
+	//updateSuv2019 - 5
+	public Map<String, Object> updateSuv20195Serv(CopyRight copyRight){
+		Map<String, Object> map = new HashMap<String, Object>();
+		int result = surveyDao.updateSuv20195(copyRight);
+		
+		if(result == 1) {
+			map.put("result", "succ");
+		}else {
+			map.put("result", "fail");
+		}
+		return map;
+	}
+	
+	//updateSuv2019 - 6
+	public Map<String, Object> updateSuv20196Serv(CopyRight copyRight){
+		Map<String, Object> map = new HashMap<String, Object>();
+		int result = surveyDao.updateSuv20196(copyRight);
+		
+		if(result == 1) {
+			map.put("result", "succ");
+		}else {
+			map.put("result", "fail");
+		}
+		return map;
+	}
+	
+	//updateSuv2019 - 7
+	public Map<String, Object> updateSuv20197Serv(CopyRight copyRight){
+		Map<String, Object> map = new HashMap<String, Object>();
+		int result = surveyDao.updateSuv20197(copyRight);
+		
+		if(result == 1) {
+			map.put("result", "succ");
+		}else {
+			map.put("result", "fail");
+		}
+		return map;
+	}
 }

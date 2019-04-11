@@ -242,7 +242,7 @@
 			</tr>
 			<c:forEach var="list" items="${list}" varStatus="i">
 				<tr>
-					<td class="firTd">${i.index+4 }월</td>
+					<td class="firTd">${i.index+3 }월</td>
 					<td class="firTd">${list.totalCnt }명</td>
 					<td class="firTd">${list.resCnt }명</td>
 					<td class="firTd"><fmt:formatNumber value="${(list.resCnt/list.totalCnt)*100 }" pattern=".0"/>%</td>

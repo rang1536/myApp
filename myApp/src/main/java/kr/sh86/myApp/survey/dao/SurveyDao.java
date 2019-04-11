@@ -486,4 +486,29 @@ public class SurveyDao {
 	public int updateSuv20192(CopyRight copyRight) {
 		return sqlSession.update("updateSuv20192", copyRight);
 	}
+	
+	//updateSuv2019-3
+	public int updateSuv20193(CopyRight copyRight) {
+		return sqlSession.update("updateSuv20193", copyRight);
+	}
+	
+	//updateSuv2019-4
+	public int updateSuv20194(CopyRight copyRight) {
+		return sqlSession.update("updateSuv20194", copyRight);
+	}
+	
+	//updateSuv2019-5
+	public int updateSuv20195(CopyRight copyRight) {
+		return sqlSession.update("updateSuv20195", copyRight);
+	}
+	
+	//updateSuv2019-6
+	public int updateSuv20196(CopyRight copyRight) {
+		return sqlSession.update("updateSuv20196", copyRight);
+	}
+	
+	//updateSuv2019-7
+	public int updateSuv20197(CopyRight copyRight) {
+		return sqlSession.update("updateSuv20197", copyRight);
+	}
 }

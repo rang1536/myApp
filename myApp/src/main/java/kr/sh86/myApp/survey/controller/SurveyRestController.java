@@ -165,6 +165,8 @@ public class SurveyRestController {
 		Map<String, Object> map = surveyService.readSbNumServ(sbHp); 		
 		return map;
 	}
+
+	//=====================================================================================================================
 	
 	//addSuv2019
 	@RequestMapping(value="/addSuv2019", method = RequestMethod.POST)
@@ -182,11 +184,51 @@ public class SurveyRestController {
 		return map;
 	}
 	
-	//updateSuv2019
+	//updateSuv2019-2
 	@RequestMapping(value="/updateSuv20192", method = RequestMethod.POST)
 	public Map<String, Object> updateSuv20192Ctrl(CopyRight copyRight){
+		System.out.println("COPYRIGHT2 : "+copyRight);
+		Map<String, Object> map = surveyService.updateSuv20192Serv(copyRight);
+		return map;
+	}
+	
+	//updateSuv2019-3
+	@RequestMapping(value="/updateSuv20193", method = RequestMethod.POST)
+	public Map<String, Object> updateSuv20193Ctrl(CopyRight copyRight){
 		System.out.println("COPYRIGHT3 : "+copyRight);
-		Map<String, Object> map = surveyService.updateSuv2019Serv(copyRight);
+		Map<String, Object> map = surveyService.updateSuv20193Serv(copyRight);
+		return map;
+	}
+	
+	//updateSuv2019-4
+	@RequestMapping(value="/updateSuv20194", method = RequestMethod.POST)
+	public Map<String, Object> updateSuv20194Ctrl(CopyRight copyRight){
+		System.out.println("COPYRIGHT4 : "+copyRight);
+		Map<String, Object> map = surveyService.updateSuv20194Serv(copyRight);
+		return map;
+	}
+	
+	//updateSuv2019-5
+	@RequestMapping(value="/updateSuv20195", method = RequestMethod.POST)
+	public Map<String, Object> updateSuv20195Ctrl(CopyRight copyRight){
+		System.out.println("COPYRIGHT5 : "+copyRight);
+		Map<String, Object> map = surveyService.updateSuv20195Serv(copyRight);
+		return map;
+	}
+	
+	//updateSuv2019-6
+	@RequestMapping(value="/updateSuv20196", method = RequestMethod.POST)
+	public Map<String, Object> updateSuv20196Ctrl(CopyRight copyRight){
+		System.out.println("COPYRIGHT6 : "+copyRight);
+		Map<String, Object> map = surveyService.updateSuv20196Serv(copyRight);
+		return map;
+	}
+	
+	//updateSuv2019-7
+	@RequestMapping(value="/updateSuv20197", method = RequestMethod.POST)
+	public Map<String, Object> updateSuv20197Ctrl(CopyRight copyRight){
+		System.out.println("COPYRIGHT7 : "+copyRight);
+		Map<String, Object> map = surveyService.updateSuv20197Serv(copyRight);
 		return map;
 	}
 }
