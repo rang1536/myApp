@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +34,8 @@ public class HomeController {
 	private BcService bcService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Model model) {
+	public String home(Model model,HttpServletRequest request) {
+		System.out.println("IP확인 : "+surveyService.getRemoteIP(request));
 		return "privercy/a";
 	}
 	

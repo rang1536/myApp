@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,6 +43,27 @@ public class SurveyService {
 	
 	@Autowired
 	private SurveyDao surveyDao;
+	
+	//아이피확인
+	public static String getRemoteIP(HttpServletRequest request){
+        String ip = request.getHeader("X-FORWARDED-FOR"); 
+        
+        //proxy 환경일 경우
+        if (ip == null || ip.length() == 0) {
+            ip = request.getHeader("Proxy-Client-IP");
+        }
+
+        //웹로직 서버일 경우
+        if (ip == null || ip.length() == 0) {
+            ip = request.getHeader("WL-Proxy-Client-IP");
+        }
+
+        if (ip == null || ip.length() == 0) {
+            ip = request.getRemoteAddr() ;
+        }
+        
+        return ip;
+   }
 	
 	//신보 - 회원번호 검색
 	public Map<String, Object> readSbNumServ(String sbHp){
